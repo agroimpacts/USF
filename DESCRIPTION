@@ -1,0 +1,14 @@
+Package: USF
+Title: Data for USF Summer Institute 2021-2
+Version: 0.0.0.9000
+Author: Pilar Delpino Marimion
+Maintenance: <pdelpinomarimon@clarku.edu>
+Description: Collects and prepares data for USF Summer Institute.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)

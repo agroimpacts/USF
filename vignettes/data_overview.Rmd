@@ -1,0 +1,255 @@
+---
+title: "Open Source datasets"
+author: "Pilii"
+date: "6/21/2021"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    theme: cerulean
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(USF)
+library(readxl)
+library(kableExtra)
+#usethis::use_data_raw(name = 'name')
+```
+
+The following is a descriptive document of the open source datasets that might be of use for the USF summer institute.
+
+# <ins> On Police shootings/killings </ins>
+
+### Washington Post Data - police shootings
+Source https://github.com/washingtonpost/data-police-shootings
+
+```{r echo=FALSE}
+data(wpdata)
+print(colnames(wpdata))
+```
+
+### Fatal Encounters
+Source https://fatalencounters.org/spreadsheets/
+
+```{r echo=FALSE}
+data(encounters)
+colnames(encounters)
+```
+
+### Million Dollar Hoods
+Source: https://milliondollarhoods.pre.ss.ucla.edu/test-iframe-2/
+
+LAPD 2012-2017 by Neighborhoods (Ranking)
+```{r echo=FALSE}
+data(mdh_lapd)
+colnames(mdh_lapd)
+```
+
+LASD 2012-2017 by Neighborhoods (Ranking)
+```{r echo=FALSE}
+data(mdh_lasd)
+colnames(mdh_lasd)
+```
+
+### Mapping Police Violence
+Source: https://mappingpoliceviolence.org/aboutthedata
+
+Whole data set
+```{r}
+ data(mpv)
+```
+
+Worksheet 1 "2013-2020 Police Killings"
+```{r echo=FALSE}
+data(mpv_polkill)
+colnames(mpv_polkill)
+```
+
+Worksheet 2 "2013-2020 Killings by PD"
+```{r echo=FALSE}
+data(mpv_killbypd)
+colnames(mpv_killbypd)
+```
+
+Worksheet 3 "2013-2020 Killings by State"
+```{r echo=FALSE}
+data(mpv_killbystate)
+colnames(mpv_killbystate)
+```
+
+Worksheet 4 "Police Killings of Black Men"
+```{r echo=FALSE}
+data(mpv_polkilbm)
+colnames(mpv_polkilbm)
+```
+
+
+### Police 
+
+
+# <ins> Policing in general </ins>
+
+
+### Timeline
+http://criticalresistance.org/policing-timeline/
+
+
+### Spending
+
+How much Us cities spend on policing
+https://www.statista.com/chart/10593/how-much-do-us-cities-spend-on-policing/
+
+PopularDemocracy.org
+https://www.populardemocracy.org/news-and-publications/congress-must-divest-billion-dollar-police-budget-and-invest-public-education
+
+
+### Stops - Open Policing Stanford
+Source: https://openpolicing.stanford.edu/data/
+CSV and shapefiles for select locations.
+
+
+Los Angeles example
+```{r echo=FALSE}
+data(laops)
+colnames(laops)
+```
+
+
+### Police in schools
+
+
+Policing America’s Schools: An Education Week Analysis
+U.S. and States
+Source: https://www.edweek.org/which-students-are-arrested-most-in-school-u-s-data-by-school#/overview
+
+### Jails and Prisons
+
+
+### National Neighbourhood Watch
+https://nnw.org/find-a-watch-program?type=2&field_county_value=&field_address_locality=&field_address_postal_code=&field_address_administrative_area=
+
+
+### Critical Resistance - Abolishing Policing
+Source: http://criticalresistance.org/abolish-policing/
+
+#### On the Road with Abolition - ppt https://docs.google.com/presentation/d/1Vs1Dt53DR6s2vShPZw5xNX-QCDC2Ppws07ctl6h_Weg/edit#slide=id.g80c2475b0e_1_80
+
+"the most basic police interaction, the stop"
+
+
+# <ins> Drawing the Black Box </ins>
+
+## <ins> Property data </ins>
+
+Most cities have property data available you can download for free: "Property Vaulation and Assessment Data". 
+
+### NYC Real Estate Assessment Property data.
+Built with the Department of Finance values.
+Source: https://data.cityofnewyork.us/City-Government/Property-Valuation-and-Assessment-Data/yjxr-fw8i
+
+### MassGIS - MA Interactive Property Map
+Datasets per city ready for download.
+Source: https://massgis.maps.arcgis.com/apps/OnePane/basicviewer/index.html?appid=47689963e7bb4007961676ad9fc56ae9
+
+### LA County Open Data Initiative
+Property related data: https://data.lacounty.gov/browse?category=Property%2FPlanning&utf8=%E2%9C%93
+
+### Zillow
+Source: https://www.zillow.com/research/data/
+
+"Zillow publishes top-tier ZHVI (typical value for homes within the 65th to 95th percentile range for a given region) and bottom-tier ZHVI (typical value for homes that fall within the 5th to 35th percentile range for a given region)."
+
+ZHVI All Homes - Top tier time series $ (Metro and US)
+```{r echo=FALSE}
+data(zhvi_toptier)
+kbl(head(zhvi_toptier[, 1:6]))
+```
+
+..
+
+ZHVI All Homes - Bottom tier time series $ (Metro and US)
+```{r echo=FALSE}
+data(zhvi_bottomtier)
+kbl(head(zhvi_bottomtier[, 1:6]))
+```
+
+
+## <ins> Public Safety </ins>
+
+According to LA County Open Data initiative, Public Safety includes Sheriff, Fire, and other Emergency related datasets
+
+### <ins> Complaints </ins>
+
+
+### Open Police
+US wide data on police complaints
+Home page: https://openpolice.org/
+Source: https://github.com/flexyourrights/openpolice
+
+I have no idea how to access the data. Still exploring
+
+
+
+### City of Tacoma
+Source: https://data.cityoftacoma.org/Public-Safety/Complaint-Allegations-with-Findings/x46s-jtje
+
+Source of complaint, "Citizen", no other information is given about who complaints. Other relevant information is the Finding of the complaint.
+
+Types of allegation
+```{r echo=FALSE}
+data(complaint_cot)
+kbl(unique(complaint_cot$Allegation))
+```
+
+..
+
+Finding/ruling on complaint
+```{r echo=FALSE}
+data(complaint_cot)
+kbl(unique(complaint_cot$Finding))
+```
+
+
+### CAP, Legal Aid Society
+Source: https://www.capstat.nyc/commands/#10/40.7618/-73.5686
+
+
+## <ins> Militarization </ins>
+
+
+Militarization and Police Violence: The Case of the 1033 Program
+Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/SDDXRT
+
+Militarization Fails to Enhance Police Safety or Reduce Crime, But May Harm Police Reputationhttps://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VYPUVC
+
+### ACLUM
+Source: https://github.com/ACLUmass/ACLUM-Public-Datasets
+
+Data from these states. Each working sheet has information.
+
+California example
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+data(dd1033_CA)
+colnames(dd1033_CA)
+```
+
+Total acquisition sum USD 7583.282.
+
+```{r}
+kbl(head(dd1033_CA))
+```
+
+
+## Whats next?
+
+ Civil Asset Forfeiture? - https://www.vera.org/publications/price-of-prisons-2015-state-spending-trends#prisonPopulationAndSpending20102015
+ 
+ War on drugs - police action to drugs linked to profit/revenue for department: https://drugpolicy.org/issues/policing
+
+
