@@ -184,7 +184,17 @@ kbl(head(zhvi_bottomtier[, 1:6]))
 
 According to LA County Open Data initiative, Public Safety includes Sheriff, Fire, and other Emergency related datasets
 
-### <ins> Complaints </ins>
+## <ins> Complaints &/or Settlements </ins>
+
+### National Police Funding Database
+Source: https://policefundingdatabase.tminstituteldf.org/misconductsettlements
+
+Data on:
+- Federal Grants
+- Police Consent Degrees
+- Police Misconduct Complaints (Only Chicago, IL)
+- Police Misconduct Settlemtns
+- Policy changes via Policy
 
 
 ### Open Police
@@ -195,6 +205,13 @@ Source: https://github.com/flexyourrights/openpolice
 I have no idea how to access the data. Still exploring
 
 
+### NYPD Misconduct Complaint Database
+Source: https://www.nyclu.org/en/campaigns/nypd-misconduct-database
+
+
+### Citizens Police Data Project
+Source: https://cpdp.co/
+collects and publishes information about police misconduct in Chicago
 
 ### City of Tacoma
 Source: https://data.cityoftacoma.org/Public-Safety/Complaint-Allegations-with-Findings/x46s-jtje
