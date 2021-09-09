@@ -56,9 +56,9 @@ knitr::kable(more_nijgrants %>% filter(Recipient == "City of Baltimore") %>%
 
 ```{r}
 knitr::kable(more_nijgrants %>% filter(Recipient == "Baltimore City") %>% 
-               select("ï..FY"))
+               select("Fiscal_Y"))
 knitr::kable(more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% 
-               select("ï..FY"))
+               select("Fiscal_Y"))
 ```
 
 How much?
