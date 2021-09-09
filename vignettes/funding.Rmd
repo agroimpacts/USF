@@ -31,6 +31,13 @@ library(kableExtra)
 data("more_nijgrants")
 ```
 
+### Solicitors
+
+```{r}
+more_nijgrants %>% group_by(Solicitor) %>% count() %>% arrange(-n)
+```
+
+
 ### Entity awarded the most amount of grants: City of Baltimore/City
 
 ```{r echo=FALSE}
