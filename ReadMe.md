@@ -7,3 +7,9 @@ Dr. Asha Best
 Dr. Lyndon Estes
 RA. Amy Dundon
 RA. Pilar Delpino Marimon
+
+
+
+Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
+
+
