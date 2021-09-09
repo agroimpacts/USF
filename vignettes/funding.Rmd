@@ -1,0 +1,77 @@
+---
+title: "funding"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{funding}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	include = FALSE
+)
+library(USF)
+library(dplyr)
+library(tidyverse)
+library(kableExtra)
+```
+
+Baltimore NIJ Example
+Information on grantees
+```{r}
+# load data
+setwd("C:/Users/pilii/Documents/Clark/RA-ing/SummerInstitute/")
+more_nijgrants <- read.csv("NIJ_Baltimore/more_nijgrants.csv")
+
+# rename columns
+# names(more_nijgrants[1]) <- "FiscalYr"
+
+# Entity awarded the most amount of grants; City of Baltimore/City
+
+more_nijgrants %>% group_by(Recipient) %>% count() %>% arrange(-n) 
+
+# Projects funded: crime lab/forensics/DNA backlog
+
+knitr::kable(more_nijgrants %>% filter(Recipient == "Baltimore City") %>% 
+  select("Title"))
+knitr::kable(more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% 
+  select("Title"))
+
+# Year of awards: 1999 to 2013, who is fundind them now?
+
+more_nijgrants %>% filter(Recipient == "Baltimore City") %>% select("ï..FY")
+more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% select("ï..FY")
+
+# How much?
+
+more_nijgrants %>% filter(Recipient == "Baltimore City") %>% select("Amount") %>% sum(.)
+more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% select("Amount") %>% sum(.)
+
+# Total amounts
+t1 <- 507895
+t2 <- 5627243
+total <- t1 + t2
+#total = 6135138
+
+
+# Ranked #2 as most funded: Johns Hopkins University 
+
+more_nijgrants %>% filter(Recipient == "Johns Hopkins University")
+
+# General search on risk or policing
+
+
+more_nijgrants %>% filter(grepl("Risk", Title) | grepl("Police", Title))
+
+```
+

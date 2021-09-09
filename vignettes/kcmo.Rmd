@@ -1,0 +1,61 @@
+---
+title: "kansas city"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{kansas city}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(USF)
+library(sf)
+library(ggplot2)
+library(tmap)
+```
+
+
+Urban Redevelopment plans - status: active, terminanted, expired
+```{r}
+setwd("~/Clark/RA-ing/SummerInstitute/GIS/kansas_city")
+
+urban_dev <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/kansas_city/urban_redevelopment.csv")
+
+urban_dev <- st_as_sf(urban_dev, 
+                            coords = c("Longitude", "Latitude"), crs = 4269)
+
+write.csv(urban_red_sf,
+          file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/urban_red_sf.csv")
+
+```
+
+Parcel data
+
+```{r}
+getwd()
+setwd("~/Clark/RA-ing/SummerInstitute/USF")
+parcel <- st_read("inst/data/kcmo/Parcel.shp")
+
+
+unique(parcel$ASSESSED_L)
+
+parcel %>%
+  ggplot(aes(fill = ASSESSED_L)) + 
+  geom_sf(color = NA) + 
+  scale_fill_viridis_c(option = "magma") +
+  labs(title = "KCMO Assessed Land Value")
+
+tmap_mode("view")
+tm_shape(parcel) + 
+ tm_polygons("ASSESSED_L", title = "KCMO Assessed Land Value 2019", style = "jenks", palette = "viridis")
+```
+

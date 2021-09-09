@@ -1,0 +1,62 @@
+---
+title: "san_francisco"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{san_francisco}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(USF)
+library(tidyverse)
+```
+
+### Assessors data
+```{r}
+sf_ass_data <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Assessor_Historical_Secured_Property_Tax_Rolls.csv")
+parcels <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Parcels   Active and Retired/geo_export_4d5b727f-8af2-417c-adb4-a7601acac6b9.shp")
+
+colnames(parcels)
+colnames(sf_ass_data)
+
+unique(sf_ass_data$Closed.Roll.Year)
+
+# for 2019
+
+sf_ass_data2019 <- sf_ass_data %>% filter(Closed.Roll.Year == 2019)
+sf_ass_data2019 <- sf_ass_data2019 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
+formatC(sf_ass_data2019$Block, width = 4, format = "d", flag = "0")
+
+write.csv(sf_ass_data2019,
+          file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2019.csv")
+
+# blocks2019 <- right_join(sf_ass_data2019, parcels, by = c("Block" = "block_num")) %>% st_as_sf()
+
+# for 2009
+
+sf_ass_data2009 <- sf_ass_data %>% filter(Closed.Roll.Year == 2009)
+sf_ass_data2009 <- sf_ass_data2009 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
+formatC(sf_ass_data2009$Block, width = 4, format = "d", flag = "0")
+write.csv(sf_ass_data2009,
+          file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2009.csv")
+
+
+
+```
+
+Calls service - need address locator
+
+```{r}
+sf_calls <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Police_Department_Calls_for_Service.csv")
+```
+

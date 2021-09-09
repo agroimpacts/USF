@@ -1,0 +1,32 @@
+---
+title: "Test: 6 cities"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Test: 6 cities}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup}
+library(USF)
+```
+
+Test data we have for 6 cities:
+- Baltimore, MD
+- Chicago, IL
+- NYC, NY
+- Bay area, CA 
+- Detroit, MI
+- Kansas City, MO
+
+Steps:
+1. Get parcel data for all cities:
+- Chicago: Cook County. Parcel data till 2012.
+
+- Baltimore:
+https://www.baltimorepolice.org/crime-stats/open-data
+
+```{r}
+
+```
+

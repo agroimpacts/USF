@@ -1,0 +1,284 @@
+---
+title: "baltimore"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{baltimore}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(USF)
+library(sf)
+library(sp)
+library(rgdal)
+library(tidyverse)
+library(dplyr)
+
+```
+
+
+https://realestate.bniajfi.org/interactive-map.php
+
+```{r}
+setwd("~/Clark/RA-ing/SummerInstitute/GIS/baltimore")
+```
+
+# 911 calls, policing per district
+
+```{r}
+# Map using address - maybe heatmap?
+
+calls2020 <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/baltimore/911_Calls_For_Service_2020.csv")
+calls2019 <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/baltimore/911_Calls_For_Service_2019.csv")
+calls2018 <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/baltimore/911_Calls_For_Service_2018.csv")
+calls2017 <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/baltimore/911_Calls_For_Service_2017.csv")
+
+fcalls2020 <- calls2020 %>% group_by(PoliceDistrict) %>% count()
+fcalls2019 <- calls2019 %>% group_by(PoliceDistrict) %>% count()
+fcalls2018 <- calls2018 %>% group_by(PoliceDistrict) %>% count()
+fcalls2017 <- calls2017 %>% group_by(PoliceDistrict) %>% count()
+
+png(filename = "~/Clark/RA-ing/SummerInstitute/USF/vignettes/figures/calls2017.png", 
+      width = 720, height = 360)
+ggplot() + 
+ geom_col(aes(x = fcalls2017$PoliceDistrict , y = fcalls2017$n / 100), fill = "plum4") +
+ xlab ("District") + ylab ("# of 911 calls / 100") + ggtitle ("2017")
+dev.off()
+
+png(filename = "~/Clark/RA-ing/SummerInstitute/USF/vignettes/figures/calls2018.png", 
+      width = 720, height = 360)
+ggplot() + 
+ geom_col(aes(x = fcalls2018$PoliceDistrict , y = fcalls2018$n / 100), fill = "plum4") +
+ xlab ("District") + ylab ("# of 911 calls / 100") + ggtitle ("2018")
+dev.off()
+
+png(filename = "~/Clark/RA-ing/SummerInstitute/USF/vignettes/figures/calls2019.png", 
+      width = 720, height = 360)
+ggplot() + 
+ geom_col(aes(x = fcalls2019$PoliceDistrict, y = fcalls2019$n / 100), fill = "plum4") +
+ xlab ("District") + ylab ("# of 911 calls / 100") + ggtitle ("2019")
+dev.off()
+
+png(filename = "~/Clark/RA-ing/SummerInstitute/USF/vignettes/figures/calls2020.png", 
+      width = 720, height = 360)
+ggplot() + 
+ geom_col(aes(x = fcalls2020$PoliceDistrict , y = fcalls2020$n / 100), fill = "plum4") +
+ xlab ("District") + ylab ("# of 911 calls / 100")+ ggtitle ("2020")
+dev.off()
+```
+
+Census data
+
+```{r}
+library(tidycensus)
+library(tidycensus)
+library(tidyverse)
+library(sf)
+
+census_api_key("db359ed97072a2b7fc30c854994aea932e99598a")
+
+v19 <- load_variables(2019, "acs5", cache = TRUE)
+View(v19)
+
+	
+	
+
+	
+#B06011_001 # median household income
+
+vt <- get_acs(geography = "county", variables = c(medincome = "B06011_001"),
+              state = "MD", year = 2012)
+view(vt)
+#block group
+
+options(tigris_use_cache = TRUE)
+
+
+more_2019 <- get_acs(state = "MD", county = "Baltimore city", geography = 
+                  "tract", variables = "B06011_001", year = 2019, geometry = TRUE)
+
+more %>%
+  ggplot(aes(fill = estimate)) + 
+  geom_sf(color = NA) + 
+  scale_fill_viridis_c(option = "magma") +
+  labs(title = "median income 2019")
+
+
+more_2012 <- more_2019 <- get_acs(state = "MD", county = "Baltimore city", geography = 
+                  "tract", variables = "B06011_001", geometry = TRUE, year = 2012)
+
+more_2012 %>%
+  ggplot(aes(fill = estimate)) + 
+  geom_sf(color = NA) + 
+  scale_fill_viridis_c(option = "magma") +
+  labs(title = "median income 2012")
+```
+
+```{r}
+#B25077_001 # House value
+
+
+value_2019 <- get_acs(state = "MD", county = "Baltimore city", geography = 
+                  "tract", variables = "B25077_001", year = 2019, geometry = TRUE)
+
+value_2019 %>%
+  ggplot(aes(fill = estimate)) + 
+  geom_sf(color = NA) + 
+  scale_fill_viridis_c(option = "magma") +
+  labs(title = "value Owner-occ units")
+
+
+value_2012 <-get_acs(state = "MD", county = "Baltimore city", geography = "tract", variables = "B25077_001", geometry = TRUE, year = 2012)
+
+# more_2012_r %>%
+#   ggplot(aes(fill = estimate)) + 
+#   geom_sf(color = NA) + 
+#   scale_fill_viridis_c(option = "magma") 
+```
+
+Policing interactive map - preload/process data
+```{r}
+library(tmap)
+data("ct_wpdata")
+data("ct_mpv_polkill")
+data("ct_encounters")
+data("fpareas")
+data("datzones")
+
+
+more_wpdata <- ct_wpdata %>% filter(city == "Baltimore")
+more_encounters <- ct_encounters %>% filter(city_death == "Baltimore")
+more_mpv_polkill <- ct_mpv_polkill %>% filter(City == "Baltimore")
+
+zoning <- st_read("inst/data/baltimore/Zoning.shp")
+unique(zoning$zoning)
+
+arrests <- st_read("inst/data/baltimore/arrests.shp")
+
+shelter <- st_read("inst/data/baltimore/shelter.shp")
+
+liq <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/baltimore/liq_license/LiquorLicense_BACI/LiquorLicense_BACI.shp")
+
+liq <- liq %>% filter(License_ty == "LA")
+  
+```
+
+Interactive map
+```{r}
+tmap_mode("view")
+tm_shape(value_2012) + 
+ tm_polygons("estimate", title = "house value 2019", style = "jenks", palette = "viridis") +
+tm_shape(value_2019) +
+  tm_polygons("estimate", title = "house value 2019", style = "jenks", palette = "viridis") +
+tm_shape(more_2019) +
+  tm_polygons("estimate", title = "median income 2019", style = "jenks") +
+  tm_shape(more_2012) +
+    tm_polygons("estimate", title = "median income 2012", style = "jenks")  +
+      tm_shape(fpareas, legend = "Focused Patrol Areas") +
+  tm_borders(col = "black") + 
+  tm_shape(datzones, legend = "District Action Team Zones" ) +
+  tm_borders(col = "red") + 
+  tm_shape(shelter) +
+  tm_dots(col = "orange") +
+  tm_shape(arrests) + 
+  tm_dots(col = "brown") +
+  tm_shape(liq) +
+  tm_dots(col = "grey") +
+  tm_shape(more_wpdata) +
+    tm_dots(col = '#1CFBA5')  +
+  tm_shape(more_encounters) +
+   tm_dots(col = '#2F28FA')  +
+  tm_shape(more_mpv_polkill) +
+    tm_dots(col = '#FF0023')  +
+  tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
+         labels = c("Wash. Post Data", "Fatal Encounters", 
+                    "Mapping Police Violence"), title = "Police Shootings Data")  +
+tm_basemap(server = "OpenStreetMap", alpha = 0.7) 
+```
+
+NIJ GRANTS
+
+```{r}
+setwd("C:/Users/pilii/Documents/Clark/RA-ing/SummerInstitute/")
+more_nijgrants <- read.csv("NIJ_Baltimore/more_nijgrants.csv")
+
+# rename columns
+names(more_nijgrants[1]) <- "FiscalYr"
+
+
+# Entity awarded most grants
+more_nijgrants %>% group_by(Recipient) %>% count() %>% arrange(-n) # the city
+
+# Most awards are on crime lab/forensics
+
+more_nijgrants %>% filter(Recipient == "Baltimore City") %>% select("ï..FY")
+more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% select("ï..FY")
+
+# from 1999 to 2013
+
+more_nijgrants %>% filter(Recipient == "Baltimore City") %>% select("Amount") %>% sum(.)
+more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% select("Amount") %>% sum(.)
+
+
+# amount awarded
+t1 <- 507895
+t2 <- 5627243
+total <- t1 + t2
+total = 6135138
+
+select(more_nijgrants$Recipient == "Baltimore City")
+
+
+# Johns Hopkins University 
+
+more_nijgrants %>% filter(Recipient == "Johns Hopkins University")
+
+# General search on risk or policing
+
+
+more_nijgrants %>% filter(grepl("Risk", Title) | grepl("Police", Title))
+
+
+# All Temp. Unavailable stations, is there a pattern?
+TempUn <- US_CS %>% filter(grepl("TEMPORARILY", Access))
+
+
+## US WIDE Questions
+
+# Rank by Year stations went online (top 10)
+US_CS %>% select("Year", "State") %>% filter(!Year %in% NA) %>% 
+  arrange(Year) %>% head(., 10)
+
+# When and where did first charging station came online and where
+US_CS %>% select("Year", "State", "ZIP", "City") %>% filter(!Year %in% NA) %>%
+  arrange(Year) %>% head(., 1)
+
+# When and where did the last charging station came online and where
+US_CS %>% select("Year", "State", "ZIP", "City") %>% filter(!Year %in% NA) %>%
+  arrange(Year) %>% tail(., 1)
+
+# Where are most charging stations located - State level
+US_CS %>% group_by(State) %>% count() %>% arrange(-n) %>% head(5) %>% print()
+
+# City level
+US_CS %>% group_by(ZIP, State, City) %>% count() %>%
+  arrange(-n) %>% head(5) %>% print()
+
+# Where are the least number of charging stations located - State level
+US_CS %>% group_by(State) %>% count() %>% arrange(n) %>% head(5) %>% print()
+
+# City Level
+US_CS %>% group_by(ZIP, State, City) %>% count() %>% arrange(n) %>% 
+  head(5) %>% print()
+```
+

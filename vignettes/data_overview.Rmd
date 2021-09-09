@@ -1,6 +1,6 @@
 ---
-title: "Open Source datasets"
-author: "Pilii"
+title: "USF Summer Institute data overview"
+author: "P. Delpino"
 date: "6/21/2021"
 output:
   html_document:
@@ -19,254 +19,418 @@ knitr::opts_chunk$set(echo = TRUE)
 library(USF)
 library(readxl)
 library(kableExtra)
+library(sf)
+library(rgdal)
+library(dplyr)
+library(tmap)
+library(kableExtra)
 #usethis::use_data_raw(name = 'name')
 ```
 
-The following is a descriptive document of the open source datasets that might be of use for the USF summer institute.
+The following is a descriptive document of the datasets within the package based 
+on the predefined test cities:
 
-# <ins> On Police shootings/killings </ins>
 
-### Washington Post Data - police shootings
+- Baltimore, MD
+- Chicago, IL
+- NYC, NY
+- Bay area, CA 
+- Detroit, MI
+- Kansas City, MO
+
+
+# <ins> Open Source Databases </ins>
+
+### <ins> Washington Post Data - police shootings </ins> 
 Source https://github.com/washingtonpost/data-police-shootings
 
-```{r echo=FALSE}
-data(wpdata)
-print(colnames(wpdata))
+Raw data: `wpdata`
+
+Filtered by states of test cities: `t_wpdata`
+
+Filtered by cities: `ct_wpdata`
+
+
+States
+```{r echo=TRUE}
+data(t_wpdata)
+plot(t_wpdata$geometry)
 ```
 
-### Fatal Encounters
+Cities
+```{r echo=TRUE}
+data(ct_wpdata)
+plot(ct_wpdata$geometry)
+```
+
+### <ins> Fatal Encounters </ins> 
 Source https://fatalencounters.org/spreadsheets/
 
-```{r echo=FALSE}
-data(encounters)
-colnames(encounters)
+Raw data: `encounters`
+
+Filtered by states of test cities: `t_encounters`
+
+Filtered by cities: `ct_encounters`
+
+State
+```{r echo=TRUE}
+data(t_encounters)
+plot(t_encounters$geometry)
 ```
 
-### Million Dollar Hoods
-Source: https://milliondollarhoods.pre.ss.ucla.edu/test-iframe-2/
-
-LAPD 2012-2017 by Neighborhoods (Ranking)
-```{r echo=FALSE}
-data(mdh_lapd)
-colnames(mdh_lapd)
+Cities
+```{r echo=TRUE}
+data(ct_encounters)
+plot(ct_encounters$geometry)
 ```
 
-LASD 2012-2017 by Neighborhoods (Ranking)
-```{r echo=FALSE}
-data(mdh_lasd)
-colnames(mdh_lasd)
-```
 
-### Mapping Police Violence
+
+### <ins> Mapping Police Violence </ins> 
 Source: https://mappingpoliceviolence.org/aboutthedata
 
-Whole data set
-```{r}
- data(mpv)
+Whole data set: `mpv`
+
+
+- Worksheet 1 "2013-2020 Police Killings": `mpv_polkill`
+
+  Filter by states: `t_mpv_polkill`
+  Geocoded data including intersections (created with ArcGIS Pro 10)
+
+  Filtered by cities: `ct_mpv_polkill`
+
+States
+```{r echo=TRUE}
+data(t_mpv_polkill)
+plot(t_mpv_polkill$geometry)
 ```
 
-Worksheet 1 "2013-2020 Police Killings"
+
+Cities
+```{r echo=TRUE}
+data(ct_mpv_polkill)
+plot(ct_mpv_polkill$geometry)
+```
+
+
+
+
+- Worksheet 2 "2013-2020 Killings by PD" : `mpv_polkillbypd`
+
+  Filter by states and city: `t_mpv_polkillbypd`
+
+  Chart by city (only for San Francisco, Baltimore, New York, and Detroit)
+
+  Example San Francisco
+```{r echo=TRUE}
+data(t_mpv_killbypd )
+knitr::kable(head(t_mpv_killbypd %>% filter(City == "San Francisco")))
+```
+---------------------------------------
+
+
+
+
+
+
+
+- Worksheet 3 "2013-2020 Killings by State": `mpv_killbystate`
+
+  Filter by states: `t_mpv_killbystate`
 ```{r echo=FALSE}
-data(mpv_polkill)
-colnames(mpv_polkill)
+knitr::kable(t_mpv_killbystate)
 ```
+---------------------------------------
 
-Worksheet 2 "2013-2020 Killings by PD"
+
+
+
+
+
+- Worksheet 4 "Police Killings of Black Men": `mpv_polkilbm`
+
+  Filter by states: `t_mpv_polkilbm`
+
+  Chart by City - only for Chicago and Kansas City
+
 ```{r echo=FALSE}
-data(mpv_killbypd)
-colnames(mpv_killbypd)
+data(t_mpv_polkilbm)
+knitr::kable(t_mpv_polkilbm)
 ```
+---------------------------------------
 
-Worksheet 3 "2013-2020 Killings by State"
+
+
+# <ins> Interactive Map </ins> 
+
+All Point Features with Open Street Map as background.
+
+`t_wpdata`, `t_encounters`, and `t_mpv_polkill`
+
 ```{r echo=FALSE}
-data(mpv_killbystate)
-colnames(mpv_killbystate)
-```
+tmap_mode("view")
+tm_shape(ct_wpdata) +
+  tm_dots(col = '#1CFBA5')  +
+tm_shape(ct_encounters) +
+  tm_dots(col = '#2F28FA')  +
+tm_shape(ct_mpv_polkill) +
+  tm_dots(col = '#FF0023')  +
+tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
+         labels = c("Wash. Post Data", "Fatal Encounters", 
+                    "Mapping Police Violence"), title = "Police Shootings Data") +
+tm_basemap(server = "OpenStreetMap", alpha = 0.7)
 
-Worksheet 4 "Police Killings of Black Men"
-```{r echo=FALSE}
-data(mpv_polkilbm)
-colnames(mpv_polkilbm)
-```
-
-
-### Police 
-
-
-# <ins> Policing in general </ins>
-
-
-### Timeline
-http://criticalresistance.org/policing-timeline/
-
-
-### Spending
-
-How much Us cities spend on policing
-https://www.statista.com/chart/10593/how-much-do-us-cities-spend-on-policing/
-
-PopularDemocracy.org
-https://www.populardemocracy.org/news-and-publications/congress-must-divest-billion-dollar-police-budget-and-invest-public-education
-
-
-### Stops - Open Policing Stanford
-Source: https://openpolicing.stanford.edu/data/
-CSV and shapefiles for select locations.
-
-
-Los Angeles example
-```{r echo=FALSE}
-data(laops)
-colnames(laops)
 ```
 
 
-### Police in schools
+# <ins> City level data </ins>  
+
+## <ins> New York City </ins> 
+
+<ins> Preloaded data: </ins> 
 
 
-Policing America’s Schools: An Education Week Analysis
-U.S. and States
-Source: https://www.edweek.org/which-students-are-arrested-most-in-school-u-s-data-by-school#/overview
+- Police misconduct: `nyc_complaints` (SHP)
 
-### Jails and Prisons
+  Source: https://www.nyclu.org/en/campaigns/nypd-misconduct-database
 
-
-### National Neighbourhood Watch
-https://nnw.org/find-a-watch-program?type=2&field_county_value=&field_address_locality=&field_address_postal_code=&field_address_administrative_area=
+  Spatialize by Precinct
 
 
-### Critical Resistance - Abolishing Policing
-Source: http://criticalresistance.org/abolish-policing/
 
-#### On the Road with Abolition - ppt https://docs.google.com/presentation/d/1Vs1Dt53DR6s2vShPZw5xNX-QCDC2Ppws07ctl6h_Weg/edit#slide=id.g80c2475b0e_1_80
+- NYPD Complaint Data: `nypd_complaints`
 
-"the most basic police interaction, the stop"
+  Complaints made to NYPD.
+  To Date (2021)
 
-
-# <ins> Drawing the Black Box </ins>
-
-## <ins> Property data </ins>
-
-Most cities have property data available you can download for free: "Property Vaulation and Assessment Data". 
-
-### NYC Real Estate Assessment Property data.
-Built with the Department of Finance values.
-Source: https://data.cityofnewyork.us/City-Government/Property-Valuation-and-Assessment-Data/yjxr-fw8i
-
-### MassGIS - MA Interactive Property Map
-Datasets per city ready for download.
-Source: https://massgis.maps.arcgis.com/apps/OnePane/basicviewer/index.html?appid=47689963e7bb4007961676ad9fc56ae9
-
-### LA County Open Data Initiative
-Property related data: https://data.lacounty.gov/browse?category=Property%2FPlanning&utf8=%E2%9C%93
-
-### Zillow
-Source: https://www.zillow.com/research/data/
-
-"Zillow publishes top-tier ZHVI (typical value for homes within the 65th to 95th percentile range for a given region) and bottom-tier ZHVI (typical value for homes that fall within the 5th to 35th percentile range for a given region)."
-
-ZHVI All Homes - Top tier time series $ (Metro and US)
-```{r echo=FALSE}
-data(zhvi_toptier)
-kbl(head(zhvi_toptier[, 1:6]))
-```
-
-..
-
-ZHVI All Homes - Bottom tier time series $ (Metro and US)
-```{r echo=FALSE}
-data(zhvi_bottomtier)
-kbl(head(zhvi_bottomtier[, 1:6]))
-```
+  Source: NYC Open Data
 
 
-## <ins> Public Safety </ins>
 
-According to LA County Open Data initiative, Public Safety includes Sheriff, Fire, and other Emergency related datasets
+- NYPD Calls for Service: `nypd_servicecalls`
 
-## <ins> Complaints &/or Settlements </ins>
+  To Date (2021)
+  393 categories
 
-### National Police Funding Database
-Source: https://policefundingdatabase.tminstituteldf.org/misconductsettlements
-
-Data on:
-- Federal Grants
-- Police Consent Degrees
-- Police Misconduct Complaints (Only Chicago, IL)
-- Police Misconduct Settlemtns
-- Policy changes via Policy
+  Source: NYC Open Data
 
 
-### Open Police
-US wide data on police complaints
-Home page: https://openpolice.org/
-Source: https://github.com/flexyourrights/openpolice
-
-I have no idea how to access the data. Still exploring
 
 
-### NYPD Misconduct Complaint Database
-Source: https://www.nyclu.org/en/campaigns/nypd-misconduct-database
+<ins> inst/data/new_york folder </ins> 
 
 
-### Citizens Police Data Project
-Source: https://cpdp.co/
-collects and publishes information about police misconduct in Chicago
 
-### City of Tacoma
-Source: https://data.cityoftacoma.org/Public-Safety/Complaint-Allegations-with-Findings/x46s-jtje
+- Parcel: (already includes property assessor's data)
 
-Source of complaint, "Citizen", no other information is given about who complaints. Other relevant information is the Finding of the complaint.
+  Source: http://gis.ny.gov/gisdata/inventories/details.cfm?DSID=1300
 
-Types of allegation
-```{r echo=FALSE}
-data(complaint_cot)
-kbl(unique(complaint_cot$Allegation))
-```
+  Revised: June 2021
 
-..
+  Bronx_2020_Tax_Parcels_SHP_2106.shp, 
 
-Finding/ruling on complaint
-```{r echo=FALSE}
-data(complaint_cot)
-kbl(unique(complaint_cot$Finding))
-```
+  Kings_2020_Tax_Parcels_SHP_2106.shp, 
+
+  NewYork_2020_Tax_Parcels_SHP_2106.shp, 
+
+  Queens_2020_Tax_Parcels_SHP_2106.shp, 
+
+  Richmond_2020_Tax_Parcels_SHP_2106.shp
+
+  
 
 
-### CAP, Legal Aid Society
-Source: https://www.capstat.nyc/commands/#10/40.7618/-73.5686
 
 
-## <ins> Militarization </ins>
+- Property valuation: nyc_proptval.csv, nyc_proptval_dictionary.xlsx
+
+  Source: NYC Open Data
+
+  *use Parcel data.
 
 
-Militarization and Police Violence: The Case of the 1033 Program
-Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/SDDXRT
 
-Militarization Fails to Enhance Police Safety or Reduce Crime, But May Harm Police Reputationhttps://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VYPUVC
+- Census tract: 2018_censustract.shp
 
-### ACLUM
-Source: https://github.com/ACLUmass/ACLUM-Public-Datasets
-
-Data from these states. Each working sheet has information.
-
-California example
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-data(dd1033_CA)
-colnames(dd1033_CA)
-```
-
-Total acquisition sum USD 7583.282.
-
-```{r}
-kbl(head(dd1033_CA))
-```
+  Source: US Census data.gov
 
 
-# Whats next?
 
- Civil Asset Forfeiture? - https://www.vera.org/publications/price-of-prisons-2015-state-spending-trends#prisonPopulationAndSpending20102015
+- Zipcode.shp
+
+  Source: NYC Open Data
+
+
+
+
+- Zoning .shp
+
+  Source: NYC Open Data
+
+  nyco: Commercial district
+
+  nylh: Limited Height Districts
+
+  nyzd: Zoning Districts
+
+  nysp: Special Purpose Districts
+
+  nysp_sd: Special Purpose Districts with Subdistricts
+
+  nyzma: Zoning Map Amendments
+
+
+
+- Precinct.shp
+
+  Source: NYC Open Data
+
+
+
+- NYPD Neighborhood policing sectors: nypd_sectors.shp 
+
+  Source: NYC Open Data
+
+
+## <ins> Baltimore </ins>
+
+
+<ins> Preloaded data </ins> 
+
+- Baltimore 911 calls: `more_911`
+  Source: Open Baltimore
+  + year 2020 
+  + year 2019 
+  + year 2018
+  + year 2017 
  
- War on drugs - police action to drugs linked to profit/revenue for department: https://drugpolicy.org/issues/policing
+- Part 1 Crime data: `p1crime`
+  Source: Open Baltimore
+  " (Part 1) crime against persons, such as homicide, shooting, robbery,          aggravated assault, etc., within the City of Baltimore".
+  
+  
+- Policing sites (only boundaries, no other information)
+  Source: Drawn from BPD Crime Reduction Plan 2019
+  + Focused Patrol Areas: fpareas
+  + District Action Team Zones: datzones
+  
+- Arrests: `more_arrests`
 
+  Source: https://geo.btaa.org/
+  
+- `Parcels`
+
+  Source: Open Baltimore
+
+- `Zoning`
+
+  Source: Open Baltimore
+
+- Neighborhoods: `more_neighbhd`
+
+
+<ins> inst/data/baltimore folder </ins> 
+
+- policedist.shp
+
+  Source: Open Baltimore
+
+- Ward_Precincts.shp
+
+  Source: Open Baltimore
+  
+- Affordability Index (rent): affordindex_rent.shp
+
+  Source: Baltimore Neighborhood Indicators Alliance
+  Community Statistical Area
+
+- Homeless Shelter: shelter.shp
+
+  Source: https://geo.btaa.org/
+  
+
+- Percentage of Residential Sales for Cash: perc_res_cash.shp
+
+  Source: Baltimore Neighborhood Indicators Alliance
+  
+  Community Statistical Area
+
+ 
+## <ins> Detroit </ins> (all from Open Detroit)
+
+Preloaded data:
+
+- Citizen complaints Police Misconduct: dt_complaints
+
+  By Precinct, date and time
+  
+- 911 calls: `dt_911`
+
+- RMS Crime Incidents: `rmsdata`
+  
+  Reported criminal offenses.
+
+- Parcel (includes assessor's data): `dt_parcels`
+
+- Zoning: `dt_zoning`
+
+
+<ins> inst/data/detroit folder </ins> 
+
+
+- Neighborhoods.shp
+
+- Vacant property registration: vacant.shp
+
+- Blight_Violations.shp
+
+- Policing neighborhood:
+  + Scout Car Areas: sca.shp
+  + Neighborhood Police Officers: npo.shp
+  + Project Green Light Locations: pgll.shp
+  
+
+## <ins> Chicago </ins>
+
+Preloaded data:
+
+- Crimes Map: crimemap
+  Source: Open Chicago
+
+
+- Assessor's data: parceldata
+  Source: Open Chicago
+  
+- Zoning: `chgo_zoning`
+
+- Police beat map: `pol_beats`
+
+<ins> inst/data/chicago folder </ins> 
+
+- neighborhoods.shp
+
+- Vacant and Abandoned buildings: vacant.shp
+
+- wards.shp
+
+- Policing district: pol_dist.shp
+
+
+
+
+## <ins> Kansas City </ins>
+
+Preloaded data:
+
+- Crime Heat Map: kcmo_heatmap
+  Group_by beat, ref to beat areas. Hotspot.
+  Beat with highest crime?
+  
+
+
+<ins> inst/data/kcmo folder </ins> 
+
+- Parcel.shp (includes property assessor's data)
+
+- Neighborhood: kcmo_neighborhood.shp
 
