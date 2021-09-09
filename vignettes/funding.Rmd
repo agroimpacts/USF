@@ -30,8 +30,7 @@ Baltimore NIJ Example
 Information on grantees
 ```{r}
 # load data
-setwd("C:/Users/pilii/Documents/Clark/RA-ing/SummerInstitute/")
-more_nijgrants <- read.csv("NIJ_Baltimore/more_nijgrants.csv")
+data("more_nijgrants")
 
 # rename columns
 # names(more_nijgrants[1]) <- "FiscalYr"
