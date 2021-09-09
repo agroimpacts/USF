@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -15,62 +15,77 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-knitr::opts_chunk$set(
-	message = FALSE,
-	warning = FALSE,
-	include = FALSE
-)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(USF)
 library(dplyr)
 library(tidyverse)
 library(kableExtra)
 ```
 
-Baltimore NIJ Example
-Information on grantees
-```{r}
+## Baltimore NIJ Example
+
+### Information on grantees
+
+```{r include=FALSE}
 # load data
 data("more_nijgrants")
+```
 
-# rename columns
-# names(more_nijgrants[1]) <- "FiscalYr"
+### Entity awarded the most amount of grants: City of Baltimore/City
 
-# Entity awarded the most amount of grants; City of Baltimore/City
+```{r echo=FALSE}
+knitr::kable(more_nijgrants %>% group_by(Recipient) %>% count() %>% arrange(-n)) 
+```
 
-more_nijgrants %>% group_by(Recipient) %>% count() %>% arrange(-n) 
-
-# Projects funded: crime lab/forensics/DNA backlog
-
+#### Projects funded: crime lab/forensics/DNA backlog
+```{r}
 knitr::kable(more_nijgrants %>% filter(Recipient == "Baltimore City") %>% 
   select("Title"))
 knitr::kable(more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% 
   select("Title"))
+```
 
-# Year of awards: 1999 to 2013, who is fundind them now?
+#### Year of awards: 1999 to 2013, who is funding them now?
 
-more_nijgrants %>% filter(Recipient == "Baltimore City") %>% select("ï..FY")
-more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% select("ï..FY")
+```{r}
+knitr::kable(more_nijgrants %>% filter(Recipient == "Baltimore City") %>% 
+               select("ï..FY"))
+knitr::kable(more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% 
+               select("ï..FY"))
+```
 
-# How much?
+How much?
 
-more_nijgrants %>% filter(Recipient == "Baltimore City") %>% select("Amount") %>% sum(.)
-more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% select("Amount") %>% sum(.)
+```{r}
+more_nijgrants %>% filter(Recipient == "Baltimore City") %>% 
+  select("Amount") %>% sum(.)
+more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% 
+  select("Amount") %>% sum(.)
+```
 
-# Total amounts
+#### Total amounts awarded: $6,135,138 from 1999 to 2013
+```{r}
 t1 <- 507895
 t2 <- 5627243
 total <- t1 + t2
 #total = 6135138
-
-
-# Ranked #2 as most funded: Johns Hopkins University 
-
-more_nijgrants %>% filter(Recipient == "Johns Hopkins University")
-
-# General search on risk or policing
-
-
-more_nijgrants %>% filter(grepl("Risk", Title) | grepl("Police", Title))
-
 ```
 
+### Ranked #2 as most funded: Baltimore County Maryland 
+
+```{r}
+knitr::kable(more_nijgrants %>% filter(Recipient == "Baltimore County Maryland") %>% 
+  select("Title"))
+```
+
+
+
+### General search on risk or policing
+
+```{r}
+knitr::kable(more_nijgrants %>% 
+  filter( grepl("Risk", Title) | 
+            grepl("Police", Title) | 
+    grepl("Violence", Title) | 
+  grepl("Weapons", Title)))
+```
