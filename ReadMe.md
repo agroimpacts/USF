@@ -3,13 +3,11 @@ This package collects and prepares data for the USF Summer Institute on
 Address Police Violence" at Clark University, Graduate School of Geography.
 
 Team:
-Dr. Asha Best
 
-Dr. Lyndon Estes
-
-RA. Amy Dundon
-
-RA. Pilar Delpino Marimon
+- Dr. Asha Best
+- Dr. Lyndon Estes
+- RA. Amy Dundon
+- RA. Pilar Delpino Marimon
 
 
 
