@@ -7,15 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
 library(USF)
 library(dplyr)
 library(tidyverse)
@@ -34,7 +33,7 @@ data("more_nijgrants")
 ### Solicitors
 
 ```{r}
-more_nijgrants %>% group_by(Solicitor) %>% count() %>% arrange(-n)
+#knitr::kable(more_nijgrants %>% group_by(Solicitor) %>% count() %>% arrange(-n))
 ```
 
 
@@ -63,7 +62,7 @@ knitr::kable(more_nijgrants %>% filter(Recipient == "City of Baltimore") %>%
 
 How much?
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 more_nijgrants %>% filter(Recipient == "Baltimore City") %>% 
   select("Amount") %>% sum(.)
 more_nijgrants %>% filter(Recipient == "City of Baltimore") %>% 
