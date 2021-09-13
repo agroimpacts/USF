@@ -11,3 +11,347 @@ on the selected test case study cities:
 - Bay area, CA 
 - Detroit, MI
 - Kansas City, MO
+#####add link to each city for data
+
+
+## <ins> Open Source Databases </ins>
+
+
+
+### <ins> Washington Post Data - police shootings </ins> 
+[Source](https://github.com/washingtonpost/data-police-shootings)
+
+Raw data: `wpdata`
+
+Filtered by states of test cities: `t_wpdata`
+
+Filtered by cities: `ct_wpdata`
+
+
+
+### <ins> Fatal Encounters </ins> 
+[Source](https://fatalencounters.org/spreadsheets/)
+
+Raw data: `encounters`
+
+Filtered by states of test cities: `t_encounters`
+
+Filtered by cities: `ct_encounters`
+
+
+
+### <ins> Mapping Police Violence </ins> 
+[Source](https://mappingpoliceviolence.org/aboutthedata)
+
+Whole data set: `mpv`
+
+
+- Worksheet 1 "2013-2020 Police Killings": `mpv_polkill`
+
+  Filter by states: `t_mpv_polkill`
+  Geocoded data including intersections (created with ArcGIS Pro 10)
+
+  Filtered by cities: `ct_mpv_polkill`
+
+
+
+- Worksheet 2 "2013-2020 Killings by PD" : `mpv_polkillbypd`
+
+  Filter by states and city: `t_mpv_polkillbypd`
+
+  Chart by city (only for San Francisco, Baltimore, New York, and Detroit)
+
+ 
+
+- Worksheet 3 "2013-2020 Killings by State": `mpv_killbystate`
+
+  Filter by states: `t_mpv_killbystate`
+
+
+
+- Worksheet 4 "Police Killings of Black Men": `mpv_polkilbm`
+
+  Filter by states: `t_mpv_polkilbm`
+
+  Chart by City - only for Chicago and Kansas City
+
+
+
+### <ins> Interactive Map </ins> 
+
+All Point Features with Open Street Map as background.
+
+`t_wpdata`, `t_encounters`, and `t_mpv_polkill`
+
+```{r echo=FALSE}
+tmap_mode("view")
+tm_shape(ct_wpdata) +
+  tm_dots(col = '#1CFBA5')  +
+tm_shape(ct_encounters) +
+  tm_dots(col = '#2F28FA')  +
+tm_shape(ct_mpv_polkill) +
+  tm_dots(col = '#FF0023')  +
+tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
+         labels = c("Wash. Post Data", "Fatal Encounters", 
+                    "Mapping Police Violence"), title = "Police Shootings Data") +
+tm_basemap(server = "OpenStreetMap", alpha = 0.7)
+
+```
+
+
+# <ins> City level data </ins>  
+
+## <ins> New York City </ins> 
+
+<ins> Preloaded data: </ins> 
+
+
+- Police misconduct: `nyc_complaints` (SHP)
+
+  Source: https://www.nyclu.org/en/campaigns/nypd-misconduct-database
+
+  Spatialize by Precinct
+
+
+
+- NYPD Complaint Data: `nypd_complaints`
+
+  Complaints made to NYPD.
+  To Date (2021)
+
+  Source: NYC Open Data
+
+
+
+- NYPD Calls for Service: `nypd_servicecalls`
+
+  To Date (2021)
+  393 categories
+
+  Source: NYC Open Data
+
+
+
+
+<ins> inst/data/new_york folder </ins> 
+
+
+
+- Parcel: (already includes property assessor's data)
+
+  Source: http://gis.ny.gov/gisdata/inventories/details.cfm?DSID=1300
+
+  Revised: June 2021
+
+  Bronx_2020_Tax_Parcels_SHP_2106.shp, 
+
+  Kings_2020_Tax_Parcels_SHP_2106.shp, 
+
+  NewYork_2020_Tax_Parcels_SHP_2106.shp, 
+
+  Queens_2020_Tax_Parcels_SHP_2106.shp, 
+
+  Richmond_2020_Tax_Parcels_SHP_2106.shp
+
+  
+
+
+
+
+- Property valuation: nyc_proptval.csv, nyc_proptval_dictionary.xlsx
+
+  Source: NYC Open Data
+
+  *use Parcel data.
+
+
+
+- Census tract: 2018_censustract.shp
+
+  Source: US Census data.gov
+
+
+
+- Zipcode.shp
+
+  Source: NYC Open Data
+
+
+
+
+- Zoning .shp
+
+  Source: NYC Open Data
+
+  nyco: Commercial district
+
+  nylh: Limited Height Districts
+
+  nyzd: Zoning Districts
+
+  nysp: Special Purpose Districts
+
+  nysp_sd: Special Purpose Districts with Subdistricts
+
+  nyzma: Zoning Map Amendments
+
+
+
+- Precinct.shp
+
+  Source: NYC Open Data
+
+
+
+- NYPD Neighborhood policing sectors: nypd_sectors.shp 
+
+  Source: NYC Open Data
+
+
+## <ins> Baltimore </ins>
+
+
+<ins> Preloaded data </ins> 
+
+- Baltimore 911 calls: `more_911`
+  Source: Open Baltimore
+  + year 2020 
+  + year 2019 
+  + year 2018
+  + year 2017 
+ 
+- Part 1 Crime data: `p1crime`
+  Source: Open Baltimore
+  " (Part 1) crime against persons, such as homicide, shooting, robbery,          aggravated assault, etc., within the City of Baltimore".
+  
+  
+- Policing sites (only boundaries, no other information)
+  Source: Drawn from BPD Crime Reduction Plan 2019
+  + Focused Patrol Areas: fpareas
+  + District Action Team Zones: datzones
+  
+- Arrests: `more_arrests`
+
+  Source: https://geo.btaa.org/
+  
+- `Parcels`
+
+  Source: Open Baltimore
+
+- `Zoning`
+
+  Source: Open Baltimore
+
+- Neighborhoods: `more_neighbhd`
+
+
+<ins> inst/data/baltimore folder </ins> 
+
+- policedist.shp
+
+  Source: Open Baltimore
+
+- Ward_Precincts.shp
+
+  Source: Open Baltimore
+  
+- Affordability Index (rent): affordindex_rent.shp
+
+  Source: Baltimore Neighborhood Indicators Alliance
+  Community Statistical Area
+
+- Homeless Shelter: shelter.shp
+
+  Source: https://geo.btaa.org/
+  
+
+- Percentage of Residential Sales for Cash: perc_res_cash.shp
+
+  Source: Baltimore Neighborhood Indicators Alliance
+  
+  Community Statistical Area
+
+ 
+## <ins> Detroit </ins> (all from Open Detroit)
+
+Preloaded data:
+
+- Citizen complaints Police Misconduct: dt_complaints
+
+  By Precinct, date and time
+  
+- 911 calls: `dt_911`
+
+- RMS Crime Incidents: `rmsdata`
+  
+  Reported criminal offenses.
+
+- Parcel (includes assessor's data): `dt_parcels`
+
+- Zoning: `dt_zoning`
+
+
+<ins> inst/data/detroit folder </ins> 
+
+
+- Neighborhoods.shp
+
+- Vacant property registration: vacant.shp
+
+- Blight_Violations.shp
+
+- Policing neighborhood:
+  + Scout Car Areas: sca.shp
+  + Neighborhood Police Officers: npo.shp
+  + Project Green Light Locations: pgll.shp
+  
+
+## <ins> Chicago </ins>
+
+Preloaded data:
+
+- Crimes Map: crimemap
+  Source: Open Chicago
+
+
+- Assessor's data: parceldata
+  Source: Open Chicago
+  
+- Zoning: `chgo_zoning`
+
+- Police beat map: `pol_beats`
+
+<ins> inst/data/chicago folder </ins> 
+
+- neighborhoods.shp
+
+- Vacant and Abandoned buildings: vacant.shp
+
+- wards.shp
+
+- Policing district: pol_dist.shp
+
+
+
+
+## <ins> Kansas City </ins>
+
+Preloaded data:
+
+- Crime Heat Map: kcmo_heatmap
+  Group_by beat, ref to beat areas. Hotspot.
+  Beat with highest crime?
+  
+
+
+<ins> inst/data/kcmo folder </ins> 
+
+- Parcel.shp (includes property assessor's data)
+
+- Neighborhood: kcmo_neighborhood.shp
+
+
+
+## <ins> San Francisco </ins>
+
+DATA DELETED. TBD
