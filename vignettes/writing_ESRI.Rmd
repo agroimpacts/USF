@@ -1,0 +1,40 @@
+---
+title: "writing_ESRI"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{writing_ESRI}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(USF)
+```
+
+## Writing ESRI files - stored in hidden folder (localdrive)
+
+#### Police violence data - specific to case studies
+```{r}
+getwd()
+library(here)
+st_write(ct_encounters, here("localdrive/ct_encounters.shp"))
+st_write(ct_mpv_polkill, here("localdrive//ct_mpv_polkill.shp"))
+st_write(ct_wpdata, here("localdrive/ct_wpdata.shp"))
+```
+
+
+```{r}
+getwd()
+library(here)
+st_write(crimemap, 
+         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/crime_map.shp", 
+         driver = "ESRI Shapefile")
+
+```
