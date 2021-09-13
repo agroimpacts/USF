@@ -10,6 +10,17 @@ Team:
 - RA. Pilar Delpino Marimon
 
 
+The data within the package are based 
+on the selected test case study cities:
+
+
+- Baltimore, MD
+- Chicago, IL
+- NYC, NY
+- Bay area, CA 
+- Detroit, MI
+- Kansas City, MO
+
 
 Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
 
