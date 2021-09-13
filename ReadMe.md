@@ -10,7 +10,7 @@ Team:
 - RA. Pilar Delpino Marimon
 
 
-The data within the package are based 
+The data within the package is based 
 on the selected test case study cities:
 
 
