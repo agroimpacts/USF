@@ -21,6 +21,7 @@ on the selected test case study cities:
 - Detroit, MI
 - Kansas City, MO
 
+For an overview on the data, click [here](Overview.html)
 
 Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
 
