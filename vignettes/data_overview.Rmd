@@ -24,6 +24,7 @@ library(rgdal)
 library(dplyr)
 library(tmap)
 library(kableExtra)
+library(here)
 #usethis::use_data_raw(name = 'name')
 ```
 
@@ -42,7 +43,7 @@ on the predefined test cities:
 # <ins> Open Source Databases </ins>
 
 ### <ins> Washington Post Data - police shootings </ins> 
-Source https://github.com/washingtonpost/data-police-shootings
+(Source) https://github.com/washingtonpost/data-police-shootings
 
 Raw data: `wpdata`
 
@@ -53,18 +54,18 @@ Filtered by cities: `ct_wpdata`
 
 States
 ```{r echo=TRUE}
-data(t_wpdata)
+t_wpdata <- load(here("~/USF/data/t_wpdata.rda"))
 plot(t_wpdata$geometry)
 ```
 
 Cities
 ```{r echo=TRUE}
-data(ct_wpdata)
+load("ct_wpdata")
 plot(ct_wpdata$geometry)
 ```
 
 ### <ins> Fatal Encounters </ins> 
-Source https://fatalencounters.org/spreadsheets/
+(Source)[https://fatalencounters.org/spreadsheets/]
 
 Raw data: `encounters`
 
@@ -74,20 +75,20 @@ Filtered by cities: `ct_encounters`
 
 State
 ```{r echo=TRUE}
-data(t_encounters)
+load(t_encounters)
 plot(t_encounters$geometry)
 ```
 
 Cities
 ```{r echo=TRUE}
-data(ct_encounters)
+load(ct_encounters)
 plot(ct_encounters$geometry)
 ```
 
 
 
 ### <ins> Mapping Police Violence </ins> 
-Source: https://mappingpoliceviolence.org/aboutthedata
+(Source)[https://mappingpoliceviolence.org/aboutthedata]
 
 Whole data set: `mpv`
 
@@ -101,14 +102,14 @@ Whole data set: `mpv`
 
 States
 ```{r echo=TRUE}
-data(t_mpv_polkill)
+load(t_mpv_polkill)
 plot(t_mpv_polkill$geometry)
 ```
 
 
 Cities
 ```{r echo=TRUE}
-data(ct_mpv_polkill)
+load(ct_mpv_polkill)
 plot(ct_mpv_polkill$geometry)
 ```
 
@@ -123,7 +124,7 @@ plot(ct_mpv_polkill$geometry)
 
   Example San Francisco
 ```{r echo=TRUE}
-data(t_mpv_killbypd )
+load(t_mpv_killbypd )
 knitr::kable(head(t_mpv_killbypd %>% filter(City == "San Francisco")))
 ```
 ---------------------------------------
@@ -154,7 +155,7 @@ knitr::kable(t_mpv_killbystate)
   Chart by City - only for Chicago and Kansas City
 
 ```{r echo=FALSE}
-data(t_mpv_polkilbm)
+load(t_mpv_polkilbm)
 knitr::kable(t_mpv_polkilbm)
 ```
 ---------------------------------------
@@ -169,7 +170,7 @@ All Point Features with Open Street Map as background.
 
 ```{r echo=FALSE}
 tmap_mode("view")
-tm_shape(ct_wpdata) +
+ct <- tm_shape(ct_wpdata) +
   tm_dots(col = '#1CFBA5')  +
 tm_shape(ct_encounters) +
   tm_dots(col = '#2F28FA')  +
@@ -179,6 +180,8 @@ tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"),
          labels = c("Wash. Post Data", "Fatal Encounters", 
                     "Mapping Police Violence"), title = "Police Shootings Data") +
 tm_basemap(server = "OpenStreetMap", alpha = 0.7)
+
+htmlwidgets::saveWidget(ct, "/docs/case_studies_pv.html")
 
 ```
 

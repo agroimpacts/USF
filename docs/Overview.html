@@ -216,169 +216,19 @@ pre code {
 <h3><ins> Interactive Map </ins></h3>
 <p>All Point Features with Open Street Map as background.</p>
 <p><code>t_wpdata</code>, <code>t_encounters</code>, and <code>t_mpv_polkill</code></p>
-<p>```{r echo=FALSE} tmap_mode(“view”) tm_shape(ct_wpdata) + tm_dots(col = ‘#1CFBA5’) + tm_shape(ct_encounters) + tm_dots(col = ‘#2F28FA’) + tm_shape(ct_mpv_polkill) + tm_dots(col = ‘#FF0023’) + tm_add_legend(col = c(“#1CFBA5”, “#2F28FA”, “#FF0023”), labels = c(“Wash. Post Data”, “Fatal Encounters”, “Mapping Police Violence”), title = “Police Shootings Data”) + tm_basemap(server = “OpenStreetMap”, alpha = 0.7)</p>
-<p>```</p>
+<pre class="r"><code>tmap_mode(&quot;view&quot;)
+tm_shape(ct_wpdata) +
+  tm_dots(col = &#39;#1CFBA5&#39;)  +
+tm_shape(ct_encounters) +
+  tm_dots(col = &#39;#2F28FA&#39;)  +
+tm_shape(ct_mpv_polkill) +
+  tm_dots(col = &#39;#FF0023&#39;)  +
+tm_add_legend(col = c(&quot;#1CFBA5&quot;, &quot;#2F28FA&quot;, &quot;#FF0023&quot;), 
+         labels = c(&quot;Wash. Post Data&quot;, &quot;Fatal Encounters&quot;, 
+                    &quot;Mapping Police Violence&quot;), title = &quot;Police Shootings Data&quot;) +
+tm_basemap(server = &quot;OpenStreetMap&quot;, alpha = 0.7)
+</code></pre>
 </div>
-</div>
-</div>
-<div id="city-level-data" class="section level1">
-<h1><ins> City level data </ins></h1>
-<div id="new-york-city" class="section level2">
-<h2><ins> New York City </ins></h2>
-<ins>
-Preloaded data:
-</ins>
-<ul>
-<li><p>Police misconduct: <code>nyc_complaints</code> (SHP)</p>
-<p>Source: <a href="https://www.nyclu.org/en/campaigns/nypd-misconduct-database" class="uri">https://www.nyclu.org/en/campaigns/nypd-misconduct-database</a></p>
-<p>Spatialize by Precinct</p></li>
-<li><p>NYPD Complaint Data: <code>nypd_complaints</code></p>
-<p>Complaints made to NYPD. To Date (2021)</p>
-<p>Source: NYC Open Data</p></li>
-<li><p>NYPD Calls for Service: <code>nypd_servicecalls</code></p>
-<p>To Date (2021) 393 categories</p>
-<p>Source: NYC Open Data</p></li>
-</ul>
-<ins>
-inst/data/new_york folder
-</ins>
-<ul>
-<li><p>Parcel: (already includes property assessor’s data)</p>
-<p>Source: <a href="http://gis.ny.gov/gisdata/inventories/details.cfm?DSID=1300" class="uri">http://gis.ny.gov/gisdata/inventories/details.cfm?DSID=1300</a></p>
-<p>Revised: June 2021</p>
-<p>Bronx_2020_Tax_Parcels_SHP_2106.shp,</p>
-<p>Kings_2020_Tax_Parcels_SHP_2106.shp,</p>
-<p>NewYork_2020_Tax_Parcels_SHP_2106.shp,</p>
-<p>Queens_2020_Tax_Parcels_SHP_2106.shp,</p>
-<p>Richmond_2020_Tax_Parcels_SHP_2106.shp</p></li>
-<li><p>Property valuation: nyc_proptval.csv, nyc_proptval_dictionary.xlsx</p>
-<p>Source: NYC Open Data</p>
-<p>*use Parcel data.</p></li>
-<li><p>Census tract: 2018_censustract.shp</p>
-<p>Source: US Census data.gov</p></li>
-<li><p>Zipcode.shp</p>
-<p>Source: NYC Open Data</p></li>
-<li><p>Zoning .shp</p>
-<p>Source: NYC Open Data</p>
-<p>nyco: Commercial district</p>
-<p>nylh: Limited Height Districts</p>
-<p>nyzd: Zoning Districts</p>
-<p>nysp: Special Purpose Districts</p>
-<p>nysp_sd: Special Purpose Districts with Subdistricts</p>
-<p>nyzma: Zoning Map Amendments</p></li>
-<li><p>Precinct.shp</p>
-<p>Source: NYC Open Data</p></li>
-<li><p>NYPD Neighborhood policing sectors: nypd_sectors.shp</p>
-<p>Source: NYC Open Data</p></li>
-</ul>
-</div>
-<div id="baltimore" class="section level2">
-<h2><ins> Baltimore </ins></h2>
-<ins>
-Preloaded data
-</ins>
-<ul>
-<li><p>Baltimore 911 calls: <code>more_911</code> Source: Open Baltimore</p>
-<ul>
-<li>year 2020</li>
-<li>year 2019</li>
-<li>year 2018</li>
-<li>year 2017</li>
-</ul></li>
-<li><p>Part 1 Crime data: <code>p1crime</code> Source: Open Baltimore &quot; (Part 1) crime against persons, such as homicide, shooting, robbery, aggravated assault, etc., within the City of Baltimore&quot;.</p></li>
-<li><p>Policing sites (only boundaries, no other information) Source: Drawn from BPD Crime Reduction Plan 2019</p>
-<ul>
-<li>Focused Patrol Areas: fpareas</li>
-<li>District Action Team Zones: datzones</li>
-</ul></li>
-<li><p>Arrests: <code>more_arrests</code></p>
-<p>Source: <a href="https://geo.btaa.org/" class="uri">https://geo.btaa.org/</a></p></li>
-<li><p><code>Parcels</code></p>
-<p>Source: Open Baltimore</p></li>
-<li><p><code>Zoning</code></p>
-<p>Source: Open Baltimore</p></li>
-<li><p>Neighborhoods: <code>more_neighbhd</code></p></li>
-</ul>
-<ins>
-inst/data/baltimore folder
-</ins>
-<ul>
-<li><p>policedist.shp</p>
-<p>Source: Open Baltimore</p></li>
-<li><p>Ward_Precincts.shp</p>
-<p>Source: Open Baltimore</p></li>
-<li><p>Affordability Index (rent): affordindex_rent.shp</p>
-<p>Source: Baltimore Neighborhood Indicators Alliance Community Statistical Area</p></li>
-<li><p>Homeless Shelter: shelter.shp</p>
-<p>Source: <a href="https://geo.btaa.org/" class="uri">https://geo.btaa.org/</a></p></li>
-<li><p>Percentage of Residential Sales for Cash: perc_res_cash.shp</p>
-<p>Source: Baltimore Neighborhood Indicators Alliance</p>
-<p>Community Statistical Area</p></li>
-</ul>
-</div>
-<div id="detroit-all-from-open-detroit" class="section level2">
-<h2><ins> Detroit </ins> (all from Open Detroit)</h2>
-<p>Preloaded data:</p>
-<ul>
-<li><p>Citizen complaints Police Misconduct: dt_complaints</p>
-<p>By Precinct, date and time</p></li>
-<li><p>911 calls: <code>dt_911</code></p></li>
-<li><p>RMS Crime Incidents: <code>rmsdata</code></p>
-<p>Reported criminal offenses.</p></li>
-<li><p>Parcel (includes assessor’s data): <code>dt_parcels</code></p></li>
-<li><p>Zoning: <code>dt_zoning</code></p></li>
-</ul>
-<ins>
-inst/data/detroit folder
-</ins>
-<ul>
-<li><p>Neighborhoods.shp</p></li>
-<li><p>Vacant property registration: vacant.shp</p></li>
-<li><p>Blight_Violations.shp</p></li>
-<li><p>Policing neighborhood:</p>
-<ul>
-<li>Scout Car Areas: sca.shp</li>
-<li>Neighborhood Police Officers: npo.shp</li>
-<li>Project Green Light Locations: pgll.shp</li>
-</ul></li>
-</ul>
-</div>
-<div id="chicago" class="section level2">
-<h2><ins> Chicago </ins></h2>
-<p>Preloaded data:</p>
-<ul>
-<li><p>Crimes Map: crimemap Source: Open Chicago</p></li>
-<li><p>Assessor’s data: parceldata Source: Open Chicago</p></li>
-<li><p>Zoning: <code>chgo_zoning</code></p></li>
-<li><p>Police beat map: <code>pol_beats</code></p></li>
-</ul>
-<ins>
-inst/data/chicago folder
-</ins>
-<ul>
-<li><p>neighborhoods.shp</p></li>
-<li><p>Vacant and Abandoned buildings: vacant.shp</p></li>
-<li><p>wards.shp</p></li>
-<li><p>Policing district: pol_dist.shp</p></li>
-</ul>
-</div>
-<div id="kansas-city" class="section level2">
-<h2><ins> Kansas City </ins></h2>
-<p>Preloaded data:</p>
-<ul>
-<li>Crime Heat Map: kcmo_heatmap Group_by beat, ref to beat areas. Hotspot. Beat with highest crime?</li>
-</ul>
-<ins>
-inst/data/kcmo folder
-</ins>
-<ul>
-<li><p>Parcel.shp (includes property assessor’s data)</p></li>
-<li><p>Neighborhood: kcmo_neighborhood.shp</p></li>
-</ul>
-</div>
-<div id="san-francisco" class="section level2">
-<h2><ins> San Francisco </ins></h2>
-<p>DATA DELETED. TBD</p>
 </div>
 </div>
 

@@ -18,41 +18,68 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(USF)
+library(sf)
 library(tidyverse)
+library(tmap)
 ```
 
 ### Assessors data
 ```{r}
-sf_ass_data <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Assessor_Historical_Secured_Property_Tax_Rolls.csv")
-parcels <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Parcels   Active and Retired/geo_export_4d5b727f-8af2-417c-adb4-a7601acac6b9.shp")
+sf_ass_data <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Assessor_Historical_Secured_Property_Tax_Rolls.csv") 
+parcels <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Parcels/Parcels/sanfranparcel.shp")
 
-colnames(parcels)
-colnames(sf_ass_data)
+names(parcels)[1] <- "Parcel.Number"
+
 
 unique(sf_ass_data$Closed.Roll.Year)
 
 # for 2019
 
-sf_ass_data2019 <- sf_ass_data %>% filter(Closed.Roll.Year == 2019)
-sf_ass_data2019 <- sf_ass_data2019 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
-formatC(sf_ass_data2019$Block, width = 4, format = "d", flag = "0")
+sf_ass_data2019 <- sf_ass_data %>% filter(Closed.Roll.Year == 2019) %>% filter(!Assessed.Personal.Property.Value %in% NA)
 
-write.csv(sf_ass_data2019,
-          file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2019.csv")
+# join with parcel data
 
-# blocks2019 <- right_join(sf_ass_data2019, parcels, by = c("Block" = "block_num")) %>% st_as_sf()
+sf_2019_prop <- right_join(parcels, sf_ass_data2019, by = "Parcel.Number")
 
-# for 2009
+sf_2019_prop <- sf_2019_prop %>% st_as_sf()
+colnames(sf_2019_prop)
 
-sf_ass_data2009 <- sf_ass_data %>% filter(Closed.Roll.Year == 2009)
-sf_ass_data2009 <- sf_ass_data2009 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
-formatC(sf_ass_data2009$Block, width = 4, format = "d", flag = "0")
-write.csv(sf_ass_data2009,
-          file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2009.csv")
+sf_2019_prop <- sf_2019_prop[-c(2:11, 13:22)] #remove unwanted columns
 
+# map parcel data for 2019
+tmap_mode("view")
+tm_shape(sf_2019_prop) + 
+ tm_polygons("Parcel.Number", title = "Property Values 2019", style = "jenks", palette = "viridis") +
+  #tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
+   #      labels = c("Wash. Post Data", "Fatal Encounters", 
+                   # "Mapping Police Violence"), title = "Police Shootings Data")  #+
+tm_basemap(server = "OpenStreetMap", alpha = 0.7) 
 
+class(sf_2019_prop)
 
 ```
+
+```{r}
+
+# sf_ass_data2019 <- sf_ass_data2019 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
+# formatC(sf_ass_data2019$Block, width = 4, format = "d", flag = "0")
+# 
+# write.csv(sf_ass_data2019,
+#           file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2019.csv")
+# 
+# # blocks2019 <- right_join(sf_ass_data2019, parcels, by = c("Block" = "block_num")) %>% st_as_sf()
+# 
+# # for 2009
+# 
+# sf_ass_data2009 <- sf_ass_data %>% filter(Closed.Roll.Year == 2009)
+# sf_ass_data2009 <- sf_ass_data2009 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
+# formatC(sf_ass_data2009$Block, width = 4, format = "d", flag = "0")
+# write.csv(sf_ass_data2009,
+#           file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2009.csv")
+# 
+
+```
+
 
 Calls service - need address locator
 
