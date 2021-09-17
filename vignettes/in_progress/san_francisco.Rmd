@@ -21,65 +21,144 @@ library(USF)
 library(sf)
 library(tidyverse)
 library(tmap)
+library(ggplot2)
 ```
 
-### Assessors data
+----
+
+New data: Secured Property Tax Data from 2007/08 to 2020/21 tax year 
+[Source](https://www.sfassessor.org/news-information/property-data-0)
+
 ```{r}
-sf_ass_data <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Assessor_Historical_Secured_Property_Tax_Rolls.csv") 
+# read excel sheets
+library(here)
+library(readxl)
+
+# read excel_sheet
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2007-2008.xlsx"))
+
+# specify worksheet 1 "Roll Data 2007-2008"
+
+ptaxdata_0708 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2007-2008.xlsx"), 
+  sheet = "Roll Data 2007-2008")
+
+# edit col 3
+
+ptaxdata_0708[3] <-ptaxdata_0708[3] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2012-13
+
+ptaxdata_1213 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2012-2013.xlsx"),
+  sheet = "Roll Data 2012-2013")
+
+ptaxdata_1213[3] <-ptaxdata_1213[3] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2017-18
+
+ptaxdata_1718 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.12__SF_ASR_Secured_Roll_Data_2017-2018.xlsx"),
+                          sheet = "Roll Data 2017-2018")
+
+ptaxdata_1718[3] <-ptaxdata_1718[3] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2019-20
+
+ptaxdata_1920 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2020.7.10_SF_ASR_Secured_Roll_Data_2019-2020.xlsx"),
+                          sheet = "Roll Data 2019-2020")
+
+ptaxdata_1920[2] <-ptaxdata_1920[2] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2020-21
+
+ptaxdata_2021 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2021.7.28_SF_ASR_Secured_Roll_Data_2020-2021.xlsx"),
+                          sheet = "Roll Data 2020-2021")
+
+ptaxdata_2021[2] <-ptaxdata_2021[2] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+
+```
+
+
+Parcel data
+
+```{r}
 parcels <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Parcels/Parcels/sanfranparcel.shp")
 
-names(parcels)[1] <- "Parcel.Number"
+# change name to match `ptdata_XXXX`
 
+names(parcels)[1] <- "RP1PRCLID"
 
-unique(sf_ass_data$Closed.Roll.Year)
+# attempt join
 
-# for 2019
+sf_0708 <- right_join(parcels, ptaxdata_0708, by = "RP1PRCLID") %>% st_as_sf()
 
-sf_ass_data2019 <- sf_ass_data %>% filter(Closed.Roll.Year == 2019) %>% filter(!Assessed.Personal.Property.Value %in% NA)
+sf_1213 <- right_join(parcels, ptaxdata_1213, by = "RP1PRCLID") %>% st_as_sf()
 
-# join with parcel data
+sf_1718 <- right_join(parcels, ptaxdata_1718, by = "RP1PRCLID") %>% st_as_sf()
 
-sf_2019_prop <- right_join(parcels, sf_ass_data2019, by = "Parcel.Number")
+sf_1920 <- right_join(parcels, ptaxdata_1920, by = "RP1PRCLID") %>% st_as_sf() 
 
-sf_2019_prop <- sf_2019_prop %>% st_as_sf()
-colnames(sf_2019_prop)
+sf_2021 <- right_join(parcels, ptaxdata_2021, by = "RP1PRCLID") %>% st_as_sf() 
 
-sf_2019_prop <- sf_2019_prop[-c(2:11, 13:22)] #remove unwanted columns
-
-# map parcel data for 2019
-tmap_mode("view")
-tm_shape(sf_2019_prop) + 
- tm_polygons("Parcel.Number", title = "Property Values 2019", style = "jenks", palette = "viridis") +
-  #tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
-   #      labels = c("Wash. Post Data", "Fatal Encounters", 
-                   # "Mapping Police Violence"), title = "Police Shootings Data")  #+
-tm_basemap(server = "OpenStreetMap", alpha = 0.7) 
-
-class(sf_2019_prop)
 
 ```
+
+Map? Works with `ggplot` but doesn't with `tmap` - need to fix bugs
+
 
 ```{r}
 
-# sf_ass_data2019 <- sf_ass_data2019 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
-# formatC(sf_ass_data2019$Block, width = 4, format = "d", flag = "0")
+# quantile(ptaxdata_0708$RP1LNDVAL)
+# sf0708_breaks <- c(1, 36370, 140186, 1475439, 256020000)
+
+sd(ptaxdata_0708$RP1LNDVAL)
+
+
+sf_1920 %>%
+  ggplot(aes(fill = RP1LNDVAL)) + 
+  geom_sf(color = NA) + 
+  scale_fill_viridis_c(option = "magma", na.value = "light grey",
+                       breaks = sf0708_breaks) +
+  labs(title = "Assessed value of land 07/08")
+```
+
+Export `.SHP` for ArcOnline hosting
+
+```{r}
+# write SHP
+
+#st_write(sf_0708, 
+#         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_0708.shp", 
+#         driver = "ESRI Shapefile")
+
+# st_write(sf_1213,
+#         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_1213.shp",
+#         driver = "ESRI Shapefile")
 # 
-# write.csv(sf_ass_data2019,
-#           file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2019.csv")
+# st_write(sf_1718,
+#         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_1718.shp",
+#         driver = "ESRI Shapefile")
 # 
-# # blocks2019 <- right_join(sf_ass_data2019, parcels, by = c("Block" = "block_num")) %>% st_as_sf()
+# st_write(sf_1920,
+#         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_1920.shp",
+#         driver = "ESRI Shapefile")
 # 
-# # for 2009
-# 
-# sf_ass_data2009 <- sf_ass_data %>% filter(Closed.Roll.Year == 2009)
-# sf_ass_data2009 <- sf_ass_data2009 %>% group_by(Block) %>% summarise(Value = mean(Assessed.Land.Value))
-# formatC(sf_ass_data2009$Block, width = 4, format = "d", flag = "0")
-# write.csv(sf_ass_data2009,
-#           file = "~/Clark/RA-ing/SummerInstitute/USF/inst/data/sf_ass_data2009.csv")
-# 
+# st_write(sf_2021,
+#         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_2021.shp",
+#         driver = "ESRI Shapefile")
 
 ```
 
+-----
 
 Calls service - need address locator
 

@@ -193,7 +193,7 @@ htmlwidgets::saveWidget(ct, "/docs/case_studies_pv.html")
 <ins> Preloaded data: </ins> 
 
 
-- Police misconduct: `nyc_complaints` (SHP)
+- Police misconduct: `nyc_complaints`
 
   Source: https://www.nyclu.org/en/campaigns/nypd-misconduct-database
 

@@ -1,5 +1,5 @@
 ---
-title: "new york city"
+title: "new york city _ case for class"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{new york city}
@@ -24,101 +24,57 @@ library(tmap)
 library(tidyverse)
 ```
 
-Load all data
-
-# Open data
-```{r}
-nyc_wpdata <- ct_wpdata %>% filter(city == "New York")
-nyc_encounters <- ct_encounters %>% filter(city_death == "New York")
-nyc_mpv_polkill <- ct_mpv_polkill %>% filter(City == "New York")
-```
-
 
 # NYC Complaints
 ```{r}
-# NYC Complaints (NYCLU)
-data(nyc_complaints) # only by precinct
-sum_complaints <- nyc_complaints %>% group_by(Precinct) %>% count()
+# Police Misconduct (NYCLU)
+data(nyc_complaints) 
+
+# Precinct with most complaints
+precint_complaints <- nyc_complaints %>% group_by(Precinct) %>% count() # spatialize by precinct.shp
+precint_complaints %>% arrange(-n)
+precint_complaints %>% arrange(n)
+
+# Allegation of misconduct
+
+nyc_complaints %>% group_by(FADOType) %>% count()
+
+# date distribution
+
+max(nyc_complaints$IncidentDate)
 
 
-# NYC Police Department data
-data(nypd_complaints)
-colnames(nypd_complaints)
-nypd_complaints %>% group_by(nypd_complaints$SUSP_RACE) %>% count()
-nypd_complaints$OFNS_DESC %>% unique()
-nypd_complaints$PD_DESC %>% unique()
+# Sites of abuse/threat/misconduct
 
-```
+nyc_complaints %>% group_by(LocationType) %>% count() %>% arrange(n)
 
-# Service Calls
+# Rule
 
-```{r}
-data(nypd_servicecalls)
-colnames(nypd_servicecalls)
-unique(nypd_servicecalls$TYP_DESC)
-```
+nyc_complaints$NYPDDisposition %>% unique()
+
+#nyc_complaints %>% 
+#  filter( grepl("Guilty", NYPDDisposition))
 
 
+# "Impacted .." demographics
 
-# Property Value
-```{r include=FALSE}
-# Use raw data
-# nyc_proprtval <- read.csv("inst/data/new_york/nyc_proptval.csv")
-# Use georef data (Parcel data)
-nyc_parcels <- st_read("inst/data/new_york/NewYork_2020_Tax_Parcels_SHP_2106.shp")
-```
+nyc_complaints %>% group_by(ImpactedRace) %>% count() %>% arrange(-n)
 
-# Policing areas
-```{r}
-precinct <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/precinct.shp")
+nyc_complaints %>% group_by(ImpactedGender) %>% count() %>% arrange(-n)
 
-nypd_sectors <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nypd_sectors.shp")
-
-```
-
-# Zoning
-```{r}
-nyco <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nyco.shp") # Commercial district
-nylh <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nyco.shp") # Limited Height Districts
-nyzd <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nyzd.shp") # Zoning Districts
-nysp <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nysp.shp") # Special Purpose Districts
-nysp_sd <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nysp_sd.shp") # Special Purpose Districts with Subdistricts
-nyzma <- st_read(
-  "~/Clark/RA-ing/SummerInstitute/USF/inst/data/new_york/nyzma.shp") # Zoning Map Amendments
-```
+nyc_complaints %>% group_by(ImpactedAge) %>% count() %>% arrange(-n) #very weird numbers towards the top
 
 
-# Interactive Map
 
-```{r echo=FALSE}
+# Select misconducts based on query
 
-tmap_mode("view")
-tm_shape(nypd_complaints) +
-  tm_dots(col = '#FF0098')  +
-tm_add_legend(col = c("#FF0098"), 
-         labels = c("NYPD Complaints"), title = "Complaints to NYPD") +
-  tm_shape(nypd_sectors) +
-  tm_polygons("sector", title = "NYPD Community Policing sectors") +
-tm_shape(nyc_parcels) +
-  tm_polygons("TOTAL_AV", style= "fisher", title = "Assessed total value of the parcel (Natural Breaks)")  +
-  tm_layout(legend.format = NA) + 
-  tm_borders(col = NA) +
-tm_shape(nyc_wpdata) +
-  tm_dots(col = '#1CFBA5')  +
-tm_shape(nyc_encounters) +
-  tm_dots(col = '#2F28FA')  +
-tm_shape(nyc_mpv_polkill) +
-  tm_dots(col = '#FF0023')  +
-tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
-         labels = c("Wash. Post Data", "Fatal Encounters", 
-                    "Mapping Police Violence"), title = "Police Shootings Data") +
-tm_basemap(server = "OpenStreetMap", alpha = 0.7)  
+allegations_sample <- nyc_complaints %>% 
+  filter( grepl("Refusal", Allegation) | 
+            grepl("Threat", Allegation) | 
+    grepl("Statement", Allegation) | 
+  grepl("Sex", Allegation))
+
+
+
 ```
 

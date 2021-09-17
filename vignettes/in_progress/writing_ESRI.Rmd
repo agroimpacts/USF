@@ -29,7 +29,7 @@ st_write(ct_mpv_polkill, here("localdrive//ct_mpv_polkill.shp"))
 st_write(ct_wpdata, here("localdrive/ct_wpdata.shp"))
 ```
 
-
+Chicago Crime map
 ```{r}
 getwd()
 library(here)
@@ -38,3 +38,12 @@ st_write(crimemap,
          driver = "ESRI Shapefile")
 
 ```
+
+San Francisco parcel asssessors per year
+
+```{r}
+st_write(sf_2019, 
+         "~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_2019.shp", 
+         driver = "ESRI Shapefile")
+```
+

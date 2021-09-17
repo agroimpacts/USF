@@ -1,7 +1,4 @@
 ---
-title: "test_output"
-author: "Pilar Delpino Marimon"
-date: "9/14/2021"
 output: github_document
 ---
 
