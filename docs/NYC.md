@@ -19,10 +19,12 @@
  Unless specified, all shapefiles are in compressed format (.zip)
 
 - `NYC_2020_Tax_Parcels_SHP_2106.shp`: Parcels divided by borough, they included property assessor's data for 2020.
-- `Assessors_dictionary.xlsx`: Tax parcels dictionary (individual file)
-
-- `nyc_proptval.csv`: Property valuation
+- `nyc_taxparcel_dictionary.pdf`: Tax parcels dictionary (individual file)
 - `nyc_proptval_dictionary.xlsx`: Property valuation dictionary
+- 
+
+For data on property valuation, download from [here](https://data.cityofnewyork.us/download/rgy2-tti8/application%2Fzip)
+
 
 
 ## <ins> Sources </ins>
