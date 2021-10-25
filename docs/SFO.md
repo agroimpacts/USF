@@ -22,6 +22,10 @@
   The largest expenditure for district offices is officer salaries, so using the number of staff members as a proxy should provide an idea of which districts receive the most funding.
   The table compiles the distribution of officers who are regularly "on the street" to get an idea of officer density
   For more info on SFPD reports, click [here](https://www.sanfranciscopolice.org/your-sfpd/published-reports)
+- `sf_fedgrants`: Federal Grants awarded to San Francisco
+  For more on federal funding, click [here](https://www.usaspending.gov/search/?hash=1bc27eda4fd1ca4ad84638d682e995cf)
+  
+  
 ## <ins> Dropbox data </ins>
 
  [Link to folder](https://www.dropbox.com/sh/jh6zs8667w2b9wz/AADup1H0hIQktDqFQ0JQwwyIa?dl=0)
@@ -36,6 +40,8 @@
 - San Francisco Assessor Office
 - ACLU
 - San Francisco Public Defender
+- San Francisco Police Department
+- National Police Funding Database
 
 
 [Back to home](https://github.com/agroimpacts/USF#readme)
