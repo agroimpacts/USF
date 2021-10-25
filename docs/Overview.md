@@ -8,7 +8,7 @@ on the selected test case study cities:
 - Baltimore, MD
 - Chicago, IL
 - NYC, NY
-- San Francisco, CA 
+- [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
 - Detroit, MI
 - Kansas City, MO
 
