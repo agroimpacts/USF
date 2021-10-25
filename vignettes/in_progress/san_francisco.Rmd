@@ -39,49 +39,146 @@ excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.2
 
 # specify worksheet 1 "Roll Data 2007-2008"
 
-ptaxdata_0708 <- read_excel(
-  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2007-2008.xlsx"), 
-  sheet = "Roll Data 2007-2008")
+# ptaxdata_0708 <- read_excel(
+#   here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2007-2008.xlsx"), 
+#   sheet = "Roll Data 2007-2008") %>% .[-c(1, 2, 4:18)] 
+# 
+# ptaxdata_0708[1] <-ptaxdata_0708[1] %>% 
+#   mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
 
-# edit col 3
 
-ptaxdata_0708[3] <-ptaxdata_0708[3] %>% 
+# 2008-09
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2008-2009.xlsx"))
+
+ptaxdata_0809 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2008-2009.xlsx"), 
+  sheet = "Roll Data 2008-2009") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_0809[1] <-ptaxdata_0809[1] %>% 
   mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2009-10
+# read excel_sheet
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2009-2010.xlsx"))
+
+ptaxdata_0910 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2009-2010.xlsx"), 
+  sheet = "2009-2010") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_0910[1] <-ptaxdata_0910[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2010-11
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2010-2011.xlsx"))
+
+ptaxdata_1011 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2010-2011.xlsx"), 
+  sheet = "Roll Data 2010-2011") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_1011[1] <-ptaxdata_1011[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2011-12
+
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.11.5__SF_ASR_Secured_Roll_Data_2011-2012.xlsx"))
+
+ptaxdata_1112 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.11.5__SF_ASR_Secured_Roll_Data_2011-2012.xlsx"), 
+  sheet = "Roll Data 2011-2012") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_1112[1] <-ptaxdata_1112[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
 
 # 2012-13
 
 ptaxdata_1213 <- read_excel(
   here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2012-2013.xlsx"),
-  sheet = "Roll Data 2012-2013")
+  sheet = "Roll Data 2012-2013") %>% .[-c(1, 2, 4:18)]
 
-ptaxdata_1213[3] <-ptaxdata_1213[3] %>% 
+ptaxdata_1213[1] <-ptaxdata_1213[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2013-14
+
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2013-2014.xlsx"))
+
+ptaxdata_1314 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2013-2014.xlsx"), 
+  sheet = "Roll Data 2013-2014") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_1314[1] <-ptaxdata_1314[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2014-15
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2014-2015.xlsx"))
+
+ptaxdata_1415 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2014-2015.xlsx"), 
+  sheet = "2014-2015") %>% .[-c(1, 2, 4:23)]
+
+ptaxdata_1415[1] <-ptaxdata_1415[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2015-16
+
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2020.7.10_SF_ASR_Secured_Roll_Data_2015-2016.xlsx"))
+
+ptaxdata_1516 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2020.7.10_SF_ASR_Secured_Roll_Data_2015-2016.xlsx"), 
+  sheet = "Roll Data 2015-2016") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_1516[1] <-ptaxdata_1516[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+# 2016-17
+
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.12__SF_ASR_Secured_Roll_Data_2016-2017_0.xlsx"))
+
+ptaxdata_1617 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.12__SF_ASR_Secured_Roll_Data_2016-2017_0.xlsx"), 
+  sheet = "Roll Data 2016-2017") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_1617[1] <-ptaxdata_1617[1] %>% 
   mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
 
 # 2017-18
 
 ptaxdata_1718 <- read_excel(
   here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.12__SF_ASR_Secured_Roll_Data_2017-2018.xlsx"),
-                          sheet = "Roll Data 2017-2018")
+                          sheet = "Roll Data 2017-2018")%>% .[-c(1, 2, 4:18)]
 
-ptaxdata_1718[3] <-ptaxdata_1718[3] %>% 
+ptaxdata_1718[1] <-ptaxdata_1718[1] %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+
+
+# 2018-19
+
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2020.7.10_SF_ASR_Secured_Roll_Data_2018-2019.xlsx"))
+
+ptaxdata_1819 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2020.7.10_SF_ASR_Secured_Roll_Data_2018-2019.xlsx"), 
+  sheet = "Roll Data 2018-2019") %>% .[-c(1, 3:18)]
+
+ptaxdata_1819[1] <-ptaxdata_1819[1] %>% 
   mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
 
 # 2019-20
 
 ptaxdata_1920 <- read_excel(
   here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2020.7.10_SF_ASR_Secured_Roll_Data_2019-2020.xlsx"),
-                          sheet = "Roll Data 2019-2020")
+                          sheet = "Roll Data 2019-2020") %>% .[-c(1, 3:18)]
 
-ptaxdata_1920[2] <-ptaxdata_1920[2] %>% 
+ptaxdata_1920[1] <-ptaxdata_1920[1] %>% 
   mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
 
 # 2020-21
 
 ptaxdata_2021 <- read_excel(
   here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2021.7.28_SF_ASR_Secured_Roll_Data_2020-2021.xlsx"),
-                          sheet = "Roll Data 2020-2021")
+                          sheet = "Roll Data 2020-2021") %>% .[-c(1, 3:18)]
 
-ptaxdata_2021[2] <-ptaxdata_2021[2] %>% 
+ptaxdata_2021[1] <-ptaxdata_2021[1] %>% 
   mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
 
 
