@@ -28,7 +28,7 @@ Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6q
 Access [slides](https://www.dropbox.com/s/a8vpnjvutps6vx1/Test_casestudies_7.23.21.pptx?dl=0) on case studies from 07/23/2021
 
 
-GEOG246346 class projects:
+## <ins> GEOG246346 class projects: </ins>
 
 - Mapping the sources/destinations/flows of budget revenues for police departments, from federal/state/municipal sources.
   Use data from [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
