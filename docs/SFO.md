@@ -14,6 +14,7 @@
 - `sf_pdistricts`: Current Police Districts
 - `sf_pdcalls`: Calls for service to Police Department
 - `sf_incidents`: Police Department incident report from 2018 to present
+- `CopMonitor`: Police misconduct database
 
 
 ## <ins> Dropbox data </ins>
@@ -29,6 +30,7 @@
 - Open San Francisco
 - San Francisco Assessor Office
 - ACLU
+- San Francisco Public Defender
 
 
 [Back to home](https://github.com/agroimpacts/USF#readme)
