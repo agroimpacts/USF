@@ -37,6 +37,10 @@ library(devtools)
 install_github("agroimpacts/USF")
 ```
 
+## <ins>  On police violence </ins>
+
+For an overview on the data, click [here](https://github.com/agroimpacts/USF/blob/main/docs/Overview.md)
+
 
 ## <ins> GEOG246346 class projects: </ins>
 
@@ -65,8 +69,6 @@ install_github("agroimpacts/USF")
 
 
 ## <ins> More information </ins>
-
-For an overview on the data, click [here](https://github.com/agroimpacts/USF/blob/main/docs/Overview.md)
 
 Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
 
