@@ -21,11 +21,21 @@ on the selected test case study cities:
 - Detroit, MI
 - Kansas City, MO
 
-For an overview on the data, click [here](https://github.com/agroimpacts/USF/blob/main/docs/Overview.md)
+## <ins> Installation </ins>
 
-Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
+Install the devtools package
 
-Access [slides](https://www.dropbox.com/s/a8vpnjvutps6vx1/Test_casestudies_7.23.21.pptx?dl=0) on case studies from 07/23/2021
+```
+install.packages("devtools")
+library(devtools)
+```
+
+Install the USF package
+
+```
+library(devtools)
+install_github("agroimpacts/USF")
+```
 
 
 ## <ins> GEOG246346 class projects: </ins>
@@ -48,3 +58,12 @@ Access [slides](https://www.dropbox.com/s/a8vpnjvutps6vx1/Test_casestudies_7.23.
 
 
 - Mapping #blacklivesmatter social media
+
+
+## <ins> More information </ins>
+
+For an overview on the data, click [here](https://github.com/agroimpacts/USF/blob/main/docs/Overview.md)
+
+Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
+
+Access [slides](https://www.dropbox.com/s/a8vpnjvutps6vx1/Test_casestudies_7.23.21.pptx?dl=0) on case studies from 07/23/2021
