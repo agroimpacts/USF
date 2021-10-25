@@ -2,7 +2,7 @@
 
 
 
-<ins> Preloaded data within USF package </ins> 
+## <ins> Preloaded data within USF package </ins> 
 
 
 - `more_parcels`: Parcels within the City
@@ -17,7 +17,7 @@
   BPD Crime Reduction Plan 2019)
 
 
-<ins> Dropbox `.Rda` data </ins>
+## <ins> Dropbox `.Rda` data </ins>
 
 
 
@@ -36,5 +36,13 @@
 - `Homeless_shelter.shp`
 - `perc_res_cash.shp`: Percentage of Residential Sales for Cash
 - `more_cctv`: Location of CCTV til 2016
+
+
+## <ins> Sources </ins>
+
+- Open Baltimore
+- BPD Crime Reduction Plan 2019
+- Bid Academic Alliance
+- Baltimore Neighborhood Indicators Alliance
 
 [Back to home](https://github.com/agroimpacts/USF#readme)
