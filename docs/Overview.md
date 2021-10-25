@@ -8,10 +8,9 @@ on the selected test case study cities:
 - Baltimore, MD
 - Chicago, IL
 - NYC, NY
-- Bay area, CA 
+- San Francisco, CA 
 - Detroit, MI
 - Kansas City, MO
-#####add link to each city for data
 
 
 ## <ins> Open Source Databases </ins>
@@ -79,7 +78,7 @@ Whole data set: `mpv`
 
 ### <ins> Interactive Map </ins> 
 
-All Point Features with Open Street Map as background.
+All point features with Open Street Map as background.
 
 `t_wpdata`, `t_encounters`, and `t_mpv_polkill`
 
