@@ -35,7 +35,7 @@
 - `affordindex_rent.shp`: Affordability Index (rent)
 - `Homeless_shelter.shp`
 - `perc_res_cash.shp`: Percentage of Residential Sales for Cash
-- `more_cctv.sho`: Location of CCTV til 2016
+- `more_cctv.shp`: Location of CCTV til 2016
 
 
 ## <ins> Sources </ins>
