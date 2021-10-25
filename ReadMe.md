@@ -41,18 +41,22 @@ install_github("agroimpacts/USF")
 ## <ins> GEOG246346 class projects: </ins>
 
 - Mapping the sources/destinations/flows of budget revenues for police departments, from federal/state/municipal sources.
+
   Use data from [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
   
   
-- Changes in property valuation versus police activity and/or budgets (linked to #1)
+- Changes in property valuation versus police activity and/or budgets (linked to #1).
+
   Use data from [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
   
   
-- Spatio-temporal patterns and associations of police misconduct
+- Spatio-temporal patterns and associations of police misconduct.
+
   Use data from [NYC, NY](https://github.com/agroimpacts/USF/blob/main/docs/NYC.md)
   
   
-- Spatio-temporal patterns of surveillance (e.g. CCTV)
+- Spatio-temporal patterns of surveillance (e.g. CCTV).
+
   Use data from [Detroit, MI](https://github.com/agroimpacts/USF/blob/main/docs/DT.md) and/or 
   [Baltimore, MD](https://github.com/agroimpacts/USF/blob/main/docs/MORE.md)
 
