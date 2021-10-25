@@ -24,7 +24,7 @@
  [Link to folder](https://www.dropbox.com/sh/fb0h199w074ja0q/AAD8hQxG-UfnBfVisfts6NGPa?dl=0)
  Unless specified, all shapefiles are in compressed format (.zip)
  
-- `more_911`: 911 calls
+- `more_911`: 911 calls (.rda)
   + year 2020 
   + year 2019 
   + year 2018
@@ -35,7 +35,7 @@
 - `affordindex_rent.shp`: Affordability Index (rent)
 - `Homeless_shelter.shp`
 - `perc_res_cash.shp`: Percentage of Residential Sales for Cash
-- `more_cctv`: Location of CCTV til 2016
+- `more_cctv.sho`: Location of CCTV til 2016
 
 
 ## <ins> Sources </ins>
