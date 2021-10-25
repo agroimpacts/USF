@@ -1,0 +1,10 @@
+## code to prepare `ptaxdata_1011` dataset goes here
+excel_sheets(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2010-2011.xlsx"))
+
+ptaxdata_1011 <- read_excel(
+  here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/assessors/2019.8.20__SF_ASR_Secured_Roll_Data_2010-2011.xlsx"),
+  sheet = "Roll Data 2010-2011") %>% .[-c(1, 2, 4:18)]
+
+ptaxdata_1011[1] <-ptaxdata_1011[1] %>%
+  mutate(across(where(is.character), str_remove_all, pattern = fixed(" ")))
+usethis::use_data(ptaxdata_1011, overwrite = TRUE)
