@@ -42,7 +42,7 @@
 
 - Open Baltimore
 - BPD Crime Reduction Plan 2019
-- Bid Academic Alliance
+- Big Academic Alliance
 - Baltimore Neighborhood Indicators Alliance
 
 [Back to home](https://github.com/agroimpacts/USF#readme)
