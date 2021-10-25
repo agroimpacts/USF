@@ -11,7 +11,7 @@ Team:
 
 
 The data within the package is based 
-on the selected test case study cities:
+on selected cities:
 
 
 - Baltimore, MD
@@ -22,6 +22,8 @@ on the selected test case study cities:
 - Kansas City, MO
 
 ## <ins> Installation </ins>
+
+In Rstudio:
 
 Install the devtools package
 
@@ -37,12 +39,14 @@ library(devtools)
 install_github("agroimpacts/USF")
 ```
 
-## <ins>  On police violence </ins>
+## <ins> How to use the data </ins>
+
+### <ins>  On police violence </ins>
 
 For an overview on the data, click [here](https://github.com/agroimpacts/USF/blob/main/docs/Overview.md)
 
 
-## <ins> GEOG246346 class projects: </ins>
+### <ins> GEOG246346 class projects: </ins>
 
 - Mapping the sources/destinations/flows of budget revenues for police departments, from federal/state/municipal sources.
 
@@ -66,7 +70,7 @@ For an overview on the data, click [here](https://github.com/agroimpacts/USF/blo
 
 
 - Mapping #blacklivesmatter social media
-
+  Could potentially be focused on the selected cities or broader US analysis
 
 ## <ins> More information </ins>
 
