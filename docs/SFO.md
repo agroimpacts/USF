@@ -15,11 +15,16 @@
 - `sf_pdcalls`: Calls for service to Police Department
 - `sf_incidents`: Police Department incident report from 2018 to present
 - `CopMonitor`: Police misconduct database
-
-
+- `sf_pdbudget`: SFPC Budget data for each Fiscal Year from 2007 to 2021
+  SFPD Budget Data pulled from Annual Appropriations Ordinances for each year. They can be found [here](https://openbook.sfgov.org/webreports/search.aspx?searchString=&year=1986&year2=2021&type=CityBudgets&index=0&index2=3&index3=0)
+  Columns 4-10 indicate revenue streams. Columns 13-19 indicate department spending.          
+- `sf_pdstaff2007`: Staffing data for SFPD for 2020 and 2007
+  The largest expenditure for district offices is officer salaries, so using the number of staff members as a proxy should provide an idea of which districts receive the most funding.
+  The table compiles the distribution of officers who are regularly "on the street" to get an idea of officer density
+  For more info on SFPD reports, click [here](https://www.sanfranciscopolice.org/your-sfpd/published-reports)
 ## <ins> Dropbox data </ins>
 
- [Link to folder](https://www.dropbox.com/sh/fb0h199w074ja0q/AAD8hQxG-UfnBfVisfts6NGPa?dl=0)
+ [Link to folder](https://www.dropbox.com/sh/jh6zs8667w2b9wz/AADup1H0hIQktDqFQ0JQwwyIa?dl=0)
  Unless specified, all shapefiles are in compressed format (.zip)
  
 - `dd1033_CA`: Department of Defense 1033 Program for California
