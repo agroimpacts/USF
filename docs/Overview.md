@@ -5,11 +5,11 @@ The data within the package is based
 on the selected test case study cities:
 
 
-- Baltimore, MD
+- [Baltimore, MD](https://github.com/agroimpacts/USF/blob/main/docs/MORE.md)
 - Chicago, IL
-- NYC, NY
+- [NYC, NY](https://github.com/agroimpacts/USF/blob/main/docs/NYC.md)
 - [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
-- Detroit, MI
+- [Detroit, MI](https://github.com/agroimpacts/USF/blob/main/docs/DT.md)
 - Kansas City, MO
 
 
@@ -96,3 +96,5 @@ tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"),
 tm_basemap(server = "OpenStreetMap", alpha = 0.7)
 
 ```
+
+[Back to home](https://github.com/agroimpacts/USF#readme)
