@@ -6,6 +6,7 @@
 ## <ins> Preloaded data within USF package </ins> 
 
 - `nyc_complaints`: Complaints made about NYPD misconduct
+  For information on lawsuits by precinct, go [here](https://www.capstat.nyc/commands/#10/40.7618/-73.5686)
 - `nypd_complaints`: Complaints made to NYPD
 - `nypd_servicecalls`: 311 calls to date, 2021.
 
@@ -30,6 +31,7 @@ For data on property valuation, download from [here](https://data.cityofnewyork.
 
 - NYC Open Data
 - GIS NY
+- NYCLU
 
 
 [Back to home](https://github.com/agroimpacts/USF#readme)

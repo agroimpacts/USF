@@ -184,6 +184,21 @@ ptaxdata_2021[1] <-ptaxdata_2021[1] %>%
 
 ```
 
+Police districts
+
+```{r}
+library(here)
+sf_pdistricts <- st_read(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Current Police Districts/geo_export_9bf54163-ba35-4dfa-953f-b7357987d6f9.shp"))
+```
+
+Land use
+
+```{r}
+library(here)
+sf_landuse <- st_read(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Land Use/geo_export_bfa75090-fc16-491b-939a-36adb7e3dbdf.shp"))
+```
+
+
 
 Parcel data
 
@@ -260,6 +275,13 @@ Export `.SHP` for ArcOnline hosting
 Calls service - need address locator
 
 ```{r}
-sf_calls <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Police_Department_Calls_for_Service.csv")
+sf_pdcalls <- st_read("~/Clark/RA-ing/SummerInstitute/USF/localdrive/sf_pdcalls.shp")
+```
+
+Police department incident report
+```{r}
+library(here)
+library(sp)
+sf_incident <- st_read(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Police Department Incident Reports_ 2018 to Present/geo_export_4f55bd45-1b85-4d17-955a-73a401af9732.shp"))
 ```
 
