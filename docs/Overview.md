@@ -1,18 +1,6 @@
 # USF Data overview
 
 
-The data within the package is based 
-on the selected test case study cities:
-
-
-- [Baltimore, MD](https://github.com/agroimpacts/USF/blob/main/docs/MORE.md)
-- Chicago, IL
-- [NYC, NY](https://github.com/agroimpacts/USF/blob/main/docs/NYC.md)
-- [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
-- [Detroit, MI](https://github.com/agroimpacts/USF/blob/main/docs/DT.md)
-- Kansas City, MO
-
-
 ## <ins> Open Source Databases </ins>
 
 
