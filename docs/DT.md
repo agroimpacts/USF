@@ -7,6 +7,8 @@
 - `rmsdata`: Reported criminal offenses
 - `dt_parcels`: Parcel (includes assessor's data)
 - `pgll`: Project Green Light (cctv)
+- `dt_pdbudget`: PD Budget data for each Fiscal Year from 2007 to 2021
+- `dt_staff`: PD staffing per Precint per Fiscal Year from 2010 to 2021
 
 
 ## <ins> Dropbox data </ins>

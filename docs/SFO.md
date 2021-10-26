@@ -15,7 +15,7 @@
 - `sf_pdcalls`: Calls for service to Police Department
 - `sf_incidents`: Police Department incident report from 2018 to present
 - `CopMonitor`: Police misconduct database
-- `sf_pdbudget`: SFPC Budget data for each Fiscal Year from 2007 to 2021
+- `sf_pdbudget`: SFPD Budget data for each Fiscal Year from 2007 to 2021
   SFPD Budget Data pulled from Annual Appropriations Ordinances for each year. They can be found [here](https://openbook.sfgov.org/webreports/search.aspx?searchString=&year=1986&year2=2021&type=CityBudgets&index=0&index2=3&index3=0)
   Columns 4-10 indicate revenue streams. Columns 13-19 indicate department spending.          
 - `sf_pdstaff2007`: Staffing data for SFPD for 2020 and 2007
