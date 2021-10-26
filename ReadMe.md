@@ -52,6 +52,8 @@ For an overview on the data, click [here](https://github.com/agroimpacts/USF/blo
 
   Use data from [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
   
+  and/or [Detroit, MI](https://github.com/agroimpacts/USF/blob/main/docs/DT.md)
+  
   
 - Changes in property valuation versus police activity and/or budgets (linked to #1).
 
