@@ -17,7 +17,7 @@ on selected cities:
 - Baltimore, MD
 - Chicago, IL
 - NYC, NY
-- Bay area, CA 
+- San Francisco, CA 
 - Detroit, MI
 - Kansas City, MO
 
