@@ -71,6 +71,7 @@ All point features with Open Street Map as background.
 `t_wpdata`, `t_encounters`, and `t_mpv_polkill`
 
 ```R
+library(tmap)
 tmap_mode("view")
 tm_shape(ct_wpdata) +
   tm_dots(col = '#1CFBA5')  +
