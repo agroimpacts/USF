@@ -21,6 +21,8 @@ on selected cities:
 - Detroit, MI
 - Kansas City, MO
 
+The data compiled comes from opensource databases. City/State Opendata portals, civil society and community based open source data. For specifics, follow links to each case study.
+
 ## <ins> Installation </ins>
 
 In Rstudio:
