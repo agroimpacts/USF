@@ -38,6 +38,11 @@ Install the USF package
 library(devtools)
 install_github("agroimpacts/USF")
 ```
+To load preloaded data
+```
+data(name-of-dataset)
+```
+
 
 ## <ins> How to use the data </ins>
 

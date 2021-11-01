@@ -285,3 +285,19 @@ library(sp)
 sf_incident <- st_read(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/Police Department Incident Reports_ 2018 to Present/geo_export_4f55bd45-1b85-4d17-955a-73a401af9732.shp"))
 ```
 
+Misconduct
+```{r}
+library(here)
+CopMonitor <- read.csv(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/CopMonitor Public Records.csv"))
+names(CopMonitor)[1] <- "Name"
+
+CopMonitor$Officer.Agency %>% unique()
+```
+
+Police budget
+```{r}
+sf_pdbudget <- read.csv("~/Clark/RA-ing/SummerInstitute/budget/sf_policebudget.csv")
+sf_pdstaff2007 <- read.csv("~/Clark/RA-ing/SummerInstitute/budget/sf_policestaffing2007.csv")
+sf_fedgrants <- read.csv(here("~/Clark/RA-ing/SummerInstitute/GIS/sanfran/sf_fedgrants.csv"))
+```
+
