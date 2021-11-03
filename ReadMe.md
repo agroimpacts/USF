@@ -34,7 +34,9 @@ install.packages("devtools")
 library(devtools)
 ```
 
-Install the USF package
+Install the USF package*
+
+*this package holds a lot of data. It might take between 5 to 10 minutes to load.
 
 ```
 library(devtools)
