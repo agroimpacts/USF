@@ -32,7 +32,7 @@
  Unless specified, all shapefiles are in compressed format (.zip)
  
 - `dd1033_CA`: Department of Defense 1033 Program for California
-- metadata on `sf_pdcalls` and `sf_incident`
+- metadata on `sf_pdcalls`, `sf_incident`, and `sf_parcels`
 
 ## <ins> Sources </ins>
 
