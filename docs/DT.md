@@ -3,8 +3,8 @@
 
 ## <ins> Preloaded data: </ins>
 
-- `dt_complaints`: Citizen complaints Police Misconduct. By Precinct, date and time.
-- `rmsdata`: Reported criminal offenses
+- `dt_complaints`: Citizen complaints Police Misconduct.
+- `rmsdata`: Reported criminal offenses. 
 - `dt_parcels`: Parcel (includes assessor's data)
 - `pgll`: Project Green Light (cctv)
 - `dt_pdbudget`: PD Budget data for each Fiscal Year from 2007 to 2021. Columns 4-10 indicate revenue streams. Columns 13-19 indicate department spending.
