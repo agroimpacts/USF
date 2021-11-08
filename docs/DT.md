@@ -19,7 +19,7 @@
 
 - `dt_911`: 911 calls 
 - `sca.shp`: Scout Car Areas
-- `npo.shp`: Neighborhood Police Officers: 
+- `npo.shp`: Neighborhood Police Officers
 
   
 ## <ins> Sources </ins>
