@@ -30,12 +30,12 @@
   + year 2018
   + year 2017 
 
-- `policedist.shp`
-- `Ward_Precincts.shp`
-- `affordindex_rent.shp`: Affordability Index (rent)
-- `Homeless_shelter.shp`
-- `perc_res_cash.shp`: Percentage of Residential Sales for Cash
-- `more_cctv.shp`: Location of CCTV til 2016
+- `policedist.shp`. Boundary of police districts
+- `Ward_Precincts.shp`. Boundary of Ward Precincts
+- `affordindex_rent.shp`: Affordability Index (rent) by Community Statistical area
+- `Homeless_shelter.shp`. Points of where homeless shelters are located
+- `perc_res_cash.shp`: Percentage of Residential Sales for Cash by Community statistical area
+- `more_cctv.shp`: Location of CCTV till 2016.
 
 
 ## <ins> Sources </ins>
