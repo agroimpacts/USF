@@ -9,8 +9,6 @@
 - `more_zoning`: Zoning map
 - `more_neighbhd`: Baltimore neighborhoods
 - `more_arrests`: Arrests
-- `p1crime`: Part 1 Crime data. It constitutes "crime against persons, such as 
-  homicide, shooting, robbery, aggravated assault, etc., within the City of Baltimore"
 - `fpareas`: Focused Patrol Area (Policing sites drawn from the BPD Crime 
   Reduction Plan 2019)
 - `datzones`: District Action Team Zones (Policing sites drawn from the 
@@ -30,6 +28,8 @@
   + year 2018
   + year 2017 
 
+- `p1crime`: Part 1 Crime data. It constitutes "crime against persons, such as 
+  homicide, shooting, robbery, aggravated assault, etc., within the City of Baltimore"
 - `policedist.shp`. Boundary of police districts
 - `Ward_Precincts.shp`. Boundary of Ward Precincts
 - `affordindex_rent.shp`: Affordability Index (rent) by Community Statistical area
