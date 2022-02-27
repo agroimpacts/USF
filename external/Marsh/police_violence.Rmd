@@ -1,0 +1,46 @@
+---
+title: "Mapping Violence"
+subtitle: "Methodologies for Just Urban Futures: Using Geospatial Tools to Address Police Violence"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: united
+    highlight: tango
+---
+
+
+
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(USF)
+library(tidyverse)
+library(tmap)
+ct_wpdata <- ct_wpdata %>% filter(!id %in% c("4737", "5423", "3859", "2742", "2016", "1742"))
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+tmap_mode("view")
+tm_shape(ct_wpdata, name = "Wash. Post Data") +
+  tm_dots(col = '#1CFBA5')  +
+tm_shape(ct_encounters, name = "Fatal Encounters") +
+  tm_dots(col = '#2F28FA')  +
+tm_shape(ct_mpv_polkill, name = "Mapping Police Violence") +
+  tm_dots(col = '#FF0023')  +
+tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
+         labels = c("Wash. Post Data", "Fatal Encounters", 
+                    "Mapping Police Violence"), title = "Police Shootings Data") +
+tm_basemap(server = "OpenStreetMap", alpha = 0.7)
+```
+
+Sources:
+
+
+- Washington Post Data - police shootings
+https://github.com/washingtonpost/data-police-shootings
+
+- Fatal Encounters
+https://fatalencounters.org/spreadsheets/
+
+- Mapping Police Violence </ins> 
+https://mappingpoliceviolence.org/aboutthedata
