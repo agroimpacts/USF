@@ -47,8 +47,8 @@ To load preloaded data
 data(name-of-dataset)
 ```
 
-
 ## <ins> How to use the data </ins>
+
 
 ### <ins>  On police violence </ins>
 
@@ -90,3 +90,5 @@ Database information in Excel spreadsheet format [link](https://github.com/agroi
 Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
 
 Access [slides](https://www.dropbox.com/s/a8vpnjvutps6vx1/Test_casestudies_7.23.21.pptx?dl=0) on case studies from 07/23/2021
+
+Access slides on GEOG246346 for Fall 2021 [here](https://github.com/agroimpacts/USF/blob/main/external/USF%20class%20projects_23.01.22.pdf)
