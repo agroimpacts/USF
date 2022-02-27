@@ -57,6 +57,7 @@ For an overview on the data, click [here](https://github.com/agroimpacts/USF/blo
 
 ### <ins> GEOG246346 class projects: </ins>
 
+
 - Mapping the sources/destinations/flows of budget revenues for police departments, from federal/state/municipal sources.
 
   Use data from [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
@@ -81,7 +82,11 @@ For an overview on the data, click [here](https://github.com/agroimpacts/USF/blo
 
 
 - Mapping #blacklivesmatter social media
-  Could potentially be focused on the selected cities or broader US analysis
+  Could potentially be focused on the selected cities or broader US analysis.
+  
+  
+_Access slides on GEOG246346 for Fall 2021 [here](https://github.com/agroimpacts/USF/blob/main/external/USF%20class%20projects.pdf)_
+
 
 ## <ins> More information </ins>
 
@@ -91,4 +96,4 @@ Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6q
 
 Access [slides](https://www.dropbox.com/s/a8vpnjvutps6vx1/Test_casestudies_7.23.21.pptx?dl=0) on case studies from 07/23/2021
 
-Access slides on GEOG246346 for Fall 2021 [here](https://github.com/agroimpacts/USF/blob/main/external/USF%20class%20projects_23.01.22.pdf)
+
