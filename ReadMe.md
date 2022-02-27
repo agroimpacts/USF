@@ -44,6 +44,7 @@ install_github("agroimpacts/USF")
 ```
 To load preloaded data
 ```
+library(USF)
 data(name-of-dataset)
 ```
 
