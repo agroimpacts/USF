@@ -21,7 +21,7 @@ on selected cities:
 - Detroit, MI
 - Kansas City, MO
 
-The data compiled comes from opensource databases. City/State Opendata portals, civil society and community based open source data. For specifics, follow links to each case study.
+The data compiled comes from open source databases. City/State Open data portals, civil society and community based open source data. For specifics, follow links to each case study.
 
 ## <ins> Installation </ins>
 
@@ -36,7 +36,7 @@ library(devtools)
 
 Install the USF package*
 
-*this package holds a lot of data. It might take between 5 to 10 minutes to load.
+_*this package holds a lot of data. It might take between 5 to 10 minutes to load depending on your internet connection._
 
 ```
 library(devtools)
@@ -84,6 +84,8 @@ For an overview on the data, click [here](https://github.com/agroimpacts/USF/blo
   Could potentially be focused on the selected cities or broader US analysis
 
 ## <ins> More information </ins>
+
+Database information in Excel spreadsheet format [link](https://github.com/agroimpacts/USF/blob/main/docs/Datasets_info.xls)
 
 Access and download `.Rda` data from [Dropbox](https://www.dropbox.com/sh/birb6qtoc3duexc/AACzt3VVIgXrIxw6LWKDV-FLa?dl=0)
 
