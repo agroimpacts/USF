@@ -35,7 +35,7 @@
 - metadata on `sf_pdcalls`, `sf_incident`, and `sf_parcels`
 - metadata on `ptaxdata_*`
 
-## External links
+## <ins> External links </ins>
 
 - Historic crime data from 2003 to 2018 [here](https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-Historical-2003/tmnf-yvry)
 
