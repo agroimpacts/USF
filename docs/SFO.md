@@ -13,7 +13,7 @@
   tax year.
 - `sf_pdistricts`: Current Police Districts
 - `sf_pdcalls`: Calls for service to Police Department
-- `sf_incident`: Police Department incident report from 2018 to present
+- `sf_incident`: Police Department incident report from 2018 to present (crime data)
 - `CopMonitor`: Police misconduct database
 - `sf_pdbudget`: SFPD Budget data for each Fiscal Year from 2007 to 2021
   SFPD Budget Data pulled from Annual Appropriations Ordinances for each year. They can be found [here](https://openbook.sfgov.org/webreports/search.aspx?searchString=&year=1986&year2=2021&type=CityBudgets&index=0&index2=3&index3=0)
@@ -34,6 +34,12 @@
 - `dd1033_CA`: Department of Defense 1033 Program for California
 - metadata on `sf_pdcalls`, `sf_incident`, and `sf_parcels`
 - metadata on `ptaxdata_*`
+
+## External links
+
+- Historic crime data from 2003 to 2018 [here](https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-Historical-2003/tmnf-yvry)
+
+- Historic land use data from 2007 to 2018 [here](https://data.sfgov.org/Housing-and-Buildings/Assessor-Historical-Secured-Property-Tax-Rolls/wv5m-vpq2)
 
 ## <ins> Sources </ins>
 
