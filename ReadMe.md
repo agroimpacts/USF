@@ -14,11 +14,11 @@ The data within the package is based
 on selected cities:
 
 
-- Baltimore, MD
+- [Baltimore, MD](https://github.com/agroimpacts/USF/blob/main/docs/MORE.md)
 - Chicago, IL
-- NYC, NY
-- San Francisco, CA 
-- Detroit, MI
+- [NYC, NY](https://github.com/agroimpacts/USF/blob/main/docs/NYC.md)
+- [San Francisco, CA](https://github.com/agroimpacts/USF/blob/main/docs/SFO.md)
+- [Detroit, MI](https://github.com/agroimpacts/USF/blob/main/docs/DT.md)
 - Kansas City, MO
 
 The data compiled comes from open source databases. City/State Open data portals, civil society and community based open source data. For specifics, follow links to each case study.
