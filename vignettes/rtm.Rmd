@@ -183,7 +183,7 @@ heatmap07$DayFormatText <- factor(heatmap07$DayFormatText, # Reorder factor leve
 
 ```{r, out.width = "100%", echo=FALSE, fig.align='center'}
 options(knitr.graphics.error = FALSE)
-knitr::include_graphics("figures/heatmap07.png")
+knitr::include_graphics("figures/heatmap07bk_bw.png")
 ```
 
 Add colour to reveal heatmap 
