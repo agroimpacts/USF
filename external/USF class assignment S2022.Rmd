@@ -1,0 +1,30 @@
+---
+title: "S2022 Assignment"
+author: "USF team"
+date: "4/5/2022"
+output: html_document
+---
+
+## Identifying potential risky locations for San Francisco property crime, 
+for the years 2007 and 2019.
+
+The `USF` package has information on historic crime and land use data for San Francisco. 
+This assignment would clean up the dataset, and
+create a variable for property crime (as defined by to the [National Institute of Justice](https://nij.ojp.gov/topics/crime/property-crimes)) for both years. 
+With that information, you should identify the types of land use that are most risky 
+(use fields `property_class_code_definition` for specifics on land use and 
+`use_definition` to group by categories). A socioeconomic analysis (census income, 
+population data) that goes along with the analysis would add 
+context to the areas that appear to be "risky".
+
+
+
+## Temporal analysis of crime for San Francisco, years 2007 and 2019
+
+With the `USF` crime data, this project would 
+identifying which areas of San Francisco are riskier at what times of the day/season. 
+How is 2007 temporal distribution of crime different from 2019?
+It could be for property crime or general crime. Perhaps that could be analyzed based on police districts.
+A socioeconomic analysis (census income, 
+population data) that goes with the temporal analysis would add 
+context to the areas that appear to be "risky".
