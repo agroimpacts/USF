@@ -7,7 +7,7 @@
 
 - `nyc_complaints`: Complaints made about NYPD misconduct
   For information on lawsuits by precinct, go [here](https://www.capstat.nyc/commands/#10/40.7618/-73.5686)
-- `nypd_complaints`: Complaints made to NYPD
+- `nypd_complaints`: Crime records for 2020 NYPD
 - `nypd_servicecalls`: 311 calls to date, 2021.
 
 
