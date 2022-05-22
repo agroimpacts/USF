@@ -131,22 +131,43 @@ Once I figured out how to work through the software, the second half of the seme
 + 1.How to spatialize the temporal heatmaps?
 
 
+You can find examples of heatmaps in the Rmd. To spatialize them I used basically a kernel density model and created a series of animations.
+
+
+An early version of those animations are in the Hauntings.Rmd. The most updated ones are in the update_050522.Rmd file. This file also gives you a summery of my work this later part of the semester.
+
+
 + 2.Think through data that might help us answer "what prompts the police surveil some places more the others?"
+
+
+You can get more information on this question [here](https://github.com/agroimpacts/USF/blob/main/external/USF_pdm_geog247_20.04.pdf). I was invited to present on our project in Mike Cecil's geog247 stats class. These are the notes and slides on that.
 
 
 + 3.Is there a way to link "risky locations" with urban development projects (capital investments, signs of gentrification, etc)?
 
+
 To answer this question we used Williamnsburg and Park Slope and examples, use "risky factors" to track changes in  land use/development sites, etc. You'll find this information in the focused_exploration.Rmd.
+
 
 An issue with this had to do with which boundaries to use. which boundaries make sense. You can see this work in the boundaries.Rmd file.
 
 
-
-- Create our own crime database.
-  + Figure out how informality is coded by the police. 
-  + Trace how "everyday risk" is created.
+4. What should we consider if we want to create our own crime database?
 
 
+This question has to do with unpacking how informality is coded by the police in order to track how "everyday risk" is created.
 
-- Go back to the main question: How to map patrol density?
-  + stop and frisk data
+
+Also, to move away from general crime (aka assault), most of our analysis has been using property crime. See Rmd file.
+
+
+In exploring the property crime data for the different cities is that I came across a perfect example of incomplete data, see Rmd. The case is Detroit. Read Rmd for more details.
+
+
+5. Go back to the main question: How to map patrol density?
+
+
+Right now our point of entry is using Stop and Frisk data. You will find this in the density.Rmd.
+
+
+Using the temporal heatmaps we've been thinking on police routine as well. You'll find that in the Rmd with the same name.
