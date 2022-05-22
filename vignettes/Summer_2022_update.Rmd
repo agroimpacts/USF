@@ -1,0 +1,152 @@
+---
+title: "Timeline on USF"
+author: "Pilar Delpino Marimon"
+date: "5/23/2022"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    theme: cerulean
+editor_options: 
+  chunk_output_type: console
+---
+
+This document tracks the different data/vignettes created between Summer 2021, Fall 2021 and Spring 2022.
+
+Each vignette addresses a perticular prompt or task.
+
+
+## Github repo
+
+
+This repo acts like a clearinghouse of all the data processed for the USF project.
+
++ The `data` folder holds data created for Lyndon's Fall 2021/Spring 2022 Geospatial Analysis using R class.
+
+
++ The `data-raw` folder holds the scripts that created the `data` items.
+
+
++ The `external` folder holds the materials created for RA update meetings, presentations, etc.
+
+
++ The `docs` holds the .md files for the Repo.
+
+
++ The `vignettes` folder holds explanatory/didactic Rmd files created for the institute. This folder needs to be updated with the files sitting in my local drive.
+
+
+
+## 2021 City data prep
+
+
+For summer 2021 I was working on our case studies, gettin as much data as possible for our six cities. 
+
+
+- Baltimore, MD
+- Chicago, IL
+- NYC, NY
+- Bay area, CA 
+- Detroit, MI
+- Kansas City, MO
+
+
+Our first step was to look for the police shooting information. The following is an interactive map we created. We are not using this, but was the first carto product created for the project.
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(USF)
+library(tidyverse)
+library(tmap)
+ct_wpdata <- ct_wpdata %>% filter(!id %in% c("4737", "5423", "3859", "2742", "2016", "1742"))
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+tmap_mode("view")
+tm_shape(ct_wpdata, name = "Wash. Post Data") +
+  tm_dots(col = '#1CFBA5')  +
+tm_shape(ct_encounters, name = "Fatal Encounters") +
+  tm_dots(col = '#2F28FA')  +
+tm_shape(ct_mpv_polkill, name = "Mapping Police Violence") +
+  tm_dots(col = '#FF0023')  +
+tm_add_legend(col = c("#1CFBA5", "#2F28FA", "#FF0023"), 
+         labels = c("Wash. Post Data", "Fatal Encounters", 
+                    "Mapping Police Violence"), title = "Police Shootings Data") +
+tm_basemap(server = "OpenStreetMap", alpha = 0.7)
+```
+
+
+Each city has a working Rmd file that I used to work through the different data. Some Rmds are more developed than others. The data held in the `data` folder holds the processed data collected during that phase.
+
+
+These are some very raw ArcOnline maps I created based on that data. We are not working with these, but to give you an idea of the extension of the data.
+
+
++ [San Francisco](https://clarku.maps.arcgis.com/apps/webappviewer/index.html?id=50e15b3fbf9d4523bc775a6d702b366f)
+ 
+ 
++ [New York City](https://clarku.maps.arcgis.com/apps/webappviewer/index.html?id=346521fbfab547ffa743f071eacd1e5c)
+
+ 
++ [Kansas City, MO](https://clarku.maps.arcgis.com/apps/webappviewer/index.html?id=d5e1e0a9474a4e3c8de4404b8bc842c2)
+
+ 
++ [Chicago](https://clarku.maps.arcgis.com/apps/webappviewer/index.html?id=0b0224ef51f9470ca1b08e4b865e1d36)
+
+ 
++ [Detroit](https://clarku.maps.arcgis.com/apps/webappviewer/index.html?id=3876ef2c2fad4935b8a8fc5f7e51aaf1)
+
+
+
+## 2021 Fall R class case studies
+
+I think Asha already shared the information, but you can find a copy of the descriptive PowerPoint in the `external` folder: [follow this link](https://github.com/agroimpacts/USF/blob/main/external/USF%20class%20projects_23.01.22.pdf).
+
+
+Based on the case studies, I created a Detroit crime data [map](https://clarku.maps.arcgis.com/apps/webappviewer/index.html?id=51fea3f502314a838e388b68af1ade9f) for one of Asha's presentation.
+
+
+
+## 2022 Spring RA
+
+
+Part of the inovation grant, Asha and Lyndon purchased a license for the [Risk Terrain Model](https://www.riskterrainmodeling.com/resources.html) software.
+
+
+The first half of the semester was to figure out how the RTM software works. The steps and output are in the rtm.Rmd file attached. To operationalize this work, we decided to focus on Brooklyn, NYC for 2007. Why this year? We're using crisis as a temporal prompt. Key years: 2001, 2007, 2011/2, 2019.
+
+
+Inside the rtm.Rmd file you'll see there are three main inputs and outputs:
+
++ a risk terrain analysis
+
+
++ a list of risky locations
+
+
++ a temporal heatmap matrix
+
+
+Once I figured out how to work through the software, the second half of the semester was framed by these guiding questions:
+
+
++ 1.How to spatialize the temporal heatmaps?
+
+
++ 2.Think through data that might help us answer "what prompts the police surveil some places more the others?"
+
+
++ 3.Is there a way to link "risky locations" with urban development projects (capital investments, signs of gentrification, etc)?
+
+To answer this question we used Williamnsburg and Park Slope and examples, use "risky factors" to track changes in  land use/development sites, etc. You'll find this information in the focused_exploration.Rmd.
+
+An issue with this had to do with which boundaries to use. which boundaries make sense. You can see this work in the boundaries.Rmd file.
+
+
+
+- Create our own crime database.
+  + Figure out how informality is coded by the police. 
+  + Trace how "everyday risk" is created.
+
+
+
+- Go back to the main question: How to map patrol density?
+  + stop and frisk data

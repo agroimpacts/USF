@@ -1,0 +1,27 @@
+---
+title: "Index/Roadmap"
+author: "Pilar Delpino Marimon"
+date: "`r format(Sys.time(), '%B %Y')`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: cerulean
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+# May 4th
+
+
+Guiding questions:
+
+1. Can we see risk level change over time? How does this relate to neighborhood change?
+
+
+2. Can we use this Risk Terrain Model as a proxy for policing/police presence?
+
+
+3. How does real-estate speculation relate to new terrains of risk?
