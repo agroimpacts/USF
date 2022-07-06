@@ -2,8 +2,14 @@
 # Source 1. Basic Shiny language: https://www.youtube.com/watch?v=41jmGq7ALMY&ab_channel=Appsilon
 # Source 2. Maps and Shiny: https://www.youtube.com/watch?v=eIpiL6y1oQQ&ab_channel=RockEDUScienceOutreach
 
-# Preparation: have all maps created in advance. These will go in the server section.
+# Set up
 # create new directory for app
+# have all maps created in advance. These will go in the server section.
+# create leaflet maps of things we need to answer the question on housing justice
+
+# data needs
+# land use - For 2007: assessed value of land + lu_codes. 'bldg_desc_sp'. Edit
+# to include parcel information.
 
 # Skeleton
 library(shiny)
