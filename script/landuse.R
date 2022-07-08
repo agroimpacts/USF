@@ -85,7 +85,7 @@ library(leaflet)
 #   addProviderTiles(providers$CartoDB.Positron) %>%
 #   addLegend(values = ~AssessLand2007, pal = qpal,title = "Assessed Land Value, 2007")
 
-q <- parcels %>% filter(Name == "Williamsburg")
+q <- parcels %>% filter(Hood == "Williamsburg")
 # quantile breaks
 #install.packages("classInt")
 library(classInt)
