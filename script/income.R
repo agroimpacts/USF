@@ -25,7 +25,10 @@ bk_2009 %>%
 st_crs(bk_2009)
 st_crs(parcels)
 bk_2009 <- st_transform(bk_2009, crs = 4326)
-parcels <- st_join(bk_2009, nyc_boundaries, left = TRUE)
+parcels <- st_join(bk_2009, nyc_boundaries, left = TRUE)%>%
+  filter(!estimate %in% NA)
+saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")
+
 #saveRDS(bk_2009, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/income_2009.RDS")
 
 

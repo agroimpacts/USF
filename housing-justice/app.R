@@ -71,6 +71,7 @@ server <- function(input, output) {
             return(w)
         })
 
+
     library(classInt)
     breaks_qt <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
     br <- breaks_qt$brks
@@ -86,7 +87,6 @@ server <- function(input, output) {
                     fillOpacity = 6, fillColor = ~qpal(neighborhood()$AssessLand2007),
                     popup = paste("Value: ", neighborhood()$AssessLand2007, "<br>"),
         ) %>%
-        addProviderTiles(providers$CartoDB.Positron) %>%
         addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
                   labels = paste0("up to ", format(breaks_qt$brks[-1], digits = 2)),
                   title = "Assessed Land Value, 2007"
@@ -123,20 +123,20 @@ server <- function(input, output) {
 
     output$risk <- renderLeaflet({
 
-        neighborhood <- reactive({ # reacts to user input/choice
+        priority <- reactive({ # reacts to user input/choice
             w <- bk_priority %>% filter(Name.y == input$hood) #select(., contains(input$year))#
             return(w)
         })
-        neighborhood() %>%
+
+       priority() %>%
             leaflet() %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(-73.95, 40.7, zoom = 10) %>%
                    addPolygons(stroke = TRUE, fill = TRUE,
                         color= NA, opacity = 5,
                         weight = 7,
-                        fillOpacity = 6, fillColor = neighborhood()$Name.y,
-            ) %>%
-            addProviderTiles(providers$CartoDB.Positron)
+                        fillOpacity = 6, fillColor = priority()$Name.y,
+            )
     })
 
 
