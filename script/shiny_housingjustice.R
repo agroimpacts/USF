@@ -18,26 +18,63 @@
 library(shiny)
 #install.packages("shinydashboard")
 library(shinydashboard)
+library(leaflet)
 
-ui <- dashboardPage(
-  dashboardHeader(title = "Housing Justice, 2007 - test"),
-  dashboardSidebar(), # on the left
-  dashboardBody(
-    box(plotOutput("map_1"), width = 8), # add box to dashboard
-    box(
-      selectInput("features", "Features:",
-                  c("DayFormat", "HourFormat")), width = 4
+ui <- fluidPage(
+
+  # Application title
+  titlePanel("Housing Justice, 2007 - test"),
+
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    sidebarPanel(
+      # sliderInput("bins",
+      #             "Number of bins:",
+      #             min = 1,
+      #             max = 50,
+      #             value = 30),
+
+    ),
+
+    # Specifies what to put in the main panel
+    mainPanel(
+      leafletOutput("map")  # Put one line of code here
     )
   )
 )
 
 server <- function(input, output){
-  output$map_1 <- renderPlot({
-    ggplot() +
-      geom_point(data = heatmap07, aes(x = long, y = lat), alpha = .05) # plot function. if statit
-    # ggplot() +
-    #   geom_point(data = heatmap07[[input$Features]], aes(x = long, y = lat), alpha = .05) # plot function. interactive
-    })
+# output$distPlot <- renderPlot({
+#    # generate bins based on input$bins from ui.R
+#    x    <- faithful[, 2]
+#    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+#
+#    # draw the histogram with the specified number of bins
+#    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+# })
+
+output$map <- renderLeaflet({
+  # Put three lines of leaflet code here
+  qpal <-  colorBin("Reds", parcels$AssessLand2007, bins = 5)
+    leaflet(parcels) %>%
+    addPolygons(stroke = TRUE, opacity = 1, fillOpacity = 0.5, smoothFactor = 0.5,
+                color= NA, fillColor = ~qpal(AssessLand2007),weight = 1) %>%
+    addLegend(values = ~AssessLand2007, pal = qpal,title = "Assessed Land Value, 2007")
+})
 }
+
+# server <- function(input, output){
+#   output$map_1 <- renderTmap({
+#     tmap_mode("view")
+#     tm_shape(brooklyn) +
+#       tm_polygons(col = NA)  +
+#       tm_shape(parcels) +
+#       tm_polygons(col = "AssessLand2007", n = 5)  +
+#       tm_layout(legend.outside = TRUE) +
+#       tm_basemap(server = "OpenStreetMap", alpha = 0.7)
+#   })
+# }
+
+
 
 shinyApp(ui, server)
