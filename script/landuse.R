@@ -54,7 +54,9 @@ parcels <- st_join(parcels, brooklyn_neigh, left = TRUE)
 # be specified in latitude and longitude using WGS 84 (a.k.a. EPSG:4326)
 parcels <- st_transform(parcels, crs = 4326)
 st_crs(parcels)
-names(parcels)[16] <- "Hood"
+colnames(parcels)
+names(parcels)[10] <- "Hood"
+names(parcels)[16] <- "Tract"
 saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")
 # library(tmap)
 # tmap_mode("view")

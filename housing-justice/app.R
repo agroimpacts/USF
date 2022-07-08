@@ -42,7 +42,7 @@ ui <- fluidPage(
 
     selectInput("hood",
                 "Select a neighborhood",
-                choices = c("Select", unique(parcels$Name))),
+                choices = c("Select", unique(parcels$Hood))),
 # selectInput("landuse",
 #             "Select a type of land use",
 #                choices = c("Select", unique(parcels$DECODES2007)))
