@@ -59,8 +59,3 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
             title = "Median Household Income, 2009"
   )
 
-
-
-
-
-saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")
