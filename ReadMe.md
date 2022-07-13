@@ -51,6 +51,18 @@ data(name-of-dataset)
 ## <ins> How to use the data </ins>
 
 
+### <ins> For 2022 Summer Institute </ins>
+
+The Dashboards developed for the Summer Institute have their own folder: `housing-justice` and `risk`.
+
+To run the dashboard from Rstudio you must clone the `USF` repository into your computer with this link:
+
+`https://github.com/agroimpacts/USF.git`
+
+browse through the pertinent folder, and then run the `app.R` script in Rstudio.
+
+
+
 ### <ins>  On police violence </ins>
 
 For an overview on the data, click [here](https://github.com/agroimpacts/USF/blob/main/docs/Overview.md)
