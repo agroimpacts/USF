@@ -115,3 +115,21 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
 )
 
 #saveWidget(map_interactive, "bk_assessland_2007_map.html")
+
+
+
+factpal <- colorFactor(topo.colors(11), parcels$DECODES2007)
+mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
+  addPolygons(stroke = TRUE, fill = TRUE,
+              color= NA, opacity = 5,
+              weight = 7,
+              fillOpacity = 6, fillColor = factpal(q$DECODES2007),
+              popup = paste("Use: ", q$DECODES2007, "<br>")
+  ) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addLegend(values = values(q$DECODES2007), colors = factpal(q$DECODES2007),
+            # labFormat = function(type, cuts, p) {
+            #   n = length(cuts)
+            #   p = paste0(round(p * 100), '%')
+            #   cuts = paste0(formatC(cuts[-n]), " - ", formatC(cuts[-1]))},
+            labels = q$DECODES2007)
