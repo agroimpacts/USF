@@ -43,7 +43,7 @@ mapq_interactive <- leaflet(bk_priority) %>% # openmaps background not showing u
               # set the stroke width in pixels
               weight = 7,
               # set the fill opacity
-              fillOpacity = 6, fillColor = bk_priority,
+              fillOpacity = 6, fillColor = "Reds",
               #popup = paste("Value: ", q$estimate, "<br>"),
               # highlightOptions = highlightOptions(color = "black",
               #                                     weight = 2,

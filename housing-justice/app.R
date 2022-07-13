@@ -20,12 +20,9 @@ library(sf)
 setwd(here("housing-justice/"))
 parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
-#income_2009 <- readRDS("income_2009.RDS")
 
 ui <- fluidPage(
-    # Application title
     titlePanel("Housing Justice, 2007 - test"),
-    # Sidebar with data input
     sidebarLayout(
         sidebarPanel(
         h5("Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -44,104 +41,149 @@ ui <- fluidPage(
 
     selectInput("hood",
                 "Select a neighborhood",
-                choices = c("Select", unique(parcels$Hood))),
-# selectInput("landuse",
-#             "Select a type of land use",
-#                choices = c("Select", unique(parcels$DECODES2007)))
-),
-                    # Specifies what to put in the main panel
-        mainPanel(
-            tabsetPanel(
-            tabPanel("Land Value", leafletOutput("landvalue")),
-            tabPanel("Household income", leafletOutput("income")),
-            tabPanel("Policing/police violence", leafletOutput("risk"))
+                choices = c("Select", unique(parcels$Hood)))
+        ),
+    mainPanel(leafletOutput("map", height = "600px", width = "700px"))
         )
-    )
 )
-)
+
+
+
 
 server <- function(input, output) {
 
-
-
-    output$landvalue <- renderLeaflet({
-
-        neighborhood <- reactive({ # reacts to user input/choice
-            w <- parcels %>% filter(Hood == input$hood) #select(., contains(input$year))#
-            return(w)
+    neighborhood <- reactive({ # reacts to user input/choice
+        w <- parcels %>% filter(Hood == input$hood) #select(., contains(input$year))#
+        return(w)
         })
 
-
-    library(classInt)
-    breaks_qt <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
-    br <- breaks_qt$brks
-    qpal <-  colorQuantile("Reds", parcels$AssessLand2007, n = 5)
-    neighborhood() %>%
- #       filter(DECODES2007 == input$landuse)%>%
-        leaflet() %>%
-        addProviderTiles(providers$CartoDB.Positron) %>%
-        setView(-73.95, 40.7, zoom = 10) %>%
-        addPolygons(stroke = TRUE, fill = TRUE,
-                    color= NA, opacity = 5,
-                    weight = 7,
-                    fillOpacity = 6, fillColor = ~qpal(neighborhood()$AssessLand2007),
-                    popup = paste("Value: ", neighborhood()$AssessLand2007, "<br>"),
-        ) %>%
-        addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
-                  labels = paste0("up to ", format(breaks_qt$brks[-1], digits = 2)),
-                  title = "Assessed Land Value, 2007"
-        )
+    priority <- reactive({ # reacts to user input/choice
+        w <- bk_priority %>% filter(Name.y == input$hood) #select(., contains(input$year))#
+        return(w)
     })
 
-    output$income <- renderLeaflet({
-
-        neighborhood <- reactive({ # reacts to user input/choice
-            w <- parcels %>% filter(Hood == input$hood) #select(., contains(input$year))#
-            return(w)
-        })
-
-    library(classInt)
-    breaks_qt <- classIntervals(parcels$estimate, n = 7, style = "quantile")
-    br <- breaks_qt$brks
-    qpal <-  colorQuantile("Greens", parcels$estimate, n = 7)
-    neighborhood() %>%
-    #    filter(DECODES2007 == input$landuse)%>%
-        leaflet() %>%
-        addProviderTiles(providers$CartoDB.Positron) %>%
-        setView(-73.95, 40.7, zoom = 10) %>%
-        addPolygons(stroke = TRUE, fill = TRUE,
-                    color= NA, opacity = 5,
-                    weight = 7,
-                    fillOpacity = 6, fillColor = ~qpal(neighborhood()$estimate),
-                    popup = paste("Value: ", neighborhood()$estimate, "<br>"),
-        ) %>%
-        addLegend(values = ~estimate, colors = brewer.pal(7, "Greens"),
-                  labels = paste0("up to ", format(breaks_qt$brks[-1], digits = 2)),
-                  title = "Median Household Income, 2009"
-        )
+    xy <- reactive({
+        w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$hood)))
+        return(w)
     })
 
-    output$risk <- renderLeaflet({
+    library(classInt)
 
-        priority <- reactive({ # reacts to user input/choice
-            w <- bk_priority %>% filter(Name.y == input$hood) #select(., contains(input$year))#
-            return(w)
-        })
+    breaks_qt1 <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
+    br <- breaks_qt1$brks
+    rpal <-  colorQuantile("Reds", parcels$AssessLand2007, n = 5)
+    breaks_qt2 <- classIntervals(parcels$estimate, n = 7, style = "quantile")
+    br <- breaks_qt2$brks
+    gpal <-  colorQuantile("Greens", parcels$estimate, n = 7)
 
-       priority() %>%
-            leaflet() %>%
+
+    output$map <- renderLeaflet({
+
+
+        leaflet() %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
-            setView(-73.95, 40.7, zoom = 10) %>%
-                   addPolygons(stroke = TRUE, fill = TRUE,
+            setView(-73.93, 40.68, zoom = 11)  %>%
+            #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+            addLayersControl(position = "bottomleft",
+                overlayGroups = c("Land Value", "Household Income",
+                                  "Risky locations", "Land Use"),
+                options = layersControlOptions(collapsed = FALSE)
+            ) %>%
+            addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
+                      labels = paste0("up to ", format(breaks_qt1$brks[-1], digits = 2)),
+                      title = "Assessed Land Value, 2007", opacity = 0.7
+            ) %>%
+            addLegend(values = ~estimate, colors = brewer.pal(7, "Greens"),
+                      labels = paste0("up to $", format(breaks_qt2$brks[-1], digits = 2)),
+                      title = "Median Household Income, 2009", opacity = 0.7
+            )
+        })
+
+
+    observe({
+
+        leafletProxy("map", data = neighborhood()) %>%
+           # setView(xy['X'], xy['Y'], zoom = 10) %>%
+           # setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+            addPolygons(group = "Land Value",
+                        stroke = TRUE, fill = TRUE,
                         color= NA, opacity = 5,
                         weight = 7,
-                        fillOpacity = 6, fillColor = priority()$Name.y,
+                        fillOpacity = 6, fillColor = ~rpal(neighborhood()$AssessLand2007),
+                        popup = paste("Value: ", neighborhood()$AssessLand2007, "<br>")
             )
+        })
+
+
+    observe({
+
+        leafletProxy("map", data = neighborhood()) %>%
+           # setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+                    addPolygons(group = "Household Income",
+                    stroke = TRUE, fill = TRUE,
+                    color= NA, opacity = 5,
+                    weight = 7,
+                    fillOpacity = 6, fillColor = ~gpal(neighborhood()$estimate),
+                    popup = paste("Value: ", neighborhood()$estimate, "<br>")
+        )
     })
 
+
+    observe({
+
+        leafletProxy("map", data = priority()) %>%
+            addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
+                        opacity = 5,
+                        weight = 7,
+                        color = NA,
+                        fillOpacity = 6, fillColor = priority()$Name.y)
+    })
+
+
+    observe({
+
+        factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
+
+        leafletProxy("map", data = neighborhood()) %>%
+            addPolygons(group = "Land Use",
+                        stroke = TRUE, fill = TRUE,
+                        color= NA, opacity = 5,
+                        weight = 7,
+                        fillOpacity = 6, fillColor = factpal(neighborhood()$DECODES2007),
+                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>")) %>%
+            addLegend(values = ~DECODES2007,
+                      pal = factpal,
+                      #labels = group_by(neighborhood()$DECODES2007),
+                      title = "Land Use types", opacity = 0.7)
+    })
+
+    output$map2 <- renderLeaflet({
+
+        factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
+
+        neighborhood() %>%
+        leaflet() %>%
+            addProviderTiles(providers$CartoDB.Positron) %>%
+            setView(-73.95, 40.7, zoom = 10) %>%
+            addPolygons(stroke = TRUE, fill = TRUE,
+                        color= NA, opacity = 5,
+                        weight = 7,
+                        fillOpacity = 6, fillColor = factpal(neighborhood()$DECODES2007),
+                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>")) %>%
+            addLegend(values = ~neighborhood()$DECODES2007,
+                      pal = factpal,
+                      #labels = group_by(neighborhood()$DECODES2007),
+                      title = "Land Use types")
+
+
+    })
 
 
 }
+
+
+
+
 
 
 shinyApp(ui = ui, server = server)
