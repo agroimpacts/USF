@@ -62,6 +62,9 @@ To run the dashboard from Rstudio you must clone the `USF` repository into your 
 browse through the pertinent folder, and then run the `app.R` script in Rstudio.
 
 
+For step by step demo on how to clone a repository, follow this [link](https://nceas.github.io/oss-lessons/version-control/4-getting-started-with-git-in-RStudio.html).
+
+
 
 ### <ins>  On police violence </ins>
 
