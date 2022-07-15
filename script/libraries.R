@@ -28,4 +28,5 @@ library(wordcloud2)
 library(htmlwidgets)
 library(leaflet)
 library(classInt)
+library(geojsonsf)
 
