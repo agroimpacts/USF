@@ -1,0 +1,96 @@
+---
+title: "webscrapping tutorial"
+author: "LCarver"
+date: '2022-07-14'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Rvest Library
+
+The rvest library will be used for web-scraping in R. It is one of the tidyverse libraries, and is similar to the the BeautifulSoup library for web-scraping in Python. We will first install and import rvest in the below chunk.
+
+```{r}
+ install.packages("rvest")
+library(rvest)
+```
+
+## Webpage structure
+
+
+Webpages are generally made up of three types of languages: Hypertext Markup Language (HTML), which makes up a webpage's structure and content, Cascasing Style Sheets (CSS), which makes up the style and look of a webpage, and Javascript, which provides different functions and interactive to elements of a webpage. Web-scraping focuses on reading the HTML code of a webpage.
+
+HTML is structured into elements, which consistant of a start and end tag, some optional elements, and contents. There are over 100 types of HTML elements, which you can read more about on [MDN Web Docs reference sheet for HTML elements] (https://developer.mozilla.org/en-US/docs/Web/HTML/Element). 
+
+You can also view the html document of a web-page by right clicking on the web-page and selecting "Inspect", or "View page source" to open the document in a new window.
+
+To start the scraping process, input the url of the webpage to the read_html() function. In this example, we will use a simple wikipedia site. The following code will return an xml_document object that we will use in later steps.
+
+```{r}
+url <- "https://en.wikipedia.org/wiki/Leonardo_da_Vinci"
+html <- read_html(url)
+class(html)
+```
+To identify the elements of our xml document that contain our target information, rvest provides two options: CSS selectors and XPath expressions. We will start with CSS Selectors since they are simpler. CSS Selectors help locate HTML elements by defining patterns for scraping elements. The most common selectors are:
+  * p: selects all <p> elements, which typically include paragraphs of text
+  *.title: selects all elements with the class "title"
+  *p.special: selects all <p> elements with the class "special"
+  *#title: selects the elemen with the id attibute of "title". ID attributes are unique within a documents so this will only ever select one element.
+
+Let's look at a few CSS selectors in the following chunk.
+
+```{r}
+html %>% html_element("h1")
+#> {html_node}
+#> <h1>
+html %>% html_elements("p")
+#> {xml_nodeset (2)}
+#> [1] <p id="first">This is a paragraph</p>
+#> [2] <p class="important">This is an important paragraph</p>
+html %>% html_elements(".important")
+#> {xml_nodeset (1)}
+#> [1] <p class="important">This is an important paragraph</p>
+html %>% html_elements("#first")
+#> {xml_nodeset (1)}
+#> [1] <p id="first">This is a paragraph</p>
+```
+## Extracting data
+
+# Text
+Once you have identified which elements are of importance, you can retrieve the data from them in the form of text contents or an attribute. Let's retrieve the contents under the <p> elements of this page. We'll first set the element we want (p) and then retrieve the text using an html_text fucntion. There are two such functions-- html_text() and html_text2(). html_text() will return raw underlying text while html_text2() will simulate how the text looks in the webpage. We typically want to use html_text2(), but it can be slower than html_text() in some cases.
+
+```{r}
+html %>% 
+  html_elements("p") %>%
+  html_text2()
+```
+#Attributes
+
+Attributes record things like hyperlinks, image sources, alternative text,etc. The two most common attributes, are the href attribute of a elements, which indicates a url, and the src attribute of an img element, which indicates the url for an image. Note that most of the links on this page direct to another location on the same page, such as the citations, or to another page on the wikipedia.org site, so the results of the following code don't look like a standard URL (they drop the en.wikipedia.org portion of the URL).
+
+```{r}
+#Extract Links
+html %>% 
+  html_elements("a") %>% 
+  html_attr("href")
+
+#Extract Image sources
+html %>% 
+  html_elements("img") %>% 
+  html_attr("src")
+
+```
+
+#Tables
+
+Another common way information is presented in html is the table format, which is composed of <table>, <tr> (row), <th> (heading), and <td> (data) elements. We can retrieve data from tables using the html_table() function, which will convert the element into a dataframe in R.
+
+```{r}
+html %>%
+  html_node("table") %>%
+  html_table()
+```
+
