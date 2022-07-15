@@ -50,7 +50,6 @@ data(name-of-dataset)
 
 ## <ins> How to use the data </ins>
 
-jdjdjdjdjdjd
 ### <ins> For 2022 Summer Institute </ins>
 
 The Dashboards developed for the Summer Institute have their own folder: `housing-justice` and `risk`.
