@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 The rvest library will be used for web-scraping in R. It is one of the tidyverse libraries, and is similar to the the BeautifulSoup library for web-scraping in Python. We will first install and import rvest in the below chunk.
 
 ```{r}
- install.packages("rvest")
+install.packages("rvest")
 library(rvest)
 ```
 
