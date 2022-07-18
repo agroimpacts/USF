@@ -6,7 +6,6 @@
 #
 #    http://shiny.rstudio.com/
 #
-install.packages("leaflet")
 library(shiny)
 library(tidyverse)
 library(leaflet)
