@@ -10,196 +10,7 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#install.packages("geojsonsf")
-library(sf)
 ```
-
-*Part 1:  Max Lutz*
-
-*Part 2:  Liam Tobin*
-
-*Part 3:  Mitch Lazarz*
-
-
-## Introduction
-
-In this analysis, the feasibility of detecting police surveillance floodlights using the NASA Black Marble nighttime lights product was assessed.  Detecting floodlights using remote sensing products could provide a new way to quantify police presence in urban studies research.  The overall purpose of this project is to analyze the socioeconomic and social influences of floodlights within New York City.  To do this our project was split into three parts.  First, a proof of concept was developed for the Polo Grounds Towers public housing development in Harlem.  Between August 2015 and March 2016, [341 lights](https://www1.nyc.gov/site/nycha/about/press/pr-2016/polo-grounds-20160310.page) were installed for crime mitigation at the Polo Grounds Towers.  A programmatic method was developed to find nighttime radiance anomalies in a nighttime lights time series. We compared the mean radiance values before, during, and after the installation of these lights.  By detecting these known light installations, the Black Marble product could be used to determine the police presence at nighttime protests. 
-
-The second step was to use the Black Marble nighttime lights product to determine if police surveillance floodlights used during the 2020 Black Lives Matter protests could be detected.  Our initial goal was to create a complete map of the United States showing floodlight locations in relation to BLM protests.  However, due to the scale and unavailability of BLM protest points, this idea would not allow for accurate and meaningful work.  After developing our research plan and assessing the availability of data we landed in New York City as our starting point as nighttime lights data had already been acquired for this city for the proof of concept.  New York City was a hot spot for the 2020 BLM protests within the United States and the spatial locations of protests were documented to extrapolate when studying light distribution.  The nighttime lights during the protests were compared to the same time frame in previous and subsequent years. 
-
-Lastly, we analyzed the influence of floodlight installation to decrease crime in NYC public housing when compared to private housing which does not experience these policies. To do this, we developed a method to sample areas within New York City with and without public housing with a similar structure and population density.  This was done by creating gridded population and gridded building density layers.  The 10-year mean nighttime lights values were compared for areas with and without public housing.  This was done to determine if the areas with public housing are exposed to increased policing through the use of floodlights.
-
-We found that the coarse resolution and patchy coverage of the Black Marble dataset was ineffective in detecting anomalies associated with floodlights in both the proof of concept and during the BLM protests.  However, we did find that areas in NYC with public housing have greater light exposure than areas with a similar population and building structure that do not have public housing.  Upon the completion of our project goals, we had a more complete understanding of the Black Marble product, its limitations, and the influences of nighttime light levels in New York City, particularly, in concerns to our public housing populations. 
-
-
-## Data
-
-#### **1.  NYC Feature Datasets**
-
-Public Housing Development data was acquired from [NYC Open Data](https://data.cityofnewyork.us/Housing-Development/NYCHA-GIS-file/tqnb-xmxw). This polygon dataset is a .geojson of all New York City Housing Authority developments. Additionally, census tracts and building foothills shapefiles are acquired from the same source. Census tract population data was acquired in tabular format from [NYC Planning Population FactFinder](https://popfactfinder.planning.nyc.gov/). The plot below shows the locations of public housing in blue and the Polo Grounds Towers circled in red overlaid on census tracts.
-
-```{r, eval = FALSE}
-# Shapefile of census tracts -- 
-# Projection is NAD83 / New York Long Island (ft US)
-nytract <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//nyct2020.shp")
-
-# This is the crs for NYC for future use
-ny_crs <- st_crs(nytract)
-
-# Geojson of NYC public housing developments 
-nycha <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//nycha.geojson") %>% 
-  st_transform(ny_crs)
-
-# Select Polo Grounds Towers for proof of concept
-polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
-
-# Import population data with common attribute to shapefile, "BoroCT2020"
-ny_pop <- read.csv("C://CLARK//GEOSPAAR//floodlightblm//data//nyct2020_pop.csv")
-
-# Shapefile of NYC building footprints 
-buildings <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//buildings_p.shp") %>% 
-  st_transform(ny_crs)
-```
-```{r, eval = FALSE}
-#Display tracts with public housing in blue, and Polo Grounds in red with circle hightlighting the area
-#install.packages("farver")
-ggplot() +
-  geom_sf(data = nytract, col = alpha("grey9", 0.1), fill = "grey") +
-  geom_sf(data = nycha, aes(fill = 'A'), col = "blue4", 
-          show.legend = "polygon", inherit.aes = F) +
-  geom_sf(data = polo, aes(fill = 'B'), col = NA,
-          show.legend = "polygon", inherit.aes = F) +
-  geom_sf(data = polo %>% st_geometry() %>% st_centroid() %>% st_buffer(2000), 
-          fill = NA, col = 'red4', 
-          show.legend = F, inherit.aes = F) +
-  ggtitle("NYC Public Housing Developments") +
-  scale_fill_manual(values = c("A" = "blue", "B" = "red"), 
-                    labels = c("Public Housing Developments", "Polo Grounds Towers")) +
-  xlab('') + ylab('') +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(),
-        legend.title = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks = element_blank(),
-        legend.position = c(0.22, 0.92)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview2.png")
-```
-
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview.png")
-```
-
-#### **2.  BLM Protest Points**
-
-Further downloading and developing our research after utilizing the NYC GIS database, we used a combination of points from a [web map](https://en.wikipedia.org/wiki/George_Floyd_protests_in_New_York_City) located in a Wikipedia timeline to find BLM protests that occurred in NYC, and a time series of NASA Black Marble data spanning from January 19, 2012, to December 31, 2021, to find the long term mean of nighttime lights in NYC. To deploy our BLM points into RStudio we manually entered the dates, longitude, latitude, and names of each BLM protest into a spreadsheet on Excel. We found the dates of each point through extensive research and assumptions on the timelines of each BLM protest. This process was then replicated to find the nighttime locations of protests, as these are the most relevant protests to our floodlights, we then read in the entire data set and nighttime CSV file to begin our true analysis within RStudio.
-
-```{r, eval = FALSE}
-blm_csv <- read.csv("C://CLARK//GEOSPAAR//floodlightblm//data//blmprotestpts.csv")
-
-s3 <- stack("C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc.grd")
-
-nycha <- geojson_sf("C://CLARK//GEOSPAAR//floodlightblm//data//nycha.geojson")
-
-# Select Polo Grounds Towers for proof of concept
-polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
-
-# Shapefile of census tracts
-nytract <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//nyct2020.shp") %>%
-  st_transform(crs(nycha))
-
-# Read protest points for BLM protests
-blm_csv_night <- read.csv("C://CLARK//GEOSPAAR//floodlightblm//data//blmprotestpts.csv")
-
-# Convert protest points csv to sf
-blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
-
-# Add crs to protest points
-st_crs(blm_pts_night) <- st_crs(nycha)
-```
-
-#### **3.  NASA Black Marble Night Time Lights**
-
-A time series of the NASA Black Marble product was acquired for a time series from January 19, 2012 to December 31, 2021.  Specifically, the VNP46A2 - VIIRS/NPP Gap-Filled Lunar BRDF-Adjusted Nighttime Lights is used.  This product is a daily, 500-meter resolution raster of nocturnal visible light that is corrected for atmospheric conditions and lunar irradiance. Band 3 of this product, the Gap-Filled DNB BRDF-Corrected NTL, will be used in this study. In this band, pixels that are masked due to cloud cover or low data quality are filled with the closest value temporally.  17.5 GB of daily observations were downloaded from [LAADS DAAC](https://ladsweb.modaps.eosdis.nasa.gov/) using command line code provided by LADDS DAAC. The data is in a .h5 datatype which was converted to raster datatype.  The extent of this download is a 10 x 10 degree grid which is cropped to the NYC extent.  The following code block performs this preprocessing to create a manageable raster stack for analysis:
-
-```{r, eval = FALSE}
-# List of .h5 files
-files <- list.files("E://blackmarble", pattern = ".h5", full.names = TRUE)
-
-# Get dates from file names create vector to add to raster stack
-dates <- as.Date(sapply(files, function(x) {substr(x, 26, 32)}), format = "%Y%j")
-
-# Create a list of processed images
-l <- lapply(files, function(i){
-  # Date character
-  d <- substr(i, 26, 32)
-  # Convert .h5 to SpatRaster
-  i_sr <- rast(i)
-  # Select gap-filled band and convert to raster
-  i_rast <- raster(i_sr[[3]])
-  # Set extent
-  extent(i_rast) <- c(-80, -70, 40, 50)
-  # Set crs
-  crs(i_rast) <- "EPSG:4326"
-  # Crop to NYC
-  i_rast_nyc <- crop(i_rast, c(-74.256, -73.699, 40.496, 40.916))
-  # Set NA
-  i_rast_nyc[i_rast_nyc == 65535] <- NA
-  # Rename with date
-  names(i_rast_nyc) <- d
-  return(i_rast_nyc)
-})
-
-# Stack list of raster layers and add date
-s <- setZ(stack(l), dates, "date")
-
-# Export raster stack
-writeRaster(s, "C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd",
-            format = "raster")
-```
-
-The following is a masked visualization of the mean NYC nighttime lights from 2012 to 2022.
-
-```{r, eval = FALSE}
-#install.packages("rgdal")
-library(rgdal)
-# Upload raster stack of nighttime lights
-s <- stack("C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd")
-
-# Calculate the long term mean of nighttime lights, 
-# project to NYC crs, then mask to NYC.
-mean_s <- mean(s, na.rm = TRUE) %>% projectRaster(s, ny_crs)
-mean_sc <- mask(mean_s, nytract)
-
-# Convert raster to dataframe for plotting
-mean_s_df <- as.data.frame(rasterToPoints(mean_sc))
-colnames(mean_s_df) <- c('x', 'y', 'value')
-
-# Plot long term mean of nighttime lights for NYC
-ggplot() + 
-  geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
-  ggtitle("NYC Nighttime Lights mean radiance 2012 - 2022") +
-  scale_fill_viridis(guide = guide_colorbar(title = "nWatts·cm−2·sr−1", 
-                                             ticks = FALSE)) +
-  xlab('') + ylab('') +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks = element_blank(),
-        legend.position = c(0.2, 0.8)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
-```
-
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
-```
-
-## Methods
-
-In undertaking the methods portion of our analysis there were many packages and data sets that needed to be collected. To fully understand nighttime light anomalies, BLM protests/floodlight locations, and public/private housing levels in New York City we needed  visualization packages within RStudio. These visualization packages included `ggplot2` for maps and graphs, `RColorBrewer` and `viridis` for color palettes, and `kableExtra` for table visualization.  The main packages we installed to manage the NYC city, protest location, and public housing vector data were `sf` and `sp`. The `terra` and `raster` packages were used for raster creating and manipulation when working with Black Marble and creating gridded population and building volume rasters.  `terra` was primarily used to convert the Black Marble .h5 files to `SpatRaster` format. `raster` was used for analysis and extraction of the nighttime lights time series.  After extracting night time lights values and working with dataframes, `dplyr`, `tidyr`, and `zoo` were used for data manipulation.  `zoo` allows for the creation of rolling means.  Finally, `ggplot2` were used to visualize the results of our analysis and to create a spatially appropriate examination of our data. Our method for data collection included the use of NYC GIS, specifically, a geojson polygon dataset of all New York City Housing Authority developments. After finding this data we added the area to census tracts and joined them with our New York City population data. Shortly after, we defined this data as a raster with an extent and resolution as mean nighttime lights. These steps were crucial in the development of our public housing analysis and the creation of an interpolated population grid. 
 
 The following packages are needed for our analysis.
 ```{r, eval = FALSE}
@@ -209,7 +20,7 @@ The following packages are needed for our analysis.
 # #install.packages("sf")
 library(geojsonsf) 
 library(sp)
-#library(sf)
+library(sf)
 
 # Libraries for raster data
 # install.packages("terra") # Use to convert .hd format to SpatialRaster
@@ -239,56 +50,240 @@ library(RColorBrewer) # Use for color palettes
 library(viridis) # Use for color palettes
 library(kableExtra) # Use for data table formatting
 ```
+
+## Data
+
+#### **1.  NYC Feature Datasets**
+
+Public Housing Development data was acquired from [NYC Open Data](https://data.cityofnewyork.us/Housing-Development/NYCHA-GIS-file/tqnb-xmxw). This polygon dataset is a .geojson of all New York City Housing Authority developments. Additionally, census tracts and building foothills shapefiles are acquired from the same source. Census tract population data was acquired in tabular format from [NYC Planning Population FactFinder](https://popfactfinder.planning.nyc.gov/). The plot below shows the locations of public housing in blue and the Polo Grounds Towers circled in red overlaid on census tracts.
+
+```{r, eval = FALSE}
+# Shapefile of census tracts -- 
+# Projection is NAD83 / New York Long Island (ft US)
+# data("nytract")
+# nytract <- nytract
+
+nytract <- st_read(here("nyct2020.shp"))
+
+# This is the crs for NYC for future use
+ny_crs <- crs(nytract)
+
+# Geojson of NYC public housing developments 
+# data("nycha")
+# nycha <- nycha %>% 
+#   st_transform(ny_crs)
+
+nycha <- geojson_sf(here("nycha.geojson")) %>% 
+   st_transform(ny_crs)
+
+# Select Polo Grounds Towers for proof of concept
+polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
+
+# Import population data with common attribute to shapefile, "BoroCT2020"
+# data("ny_pop")
+# ny_pop <- ny_pop
+
+ny_pop <- read.csv(here("nyct2020_pop.csv"))
+
+# Shapefile of NYC building footprints 
+# data("buildings")
+# buildings <-  buildings %>% 
+#   st_transform(ny_crs)
+
+buildings <- st_read(here("buildings_p.shp")) %>% st_transform(ny_crs)
+
+```
+
+```{r, eval = FALSE}
+#Display tracts with public housing in blue, and Polo Grounds in red with circle hightlighting the area
+#install.packages("farver")
+ggplot() +
+  geom_sf(data = nytract, col = alpha("grey9", 0.1), fill = "grey") +
+  geom_sf(data = nycha, aes(fill = 'A'), col = "blue4", 
+          show.legend = "polygon", inherit.aes = F) +
+  geom_sf(data = polo, aes(fill = 'B'), col = NA,
+          show.legend = "polygon", inherit.aes = F) +
+  geom_sf(data = polo %>% st_geometry() %>% st_centroid() %>% st_buffer(2000), 
+          fill = NA, col = 'red4', 
+          show.legend = F, inherit.aes = F) +
+  ggtitle("NYC Public Housing Developments") +
+  scale_fill_manual(values = c("A" = "blue", "B" = "red"), 
+                    labels = c("Public Housing Developments", "Polo Grounds Towers")) +
+  xlab('') + ylab('') +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        legend.title = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = c(0.22, 0.92)) 
+ # ggsave("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview2.png")
+```
+
+```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
+#knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview.png")
+```
+
+#### **2.  BLM Protest Points**
+
+
+```{r, eval = FALSE}
+blm_csv <- read.csv(here("blmprotestpts.csv"))
+
+s3 <- stack(here("bm_nyc.grd"))
+
+nycha <- geojson_sf(here("nycha.geojson"))
+
+# Select Polo Grounds Towers for proof of concept
+polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
+
+# Shapefile of census tracts
+nytract <- st_read(here("nyct2020.shp")) %>%
+  st_transform(crs(nycha))
+
+# Read protest points for BLM protests
+blm_csv_night <- read.csv(here("blmprotestpts.csv"))
+
+# Convert protest points csv to sf
+blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
+
+# Add crs to protest points
+st_crs(blm_pts_night) <- st_crs(nycha)
+```
+
+#### **3.  NASA Black Marble Night Time Lights**
+
+```{r, eval = FALSE}
+# # List of .h5 files
+# files <- list.files("E://blackmarble", pattern = ".h5", full.names = TRUE)
+# 
+# # Get dates from file names create vector to add to raster stack
+# dates <- as.Date(sapply(files, function(x) {substr(x, 26, 32)}), format = "%Y%j")
+# 
+# # Create a list of processed images
+# l <- lapply(files, function(i){
+#   # Date character
+#   d <- substr(i, 26, 32)
+#   # Convert .h5 to SpatRaster
+#   i_sr <- rast(i)
+#   # Select gap-filled band and convert to raster
+#   i_rast <- raster(i_sr[[3]])
+#   # Set extent
+#   extent(i_rast) <- c(-80, -70, 40, 50)
+#   # Set crs
+#   crs(i_rast) <- "EPSG:4326"
+#   # Crop to NYC
+#   i_rast_nyc <- crop(i_rast, c(-74.256, -73.699, 40.496, 40.916))
+#   # Set NA
+#   i_rast_nyc[i_rast_nyc == 65535] <- NA
+#   # Rename with date
+#   names(i_rast_nyc) <- d
+#   return(i_rast_nyc)
+# })
+# 
+# # Stack list of raster layers and add date
+# s <- setZ(stack(l), dates, "date")
+# 
+# # Export raster stack
+# writeRaster(s, "C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd",
+#             format = "raster")
+```
+
+The following is a masked visualization of the mean NYC nighttime lights from 2012 to 2022.
+
+```{r, eval = FALSE}
+#install.packages("rgdal")
+library(rgdal)
+# Upload raster stack of nighttime lights
+s <- stack(here("bm_nyc_cen.grd"))
+
+# Calculate the long term mean of nighttime lights, 
+# project to NYC crs, then mask to NYC.
+mean_s <- mean(s, na.rm = TRUE) %>% projectRaster(s, ny_crs)
+mean_sc <- mask(mean_s, nytract)
+
+# Convert raster to dataframe for plotting
+mean_s_df <- as.data.frame(rasterToPoints(mean_sc))
+colnames(mean_s_df) <- c('x', 'y', 'value')
+
+# Plot long term mean of nighttime lights for NYC
+ggplot() + 
+  geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
+  ggtitle("NYC Nighttime Lights mean radiance 2012 - 2022") +
+  scale_fill_viridis(guide = guide_colorbar(title = "nWatts·cm−2·sr−1", 
+                                             ticks = FALSE)) +
+  xlab('') + ylab('') +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = c(0.2, 0.8)) 
+ # ggsave("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
+```
+
+```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
+#knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
+```
+
+## Methods
+
+
 #### **1.  Polo Grounds Towers Proof of Concept**
 
 For this first part of the analysis, the goal was to be able to see if we could detect a known light installation in the New York Housing Authority project Polo Grounds. We found an article published on the nyc.gov website which claimed an installation of 341 new light fixtures at this location occurred between early August 2015 and March 10th, 2016. We first set out to see if we could find an anomaly in the amount of radiance from before and after the light installation. Then we set out to see how the values change over time to see if there are any recurring patterns by doing a rolling 30-day mean due to a large amount of noise in the data. Lastly, in an attempt to dampen the influence of yearly trends, we expanded the mean to quarterly.
 
 ```{r, eval = FALSE}
-# Names of each layer aka dates in format Xyyyyjjj
-names_s <- names(s)
-
-# Taking out the X in the dates
+#Names of each layer aka dates in format Xyyyyjjj
+ names_s <- names(s)
+# taking out the X in the dates
 dates_yj <- as.data.frame(names_s) %>%  lapply(., function(x) {
   gsub("X", "", x)})
-
-# Converting from yyyyjjj to date data format
+#converting from yyyyjjj to date data format
 dates <- lapply(dates_yj, function(x) {
   as.Date(x, format = "%Y%j")
 })
-
-# Adding dates as z value to each layer for easy querying 
+#adding dates as z value to each layer
 p <- as.data.frame(dates)
 s2 <- setZ(s, p[,1], "date")
 dates <- getZ(s2)
 class(getZ(s2)) 
 print(s2)
-
-# Query Formatting
-instal_sub <- subset(s2, 
-                  which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
-
-# Getting subsets of before and after year of known installation 
-before_inst_sub <- subset(s2, 
-                  which(getZ(s2) <= '2015-07-01' & (getZ(s2) >= '2014-07-01')))
-after_inst_sub <- subset(s2, 
-                  which(getZ(s2) >= '2016-03-10' & (getZ(s2) <= '2017-03-10')))
-
-# Creating one year means before and after the installation of lights at Polo Grounds
+#Query Formatting
+instal_sub <- subset(s2, which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
+#Getting subsets of before and after year of known installation 
+before_inst_sub <- subset(s2, which(getZ(s2) <= '2015-07-01' & (getZ(s2) >= '2014-07-01')))
+after_inst_sub <- subset(s2, which(getZ(s2) >= '2016-03-10' & (getZ(s2) <= '2017-03-10')))
+#Creating one year means before and after the installation of lights at Polo Grounds
 before_mean <- mean(before_inst_sub, na.rm = TRUE)
 after_mean <- mean(after_inst_sub, na.rm = TRUE)
-
-# Anomalies of radiance, from before and after light installation
+#Plots of before and after means 
+ba_mean_s <- stack(before_mean, after_mean)
+names(ba_mean_s) <- c("Aug_2014-2015", "Aug_2016-2017")
+plot(ba_mean_s)
+#Annomalies of irradnace, from before and after light installation
 diff <- (after_mean - before_mean)
-
-# Cropping the anomaly for Polo Grounds, turns out to only be 1 pixel
+#Histogram of the difference, where positive values indicate increase in values and negative indicates decrease in values
+par(mar = c(3, 3, 3, 3))
+hist(diff, col = "blue", xlab = "iradiance", breaks = 12)
+#cropping the anamoly for Polo Grounds, turns out only 1 pixel
 rpolo_ann <- crop(x = diff, y = polo)
-rpolo_ann_df <- as.data.frame(rpolo_ann, xy = TRUE)
-rpolo_ann_df$layer
+plot(rpolo_ann)
+
+#subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
+sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
+polo_s <- crop(x = sub1, y = polo) # error no non-missing arguments to min
+polo_frame <- raster::extract(x = polo_s, y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
+  as.data.frame(.) %>% 
+  mutate(., date = getZ(sub1)) # this line doesn't work
+
 
 # This Results in a value of -190 over polo grounds, which shows a decrease in radiance comparing before and after the light installation.
 
 # Looking at a 30 day rolling mean of the data above to visualize the decrease in radiance
-polo_roll <- polo %>% mutate(month_av = rollapply(polo[[1]], 
+polo_roll <- polo_frame %>% mutate(month_av = rollapply(polo[[1]], 
               width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
 
 # Creation of 30 day rolling mean of 3 year chunk analyzed above to display why a decrease in radiance is seen
@@ -298,23 +293,23 @@ ggplot() +
   geom_line(polo_roll[(361:614),], mapping = aes(x = date, y = month_av), 
             size = 1.2, col = "red") +
   xlab("Date") + ylab("Radiancen (Watts·cm^−2·sr^−1)") +
-  ggtitle("Polo Grounds 30 day rolling mean with light installation period highlighted in red") +
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_window2.png")
+  ggtitle("Polo Grounds 30 day rolling mean with light installation period highlighted in red") 
+ # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_window2.png")
 ```
 
 Displaying why the resulting anomaly value for polo ground is showing a decrease in radiance.
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\rolling_mean_window2.png")
+# knitr::include_graphics("graphics\\rolling_mean_window2.png")
 ```
 
 Seeing Polo Grounds in the context of the whole time series by doing a 30 day rolling mean.
 
 ```{r, eval = FALSE}
 # Cropping the time series to Polo Grounds
-polo_s2 <- crop(x = s2, y = polo)
+polo_s2 <- crop(x = s2, y = polo) # error no non-missing arguments to min
 
 # Making a data frame from those radiance values form all the layers
-polo_frame_full_full <- extract(x = polo_s2,
+polo_frame_full_full <- raster::extract(x = polo_s2,
                    y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
                   as.data.frame(.) %>% mutate(., date = getZ(s2))
 
@@ -330,13 +325,13 @@ ggplot() + geom_line(mapping = aes(x = date, y = month_av), col = "blue", size =
   geom_line(polo_roll_full[(1244:1497), ], 
             mapping = aes(x = date, y = month_av), col = "red", size = 1.2) +
   ggtitle("Rolling 30 day mean over Polo Grounds with light installation period highlighted in red") +
-  ylab("Radaice (Watts·cm^−2·sr^−1)") + xlab(NULL) +
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_polo.png")
+  ylab("Radaice (Watts·cm^−2·sr^−1)") + xlab(NULL) 
+  #ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_polo.png")
 ```
 
 Displaying a rolling mean of 30 days over polo ground across the whole time series.
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\rolling_mean_polo.png")
+#knitr::include_graphics("graphics\\rolling_mean_polo.png")
 ```
 
 Looking at quarterly means to smooth over short term trends. 
@@ -374,24 +369,23 @@ ggplot(zoo_frame) +
   geom_point(mapping = aes(x = quarter, y = mean, color = group), size = 2) +
   xlab(NULL) +
   ggtitle("Comparison of radiance of before and after
-light instalation at Polo Grounds by looking at quarterly means") +
-   ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_qline_plot.png")
+light instalation at Polo Grounds by looking at quarterly means") 
+  # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_qline_plot.png")
 ```
 
 Quarterly means of Polo Ground
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\polo_qline_plot.png")
+#knitr::include_graphics("graphics\\polo_qline_plot.png")
 ```
 
 Full time series mean split by time period with difference of before and after light installation.
 
 ```{r, out.width = "80%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\polo_table.png")
+#knitr::include_graphics("graphics\\polo_table.png")
 ```
 
 #### **2.  BLM Protest Analysis**
 
-For part two of the analysis we used a combination of points from a web map located in a Wikipedia timeline to find BLM protests that occurred in NYC, and a time series of NASA Black Marble data spanning from January 19, 2012, to December 31, 2021, to find the long term mean of nighttime lights in NYC. To deploy our BLM points into RStudio we manually entered the dates, longitude, latitude, and names of each BLM protest into a spreadsheet on Excel. We found the dates of each point through extensive research and assumptions on the timelines of each BLM protest. This process was then replicated to find the nighttime locations of protests, as these are the most relevant protests to our floodlights, we then read in the entire data set and nighttime CSV file to begin our true analysis. Upon the completion of these steps we created a map showing BLM Protest Points over the NYC grid during the day and at night. Furthermore, a comparison of a mean 3 day period (During the BLM Protest Dates) - comparing nighttime floodlight radiance over multiple years. 
 
 Reading in BLM Protest Points and NYC GRID. 
 
