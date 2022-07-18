@@ -10,10 +10,46 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#install.packages("geojsonsf")
-library(sf)
 ```
 
+The following packages are needed for our analysis.
+```{r, eval = FALSE}
+# Libraries for vector data
+# install.packages("geojsonsf") # Use to import geojson data
+# install.packages("sp")
+# #install.packages("sf")
+library(geojsonsf) 
+library(sp)
+library(sf)
+
+# Libraries for raster data
+# install.packages("terra") # Use to convert .hd format to SpatialRaster
+# install.packages("raster")
+# install.packages("exactextractr") # Use for creating fractional images
+library(terra) 
+library(raster)
+library(exactextractr) 
+
+# # Libraries for data manipulation
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("zoo") # Use to create rolling means
+# install.packages("classInt") # Use to create quartile breaks
+library(dplyr)
+library(tidyr)
+library(zoo)
+library(classInt)
+
+# Libraries for visualization
+# install.packages("ggplot2")
+# install.packages("RColorBrewer")
+# install.packages("viridis")
+# install.packages("kableExtra")
+library(ggplot2)
+library(RColorBrewer) # Use for color palettes
+library(viridis) # Use for color palettes
+library(kableExtra) # Use for data table formatting
+```
 
 ## Data
 
@@ -91,7 +127,6 @@ ggplot() +
 
 #### **2.  BLM Protest Points**
 
-Further downloading and developing our research after utilizing the NYC GIS database, we used a combination of points from a [web map](https://en.wikipedia.org/wiki/George_Floyd_protests_in_New_York_City) located in a Wikipedia timeline to find BLM protests that occurred in NYC, and a time series of NASA Black Marble data spanning from January 19, 2012, to December 31, 2021, to find the long term mean of nighttime lights in NYC. To deploy our BLM points into RStudio we manually entered the dates, longitude, latitude, and names of each BLM protest into a spreadsheet on Excel. We found the dates of each point through extensive research and assumptions on the timelines of each BLM protest. This process was then replicated to find the nighttime locations of protests, as these are the most relevant protests to our floodlights, we then read in the entire data set and nighttime CSV file to begin our true analysis within RStudio.
 
 ```{r, eval = FALSE}
 blm_csv <- read.csv(here("blmprotestpts.csv"))
@@ -118,8 +153,6 @@ st_crs(blm_pts_night) <- st_crs(nycha)
 ```
 
 #### **3.  NASA Black Marble Night Time Lights**
-
-A time series of the NASA Black Marble product was acquired for a time series from January 19, 2012 to December 31, 2021.  Specifically, the VNP46A2 - VIIRS/NPP Gap-Filled Lunar BRDF-Adjusted Nighttime Lights is used.  This product is a daily, 500-meter resolution raster of nocturnal visible light that is corrected for atmospheric conditions and lunar irradiance. Band 3 of this product, the Gap-Filled DNB BRDF-Corrected NTL, will be used in this study. In this band, pixels that are masked due to cloud cover or low data quality are filled with the closest value temporally.  17.5 GB of daily observations were downloaded from [LAADS DAAC](https://ladsweb.modaps.eosdis.nasa.gov/) using command line code provided by LADDS DAAC. The data is in a .h5 datatype which was converted to raster datatype.  The extent of this download is a 10 x 10 degree grid which is cropped to the NYC extent.  The following code block performs this preprocessing to create a manageable raster stack for analysis:
 
 ```{r, eval = FALSE}
 # # List of .h5 files
@@ -155,7 +188,7 @@ A time series of the NASA Black Marble product was acquired for a time series fr
 # # Export raster stack
 # writeRaster(s, "C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd",
 #             format = "raster")
-# ```
+```
 
 The following is a masked visualization of the mean NYC nighttime lights from 2012 to 2022.
 
@@ -197,46 +230,7 @@ ggplot() +
 
 ## Methods
 
-In undertaking the methods portion of our analysis there were many packages and data sets that needed to be collected. To fully understand nighttime light anomalies, BLM protests/floodlight locations, and public/private housing levels in New York City we needed  visualization packages within RStudio. These visualization packages included `ggplot2` for maps and graphs, `RColorBrewer` and `viridis` for color palettes, and `kableExtra` for table visualization.  The main packages we installed to manage the NYC city, protest location, and public housing vector data were `sf` and `sp`. The `terra` and `raster` packages were used for raster creating and manipulation when working with Black Marble and creating gridded population and building volume rasters.  `terra` was primarily used to convert the Black Marble .h5 files to `SpatRaster` format. `raster` was used for analysis and extraction of the nighttime lights time series.  After extracting night time lights values and working with dataframes, `dplyr`, `tidyr`, and `zoo` were used for data manipulation.  `zoo` allows for the creation of rolling means.  Finally, `ggplot2` were used to visualize the results of our analysis and to create a spatially appropriate examination of our data. Our method for data collection included the use of NYC GIS, specifically, a geojson polygon dataset of all New York City Housing Authority developments. After finding this data we added the area to census tracts and joined them with our New York City population data. Shortly after, we defined this data as a raster with an extent and resolution as mean nighttime lights. These steps were crucial in the development of our public housing analysis and the creation of an interpolated population grid. 
 
-The following packages are needed for our analysis.
-```{r, eval = FALSE}
-# Libraries for vector data
-# install.packages("geojsonsf") # Use to import geojson data
-# install.packages("sp")
-# #install.packages("sf")
-library(geojsonsf) 
-library(sp)
-#library(sf)
-
-# Libraries for raster data
-# install.packages("terra") # Use to convert .hd format to SpatialRaster
-# install.packages("raster")
-# install.packages("exactextractr") # Use for creating fractional images
-library(terra) 
-library(raster)
-library(exactextractr) 
-
-# # Libraries for data manipulation
-# install.packages("dplyr")
-# install.packages("tidyr")
-# install.packages("zoo") # Use to create rolling means
-# install.packages("classInt") # Use to create quartile breaks
-library(dplyr)
-library(tidyr)
-library(zoo)
-library(classInt)
-
-# Libraries for visualization
-# install.packages("ggplot2")
-# install.packages("RColorBrewer")
-# install.packages("viridis")
-# install.packages("kableExtra")
-library(ggplot2)
-library(RColorBrewer) # Use for color palettes
-library(viridis) # Use for color palettes
-library(kableExtra) # Use for data table formatting
-```
 #### **1.  Polo Grounds Towers Proof of Concept**
 
 For this first part of the analysis, the goal was to be able to see if we could detect a known light installation in the New York Housing Authority project Polo Grounds. We found an article published on the nyc.gov website which claimed an installation of 341 new light fixtures at this location occurred between early August 2015 and March 10th, 2016. We first set out to see if we could find an anomaly in the amount of radiance from before and after the light installation. Then we set out to see how the values change over time to see if there are any recurring patterns by doing a rolling 30-day mean due to a large amount of noise in the data. Lastly, in an attempt to dampen the influence of yearly trends, we expanded the mean to quarterly.
@@ -280,9 +274,10 @@ plot(rpolo_ann)
 
 #subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
 sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
-polo_s <- crop(x = sub1, y = polo)
+polo_s <- crop(x = sub1, y = polo) # error no non-missing arguments to min
 polo_frame <- raster::extract(x = polo_s, y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
-  as.data.frame(.) %>% mutate(date = getZ(sub1))
+  as.data.frame(.) %>% 
+  mutate(., date = getZ(sub1)) # this line doesn't work
 
 
 # This Results in a value of -190 over polo grounds, which shows a decrease in radiance comparing before and after the light installation.
@@ -311,7 +306,7 @@ Seeing Polo Grounds in the context of the whole time series by doing a 30 day ro
 
 ```{r, eval = FALSE}
 # Cropping the time series to Polo Grounds
-polo_s2 <- crop(x = s2, y = polo)
+polo_s2 <- crop(x = s2, y = polo) # error no non-missing arguments to min
 
 # Making a data frame from those radiance values form all the layers
 polo_frame_full_full <- raster::extract(x = polo_s2,
@@ -330,13 +325,13 @@ ggplot() + geom_line(mapping = aes(x = date, y = month_av), col = "blue", size =
   geom_line(polo_roll_full[(1244:1497), ], 
             mapping = aes(x = date, y = month_av), col = "red", size = 1.2) +
   ggtitle("Rolling 30 day mean over Polo Grounds with light installation period highlighted in red") +
-  ylab("Radaice (Watts·cm^−2·sr^−1)") + xlab(NULL) +
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_polo.png")
+  ylab("Radaice (Watts·cm^−2·sr^−1)") + xlab(NULL) 
+  #ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_polo.png")
 ```
 
 Displaying a rolling mean of 30 days over polo ground across the whole time series.
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\rolling_mean_polo.png")
+#knitr::include_graphics("graphics\\rolling_mean_polo.png")
 ```
 
 Looking at quarterly means to smooth over short term trends. 
@@ -374,24 +369,23 @@ ggplot(zoo_frame) +
   geom_point(mapping = aes(x = quarter, y = mean, color = group), size = 2) +
   xlab(NULL) +
   ggtitle("Comparison of radiance of before and after
-light instalation at Polo Grounds by looking at quarterly means") +
-   ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_qline_plot.png")
+light instalation at Polo Grounds by looking at quarterly means") 
+  # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_qline_plot.png")
 ```
 
 Quarterly means of Polo Ground
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\polo_qline_plot.png")
+#knitr::include_graphics("graphics\\polo_qline_plot.png")
 ```
 
 Full time series mean split by time period with difference of before and after light installation.
 
 ```{r, out.width = "80%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\polo_table.png")
+#knitr::include_graphics("graphics\\polo_table.png")
 ```
 
 #### **2.  BLM Protest Analysis**
 
-For part two of the analysis we used a combination of points from a web map located in a Wikipedia timeline to find BLM protests that occurred in NYC, and a time series of NASA Black Marble data spanning from January 19, 2012, to December 31, 2021, to find the long term mean of nighttime lights in NYC. To deploy our BLM points into RStudio we manually entered the dates, longitude, latitude, and names of each BLM protest into a spreadsheet on Excel. We found the dates of each point through extensive research and assumptions on the timelines of each BLM protest. This process was then replicated to find the nighttime locations of protests, as these are the most relevant protests to our floodlights, we then read in the entire data set and nighttime CSV file to begin our true analysis. Upon the completion of these steps we created a map showing BLM Protest Points over the NYC grid during the day and at night. Furthermore, a comparison of a mean 3 day period (During the BLM Protest Dates) - comparing nighttime floodlight radiance over multiple years. 
 
 Reading in BLM Protest Points and NYC GRID. 
 
