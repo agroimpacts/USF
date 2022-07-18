@@ -41,23 +41,27 @@ Public Housing Development data was acquired from [NYC Open Data](https://data.c
 ```{r, eval = FALSE}
 # Shapefile of census tracts -- 
 # Projection is NAD83 / New York Long Island (ft US)
-nytract <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//nyct2020.shp")
+data("nytract")
+nytract <- nytract
 
 # This is the crs for NYC for future use
-ny_crs <- st_crs(nytract)
+ny_crs <- crs(nytract)
 
 # Geojson of NYC public housing developments 
-nycha <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//nycha.geojson") %>% 
+data("nycha")
+nycha <- nycha %>% 
   st_transform(ny_crs)
 
 # Select Polo Grounds Towers for proof of concept
 polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
 
 # Import population data with common attribute to shapefile, "BoroCT2020"
-ny_pop <- read.csv("C://CLARK//GEOSPAAR//floodlightblm//data//nyct2020_pop.csv")
+data("ny_pop")
+ny_pop <- ny_pop
 
 # Shapefile of NYC building footprints 
-buildings <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//buildings_p.shp") %>% 
+data("buildings")
+buildings <-  buildings %>% 
   st_transform(ny_crs)
 ```
 ```{r, eval = FALSE}
@@ -83,12 +87,12 @@ ggplot() +
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.22, 0.92)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview2.png")
+        legend.position = c(0.22, 0.92)) 
+ # ggsave("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview2.png")
 ```
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview.png")
+#knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview.png")
 ```
 
 #### **2.  BLM Protest Points**
@@ -96,21 +100,21 @@ knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview.png")
 Further downloading and developing our research after utilizing the NYC GIS database, we used a combination of points from a [web map](https://en.wikipedia.org/wiki/George_Floyd_protests_in_New_York_City) located in a Wikipedia timeline to find BLM protests that occurred in NYC, and a time series of NASA Black Marble data spanning from January 19, 2012, to December 31, 2021, to find the long term mean of nighttime lights in NYC. To deploy our BLM points into RStudio we manually entered the dates, longitude, latitude, and names of each BLM protest into a spreadsheet on Excel. We found the dates of each point through extensive research and assumptions on the timelines of each BLM protest. This process was then replicated to find the nighttime locations of protests, as these are the most relevant protests to our floodlights, we then read in the entire data set and nighttime CSV file to begin our true analysis within RStudio.
 
 ```{r, eval = FALSE}
-blm_csv <- read.csv("C://CLARK//GEOSPAAR//floodlightblm//data//blmprotestpts.csv")
+blm_csv <- read.csv(here("blmprotestpts.csv"))
 
-s3 <- stack("C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc.grd")
+s3 <- stack(here("bm_nyc.grd"))
 
-nycha <- geojson_sf("C://CLARK//GEOSPAAR//floodlightblm//data//nycha.geojson")
+nycha <- geojson_sf(here("nycha.geojson"))
 
 # Select Polo Grounds Towers for proof of concept
 polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
 
 # Shapefile of census tracts
-nytract <- st_read("C://CLARK//GEOSPAAR//floodlightblm//data//nyct2020.shp") %>%
+nytract <- st_read(here("nyct2020.shp")) %>%
   st_transform(crs(nycha))
 
 # Read protest points for BLM protests
-blm_csv_night <- read.csv("C://CLARK//GEOSPAAR//floodlightblm//data//blmprotestpts.csv")
+blm_csv_night <- read.csv(here("blmprotestpts.csv"))
 
 # Convert protest points csv to sf
 blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
@@ -124,40 +128,40 @@ st_crs(blm_pts_night) <- st_crs(nycha)
 A time series of the NASA Black Marble product was acquired for a time series from January 19, 2012 to December 31, 2021.  Specifically, the VNP46A2 - VIIRS/NPP Gap-Filled Lunar BRDF-Adjusted Nighttime Lights is used.  This product is a daily, 500-meter resolution raster of nocturnal visible light that is corrected for atmospheric conditions and lunar irradiance. Band 3 of this product, the Gap-Filled DNB BRDF-Corrected NTL, will be used in this study. In this band, pixels that are masked due to cloud cover or low data quality are filled with the closest value temporally.  17.5 GB of daily observations were downloaded from [LAADS DAAC](https://ladsweb.modaps.eosdis.nasa.gov/) using command line code provided by LADDS DAAC. The data is in a .h5 datatype which was converted to raster datatype.  The extent of this download is a 10 x 10 degree grid which is cropped to the NYC extent.  The following code block performs this preprocessing to create a manageable raster stack for analysis:
 
 ```{r, eval = FALSE}
-# List of .h5 files
-files <- list.files("E://blackmarble", pattern = ".h5", full.names = TRUE)
-
-# Get dates from file names create vector to add to raster stack
-dates <- as.Date(sapply(files, function(x) {substr(x, 26, 32)}), format = "%Y%j")
-
-# Create a list of processed images
-l <- lapply(files, function(i){
-  # Date character
-  d <- substr(i, 26, 32)
-  # Convert .h5 to SpatRaster
-  i_sr <- rast(i)
-  # Select gap-filled band and convert to raster
-  i_rast <- raster(i_sr[[3]])
-  # Set extent
-  extent(i_rast) <- c(-80, -70, 40, 50)
-  # Set crs
-  crs(i_rast) <- "EPSG:4326"
-  # Crop to NYC
-  i_rast_nyc <- crop(i_rast, c(-74.256, -73.699, 40.496, 40.916))
-  # Set NA
-  i_rast_nyc[i_rast_nyc == 65535] <- NA
-  # Rename with date
-  names(i_rast_nyc) <- d
-  return(i_rast_nyc)
-})
-
-# Stack list of raster layers and add date
-s <- setZ(stack(l), dates, "date")
-
-# Export raster stack
-writeRaster(s, "C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd",
-            format = "raster")
-```
+# # List of .h5 files
+# files <- list.files("E://blackmarble", pattern = ".h5", full.names = TRUE)
+# 
+# # Get dates from file names create vector to add to raster stack
+# dates <- as.Date(sapply(files, function(x) {substr(x, 26, 32)}), format = "%Y%j")
+# 
+# # Create a list of processed images
+# l <- lapply(files, function(i){
+#   # Date character
+#   d <- substr(i, 26, 32)
+#   # Convert .h5 to SpatRaster
+#   i_sr <- rast(i)
+#   # Select gap-filled band and convert to raster
+#   i_rast <- raster(i_sr[[3]])
+#   # Set extent
+#   extent(i_rast) <- c(-80, -70, 40, 50)
+#   # Set crs
+#   crs(i_rast) <- "EPSG:4326"
+#   # Crop to NYC
+#   i_rast_nyc <- crop(i_rast, c(-74.256, -73.699, 40.496, 40.916))
+#   # Set NA
+#   i_rast_nyc[i_rast_nyc == 65535] <- NA
+#   # Rename with date
+#   names(i_rast_nyc) <- d
+#   return(i_rast_nyc)
+# })
+# 
+# # Stack list of raster layers and add date
+# s <- setZ(stack(l), dates, "date")
+# 
+# # Export raster stack
+# writeRaster(s, "C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd",
+#             format = "raster")
+# ```
 
 The following is a masked visualization of the mean NYC nighttime lights from 2012 to 2022.
 
@@ -165,7 +169,7 @@ The following is a masked visualization of the mean NYC nighttime lights from 20
 #install.packages("rgdal")
 library(rgdal)
 # Upload raster stack of nighttime lights
-s <- stack("C://CLARK//GEOSPAAR//floodlightblm//data//bm_nyc_cen.grd")
+s <- stack(here("bm_nyc_cen.grd"))
 
 # Calculate the long term mean of nighttime lights, 
 # project to NYC crs, then mask to NYC.
@@ -189,12 +193,12 @@ ggplot() +
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.2, 0.8)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
+        legend.position = c(0.2, 0.8)) 
+ # ggsave("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
 ```
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
+#knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
 ```
 
 ## Methods
@@ -244,51 +248,53 @@ library(kableExtra) # Use for data table formatting
 For this first part of the analysis, the goal was to be able to see if we could detect a known light installation in the New York Housing Authority project Polo Grounds. We found an article published on the nyc.gov website which claimed an installation of 341 new light fixtures at this location occurred between early August 2015 and March 10th, 2016. We first set out to see if we could find an anomaly in the amount of radiance from before and after the light installation. Then we set out to see how the values change over time to see if there are any recurring patterns by doing a rolling 30-day mean due to a large amount of noise in the data. Lastly, in an attempt to dampen the influence of yearly trends, we expanded the mean to quarterly.
 
 ```{r, eval = FALSE}
-# Names of each layer aka dates in format Xyyyyjjj
-names_s <- names(s)
-
-# Taking out the X in the dates
+#Names of each layer aka dates in format Xyyyyjjj
+ names_s <- names(s)
+# taking out the X in the dates
 dates_yj <- as.data.frame(names_s) %>%  lapply(., function(x) {
   gsub("X", "", x)})
-
-# Converting from yyyyjjj to date data format
+#converting from yyyyjjj to date data format
 dates <- lapply(dates_yj, function(x) {
   as.Date(x, format = "%Y%j")
 })
-
-# Adding dates as z value to each layer for easy querying 
+#adding dates as z value to each layer
 p <- as.data.frame(dates)
 s2 <- setZ(s, p[,1], "date")
 dates <- getZ(s2)
 class(getZ(s2)) 
 print(s2)
-
-# Query Formatting
-instal_sub <- subset(s2, 
-                  which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
-
-# Getting subsets of before and after year of known installation 
-before_inst_sub <- subset(s2, 
-                  which(getZ(s2) <= '2015-07-01' & (getZ(s2) >= '2014-07-01')))
-after_inst_sub <- subset(s2, 
-                  which(getZ(s2) >= '2016-03-10' & (getZ(s2) <= '2017-03-10')))
-
-# Creating one year means before and after the installation of lights at Polo Grounds
+#Query Formatting
+instal_sub <- subset(s2, which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
+#Getting subsets of before and after year of known installation 
+before_inst_sub <- subset(s2, which(getZ(s2) <= '2015-07-01' & (getZ(s2) >= '2014-07-01')))
+after_inst_sub <- subset(s2, which(getZ(s2) >= '2016-03-10' & (getZ(s2) <= '2017-03-10')))
+#Creating one year means before and after the installation of lights at Polo Grounds
 before_mean <- mean(before_inst_sub, na.rm = TRUE)
 after_mean <- mean(after_inst_sub, na.rm = TRUE)
-
-# Anomalies of radiance, from before and after light installation
+#Plots of before and after means 
+ba_mean_s <- stack(before_mean, after_mean)
+names(ba_mean_s) <- c("Aug_2014-2015", "Aug_2016-2017")
+plot(ba_mean_s)
+#Annomalies of irradnace, from before and after light installation
 diff <- (after_mean - before_mean)
-
-# Cropping the anomaly for Polo Grounds, turns out to only be 1 pixel
+#Histogram of the difference, where positive values indicate increase in values and negative indicates decrease in values
+par(mar = c(3, 3, 3, 3))
+hist(diff, col = "blue", xlab = "iradiance", breaks = 12)
+#cropping the anamoly for Polo Grounds, turns out only 1 pixel
 rpolo_ann <- crop(x = diff, y = polo)
-rpolo_ann_df <- as.data.frame(rpolo_ann, xy = TRUE)
-rpolo_ann_df$layer
+plot(rpolo_ann)
+
+#subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
+sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
+polo_s <- crop(x = sub1, y = polo)
+polo_frame <- raster::extract(x = polo_s, y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
+  as.data.frame(.) %>% mutate(date = getZ(sub1))
+
 
 # This Results in a value of -190 over polo grounds, which shows a decrease in radiance comparing before and after the light installation.
 
 # Looking at a 30 day rolling mean of the data above to visualize the decrease in radiance
-polo_roll <- polo %>% mutate(month_av = rollapply(polo[[1]], 
+polo_roll <- polo_frame %>% mutate(month_av = rollapply(polo[[1]], 
               width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
 
 # Creation of 30 day rolling mean of 3 year chunk analyzed above to display why a decrease in radiance is seen
@@ -298,13 +304,13 @@ ggplot() +
   geom_line(polo_roll[(361:614),], mapping = aes(x = date, y = month_av), 
             size = 1.2, col = "red") +
   xlab("Date") + ylab("Radiancen (Watts·cm^−2·sr^−1)") +
-  ggtitle("Polo Grounds 30 day rolling mean with light installation period highlighted in red") +
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_window2.png")
+  ggtitle("Polo Grounds 30 day rolling mean with light installation period highlighted in red") 
+ # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_window2.png")
 ```
 
 Displaying why the resulting anomaly value for polo ground is showing a decrease in radiance.
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\rolling_mean_window2.png")
+# knitr::include_graphics("graphics\\rolling_mean_window2.png")
 ```
 
 Seeing Polo Grounds in the context of the whole time series by doing a 30 day rolling mean.
@@ -314,7 +320,7 @@ Seeing Polo Grounds in the context of the whole time series by doing a 30 day ro
 polo_s2 <- crop(x = s2, y = polo)
 
 # Making a data frame from those radiance values form all the layers
-polo_frame_full_full <- extract(x = polo_s2,
+polo_frame_full_full <- raster::extract(x = polo_s2,
                    y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
                   as.data.frame(.) %>% mutate(., date = getZ(s2))
 
