@@ -14,23 +14,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(sf)
 ```
 
-*Part 1:  Max Lutz*
-
-*Part 2:  Liam Tobin*
-
-*Part 3:  Mitch Lazarz*
-
-
-## Introduction
-
-In this analysis, the feasibility of detecting police surveillance floodlights using the NASA Black Marble nighttime lights product was assessed.  Detecting floodlights using remote sensing products could provide a new way to quantify police presence in urban studies research.  The overall purpose of this project is to analyze the socioeconomic and social influences of floodlights within New York City.  To do this our project was split into three parts.  First, a proof of concept was developed for the Polo Grounds Towers public housing development in Harlem.  Between August 2015 and March 2016, [341 lights](https://www1.nyc.gov/site/nycha/about/press/pr-2016/polo-grounds-20160310.page) were installed for crime mitigation at the Polo Grounds Towers.  A programmatic method was developed to find nighttime radiance anomalies in a nighttime lights time series. We compared the mean radiance values before, during, and after the installation of these lights.  By detecting these known light installations, the Black Marble product could be used to determine the police presence at nighttime protests. 
-
-The second step was to use the Black Marble nighttime lights product to determine if police surveillance floodlights used during the 2020 Black Lives Matter protests could be detected.  Our initial goal was to create a complete map of the United States showing floodlight locations in relation to BLM protests.  However, due to the scale and unavailability of BLM protest points, this idea would not allow for accurate and meaningful work.  After developing our research plan and assessing the availability of data we landed in New York City as our starting point as nighttime lights data had already been acquired for this city for the proof of concept.  New York City was a hot spot for the 2020 BLM protests within the United States and the spatial locations of protests were documented to extrapolate when studying light distribution.  The nighttime lights during the protests were compared to the same time frame in previous and subsequent years. 
-
-Lastly, we analyzed the influence of floodlight installation to decrease crime in NYC public housing when compared to private housing which does not experience these policies. To do this, we developed a method to sample areas within New York City with and without public housing with a similar structure and population density.  This was done by creating gridded population and gridded building density layers.  The 10-year mean nighttime lights values were compared for areas with and without public housing.  This was done to determine if the areas with public housing are exposed to increased policing through the use of floodlights.
-
-We found that the coarse resolution and patchy coverage of the Black Marble dataset was ineffective in detecting anomalies associated with floodlights in both the proof of concept and during the BLM protests.  However, we did find that areas in NYC with public housing have greater light exposure than areas with a similar population and building structure that do not have public housing.  Upon the completion of our project goals, we had a more complete understanding of the Black Marble product, its limitations, and the influences of nighttime light levels in New York City, particularly, in concerns to our public housing populations. 
-
 
 ## Data
 
@@ -41,29 +24,40 @@ Public Housing Development data was acquired from [NYC Open Data](https://data.c
 ```{r, eval = FALSE}
 # Shapefile of census tracts -- 
 # Projection is NAD83 / New York Long Island (ft US)
-data("nytract")
-nytract <- nytract
+# data("nytract")
+# nytract <- nytract
+
+nytract <- st_read(here("nyct2020.shp"))
 
 # This is the crs for NYC for future use
 ny_crs <- crs(nytract)
 
 # Geojson of NYC public housing developments 
-data("nycha")
-nycha <- nycha %>% 
-  st_transform(ny_crs)
+# data("nycha")
+# nycha <- nycha %>% 
+#   st_transform(ny_crs)
+
+nycha <- geojson_sf(here("nycha.geojson")) %>% 
+   st_transform(ny_crs)
 
 # Select Polo Grounds Towers for proof of concept
 polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
 
 # Import population data with common attribute to shapefile, "BoroCT2020"
-data("ny_pop")
-ny_pop <- ny_pop
+# data("ny_pop")
+# ny_pop <- ny_pop
+
+ny_pop <- read.csv(here("nyct2020_pop.csv"))
 
 # Shapefile of NYC building footprints 
-data("buildings")
-buildings <-  buildings %>% 
-  st_transform(ny_crs)
+# data("buildings")
+# buildings <-  buildings %>% 
+#   st_transform(ny_crs)
+
+buildings <- st_read(here("buildings_p.shp")) %>% st_transform(ny_crs)
+
 ```
+
 ```{r, eval = FALSE}
 #Display tracts with public housing in blue, and Polo Grounds in red with circle hightlighting the area
 #install.packages("farver")
