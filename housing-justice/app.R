@@ -6,7 +6,7 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+install.packages("leaflet")
 library(shiny)
 library(tidyverse)
 library(leaflet)
@@ -20,6 +20,7 @@ library(sf)
 setwd(here("housing-justice/"))
 parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
+
 
 ui <- fluidPage(
     titlePanel("Housing Justice, 2007 - test"),
@@ -45,7 +46,7 @@ ui <- fluidPage(
         ),
     mainPanel(leafletOutput("map", height = "600px", width = "700px"))
         )
-)
+ )
 
 
 
@@ -88,7 +89,7 @@ server <- function(input, output) {
             #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>% #Lyndon's rec + my edits
             addLayersControl(position = "bottomleft",
                 overlayGroups = c("Land Value", "Household Income",
-                                  "Risky locations", "Land Use"),
+                                  "Risky locations"),
                 options = layersControlOptions(collapsed = FALSE)
             ) %>%
             addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
@@ -155,11 +156,12 @@ server <- function(input, output) {
                         color= NA, opacity = 5,
                         weight = 7,
                         fillOpacity = 6, fillColor = factpal(neighborhood()$DECODES2007),
-                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>")) %>%
-            addLegend(values = ~DECODES2007,
-                      pal = factpal,
-                      #labels = group_by(neighborhood()$DECODES2007),
-                      title = "Land Use types", opacity = 0.7)
+                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>"))
+            #Commented this out to remove the extra "Land Use Types" in legend
+            # addLegend(values = ~DECODES2007,
+            #           pal = factpal,
+            #           #labels = group_by(neighborhood()$DECODES2007),
+            #           title = "Land Use types", opacity = 0.7)
     })
 
 }
