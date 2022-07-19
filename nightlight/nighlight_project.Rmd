@@ -16,39 +16,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The following packages are needed for our analysis.
 ```{r, eval = FALSE}
-library(here
-        )
-# Libraries for vector data
-# install.packages("geojsonsf") # Use to import geojson data
-# install.packages("sp")
-# #install.packages("sf")
+library(USF)
+library(here)
 library(geojsonsf) 
 library(sp)
 library(sf)
-
-# Libraries for raster data
-# install.packages("terra") # Use to convert .hd format to SpatialRaster
-# install.packages("raster")
-# install.packages("exactextractr") # Use for creating fractional images
 library(terra) 
 library(raster)
 library(exactextractr) 
-
-# # Libraries for data manipulation
-# install.packages("dplyr")
-# install.packages("tidyr")
-# install.packages("zoo") # Use to create rolling means
-# install.packages("classInt") # Use to create quartile breaks
 library(dplyr)
 library(tidyr)
 library(zoo)
 library(classInt)
-
-# Libraries for visualization
-# install.packages("ggplot2")
-# install.packages("RColorBrewer")
-# install.packages("viridis")
-# install.packages("kableExtra")
 library(ggplot2)
 library(RColorBrewer) # Use for color palettes
 library(viridis) # Use for color palettes
@@ -62,44 +41,38 @@ library(kableExtra) # Use for data table formatting
 Public Housing Development data was acquired from [NYC Open Data](https://data.cityofnewyork.us/Housing-Development/NYCHA-GIS-file/tqnb-xmxw). This polygon dataset is a .geojson of all New York City Housing Authority developments. Additionally, census tracts and building foothills shapefiles are acquired from the same source. Census tract population data was acquired in tabular format from [NYC Planning Population FactFinder](https://popfactfinder.planning.nyc.gov/). The plot below shows the locations of public housing in blue and the Polo Grounds Towers circled in red overlaid on census tracts.
 
 ```{r, eval = FALSE}
-# Shapefile of census tracts --
-# Projection is NAD83 / New York Long Island (ft US)
+# load shapefiles. Project to 2263
 data("nytract")
-nytract <- nytract
-
-# nytract <- st_read(here("nyct2020.shp"))
-
-# This is the crs for NYC for future use
-ny_crs <- crs(nytract)
+nytract <- nytract 
+st_transform(nytract, crs = 2263)
 
 # Geojson of NYC public housing developments
 data("nycha")
 nycha <- nycha %>%
-  st_transform(ny_crs)
-
-# nycha <- geojson_sf(here("nycha.geojson")) %>%
-#    st_transform(ny_crs)
+  st_transform(., crs = 2263)
 
 # Select Polo Grounds Towers for proof of concept
-polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
+polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS") %>%
+  st_transform(., crs = 2263)
 
 # Import population data with common attribute to shapefile, "BoroCT2020"
 data("ny_pop")
-ny_pop <- ny_pop
-
-# ny_pop <- read.csv(here("nyct2020_pop.csv"))
+ny_pop <- ny_pop 
 
 # Shapefile of NYC building footprints
-
 buildings <- geojson_sf("~/Clark/RA-ing/SummerInstitute/nightlight/data/Building_Footprints.geojson") %>%
-   st_transform(ny_crs)
+     st_transform(., crs = 2263)
 
-# data("buildings")
-# buildings <-  buildings %>%
-#   st_transform(ny_crs)
+# BLM protests
+blm_csv <- read.csv(here("~/Clark/RA-ing/SummerInstitute/nightlight/data/blmprotestpts.csv"))
+blm_pts <- st_as_sf(blm_csv, coords = c("Long", "Lat"), 
+                    crs = 4326) %>% st_transform(., crs = 2263)
 
-# buildings <- st_read(here("buildings_p.shp")) %>% st_transform(ny_crs)
-
+# BLM protests at night
+data("blm_csv_night")
+blm_csv_night <- blm_csv_night
+blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"), 
+                          crs = 4326) %>% st_transform(., crs = 2263)
 ```
 
 ```{r, eval = FALSE}
@@ -129,40 +102,8 @@ ggplot() +
  # ggsave("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview2.png")
 ```
 
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/ph_overview.png")
-```
 
-#### **2.  BLM Protest Points**
-
-
-```{r, eval = FALSE}
-library(here)
-blm_csv <- read.csv(here("blmprotestpts.csv"))
-
-s3 <- stack(here("bm_nyc.grd"))
-
-nycha <- geojson_sf(here("nycha.geojson"))
-
-# Select Polo Grounds Towers for proof of concept
-polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
-
-# Shapefile of census tracts
-nytract <- st_read(here("nyct2020.shp")) %>%
-  st_transform(crs(nycha))
-
-# Read protest points for BLM protests
-blm_csv_night <- read.csv(here("blmprotestpts.csv"))
-
-# Convert protest points csv to sf
-blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
-
-# Add crs to protest points
-st_crs(blm_pts_night) <- st_crs(nycha)
-
-```
-
-#### **3.  NASA Black Marble Night Time Lights**
+#### **  NASA Black Marble Night Time Lights**
 
 ```{r, eval = FALSE}
 # # List of .h5 files
@@ -206,7 +147,7 @@ The following is a masked visualization of the mean NYC nighttime lights from 20
 #install.packages("rgdal")
 library(rgdal)
 # Upload raster stack of nighttime lights
-s <- stack("~/Clark/RA-ing/SummerInstitute/nightlight/data/bm_nyc_cen.grd")
+s <- stack(bm_nyc_cen)
 
 plot(s[[1]])
 mean_s <- calc(s, mean, na.rm = TRUE)
@@ -241,10 +182,6 @@ ggplot() +
  # ggsave("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
 ```
 
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("C:/CLARK/GEOSPAAR/floodlightblm/mean_lights.png")
-```
-
 ## Methods
 
 
@@ -253,7 +190,6 @@ ggplot() +
 For this first part of the analysis, the goal was to be able to see if we could detect a known light installation in the New York Housing Authority project Polo Grounds. We found an article published on the nyc.gov website which claimed an installation of 341 new light fixtures at this location occurred between early August 2015 and March 10th, 2016. We first set out to see if we could find an anomaly in the amount of radiance from before and after the light installation. Then we set out to see how the values change over time to see if there are any recurring patterns by doing a rolling 30-day mean due to a large amount of noise in the data. Lastly, in an attempt to dampen the influence of yearly trends, we expanded the mean to quarterly.
 
 ```{r, eval = FALSE}
-
 #Names of each layer aka dates in format Xyyyyjjj
  names_s <- names(s)
 # taking out the X in the dates
@@ -289,8 +225,92 @@ hist(diff, col = "blue", xlab = "iradiance", breaks = 12)
 #cropping the anamoly for Polo Grounds, turns out only 1 pixel
 rpolo_ann <- crop(x = diff, y = polo)
 plot(rpolo_ann)
-
 ```
+
+```{r}
+#subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
+sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
+polo_s <- crop(x = sub1, y = polo) # error no non-missing arguments to min
+polo_frame <- raster::extract(x = polo_s, y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
+  as.data.frame(.) %>% 
+  mutate(., date = getZ(sub1)) # this line doesn't work
+
+polo_roll <- polo_frame %>% mutate(month_av = rollapply(polo[[1]], 
+              width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
+# Creation of 30 day rolling mean of 3 year chunk analyzed above to display why a decrease in radiance is seen
+polo_roll %>% 
+ggplot() + 
+  geom_line(mapping = aes(x = date, y = month_av), size = 1.2, col = "blue") +
+  geom_line(polo_roll[(361:614),], mapping = aes(x = date, y = month_av), 
+            size = 1.2, col = "red") +
+  xlab("Date") + ylab("Radiancen (Watts·cm^−2·sr^−1)") +
+  ggtitle("Polo Grounds 30 day rolling mean with light installation period highlighted in red") 
+ # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_window2.png")
+```
+
+
+Seeing Polo Grounds in the context of the whole time series by doing a 30 day rolling mean.
+
+```{r}
+# Cropping the time series to Polo Grounds
+polo_s2 <- crop(x = s2, y = polo) # error no non-missing arguments to min
+# Making a data frame from those radiance values form all the layers
+polo_frame_full_full <- raster::extract(x = polo_s2,
+                   y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
+                  as.data.frame(.) %>% mutate(., date = getZ(s2))
+# Executing a rolling mean of 30 days across the whole time series and saving it as a new column in the data frame.
+polo_roll_full <- polo_frame_full_full %>%
+  mutate(month_av = rollapply(polo_frame_full_full[[1]],
+                width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
+# NA values are excluded from this rolling mean and the first 15 are NA.
+polo_roll_full %>% 
+ggplot() + geom_line(mapping = aes(x = date, y = month_av), col = "blue", size = 1.2) +
+  geom_line(polo_roll_full[(1244:1497), ], 
+            mapping = aes(x = date, y = month_av), col = "red", size = 1.2) +
+  ggtitle("Rolling 30 day mean over Polo Grounds with light installation period highlighted in red") +
+  ylab("Radaice (Watts·cm^−2·sr^−1)") + xlab(NULL) 
+  
+  #ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_polo.png")
+```
+
+
+Looking at quarterly means to smooth over short term trends.
+```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
+# Summarizing the radiance values over Polo Grounds by 3-month means in an effort
+# to lessen the influence of the February spike in radiance seen every year. 
+zoo_frame <- polo_roll_full %>% 
+  mutate(quarter = as.yearqtr(polo_roll_full$date, format = "%Y-%m-%d")) %>%
+  mutate(radiance = as.numeric(polo_roll_full$.)) %>% 
+  group_by(quarter) %>% 
+  summarise(., mean = mean(radiance, na.rm = TRUE)) %>% 
+  as.data.frame(.) %>% 
+  mutate(year = as.yearqtr(.$quarter, format = "%y/0%q") %>%
+  format(., format = "%y")) %>%
+  mutate(row_num = seq.int(nrow(.))) %>% 
+  mutate(group = ifelse(row_num < 15, "Before", 
+                        ifelse(row_num > 17, "After", "During")))
+# Looking at the difference of before and after installation with full time scale
+zoo_table <- zoo_frame %>% 
+  group_by(group) %>% 
+  summarise(., mean = round(mean(mean))) %>% 
+  as.data.frame(.) 
+# Adding the difference row in the table
+zoo_table[nrow(zoo_table) + 1, ] <- c("difference", 
+                                      (zoo_table$mean[1] - zoo_table$mean[2]))
+# Creation of a more visually appealing table
+zoo_table %>% kable() %>% kable_styling() %>% 
+  as_image(file = "C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_table.png")
+# Line plot of quarterly 
+ggplot(zoo_frame) +
+  geom_line(aes(x = quarter, y = mean), size = 0.5) + ylab("Radiance") +
+  geom_point(mapping = aes(x = quarter, y = mean, color = group), size = 2) +
+  xlab(NULL) +
+  ggtitle("Comparison of radiance of before and after
+light instalation at Polo Grounds by looking at quarterly means") 
+  # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_qline_plot.png")
+```
+
+Full time series mean split by time period with difference of before and after light installation.
 
 
 
@@ -300,15 +320,6 @@ plot(rpolo_ann)
 Plotting all BLM Protest Points. 
 
 ```{r, error = TRUE, warning = FALSE, message = FALSE, fig.height = 6, fig.width = 6, fig.align = 'center', eval = FALSE}
-# Read protest points for BLM protests
-# blm_csv <- read.csv("//Users//liamtobin//downloads//BLM Protest Points - Sheet1.csv")
-# 
-# # Convert protest points csv to sf
-blm_pts <- st_as_sf(blm_csv, coords = c("Long", "Lat"))
-
-# Add crs to protest points
-st_crs(blm_pts) <- st_crs(nycha)
-
 # Visualize protest points
 par(mar = c(0, 0, 1, 0))
 plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9", 
@@ -337,11 +348,7 @@ ggplot() +
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks = element_blank()) 
-  ggsave("external/nightlight/blm_points_mean_radiance.png")
-```
-
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("graphics\\BLM_Points_Mean_Radiance.png")
+#  ggsave("external/nightlight/blm_points_mean_radiance.png")
 ```
 
 Mean 3 day period - comparing it over multiple years. BLM Nighttime Protest Points Overlay 
@@ -420,13 +427,9 @@ blm_2017_mean <- mean(blm_2017_sub, na.rm = TRUE)
 blm_mean_s <- stack(blm_2020_mean, blm_2019_mean, blm_2019_mean, blm_2017_mean)
 names(blm_mean_s) <- c("May_June_2020", "May_June_2019", "May_June_2018", "May_June_2017")
 blm_mean_overtime <- plot(blm_mean_s)
-dev.copy(png, "external/nightlight/blm_mean_overtime.png")
-dev.off()
+# dev.copy(png, "external/nightlight/blm_mean_overtime.png")
+# dev.off()
 
-```
-
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("graphics\\blm_mean_overtime.png")
 ```
 
 #### **3.  Public Housing Lights Analysis**
@@ -440,7 +443,7 @@ r <- mean_s
 values(r) <- 1:ncell(r)
 
 # Create raster with proportion of pixel covered by public housing
-ph_fraction <- coverage_fraction(r, st_combine(nycha))[[1]]
+# ph_fraction <- coverage_fraction(r, st_combine(nycha))[[1]]
 
 # Export raster
 # writeRaster(ph_fraction, 
@@ -448,9 +451,25 @@ ph_fraction <- coverage_fraction(r, st_combine(nycha))[[1]]
 #             format = "raster")
 
 # Assign 0 to NA then convert raster to dataframe for plotting
-ph_fraction[ph_fraction == 0] <- NA
+# ph_fraction[ph_fraction == 0] <- NA
+# ph_frac_df <- as.data.frame(rasterToPoints(ph_fraction))
+# colnames(ph_frac_df) <- c('x', 'y', 'value')
+
+
+
+city_background <- pop_r
+city_background[city_background >= 0] <- 0
+
+ph_fraction <- coverage_fraction(r, st_combine(nycha))[[1]]
+ph_fraction[is.na(ph_fraction)] <- 0
+
+ph_fraction <- mask(ph_fraction, city_background)
+# or
+# ph_fraction <- ph_fraction * city_background
 ph_frac_df <- as.data.frame(rasterToPoints(ph_fraction))
 colnames(ph_frac_df) <- c('x', 'y', 'value')
+ph_frac_df <- ph_frac_df %>% filter(!is.na(value)) 
+
 
 # Plot fractional coverage image of public housing tracts
 ggplot() + 
@@ -469,15 +488,11 @@ ggplot() +
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
         legend.position = c(0.1, 0.85)) 
-  ggsave("external/nightlight/ph_plot.png")
+ # ggsave("external/nightlight/ph_plot.png")
 
 ```
 
 The map below shows the area proportion of 500 m pixels covered with public housing developments
-
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#nitr::include_graphics("graphics\\ph_plot.png")
-```
 
 #### *Create gridded population from census tracts*
 
@@ -547,7 +562,7 @@ ggplot() +
         axis.ticks = element_blank(),
         legend.title = element_blank(),
         legend.position = c(0.1, 0.85)) 
-  ggsave("external/nightlight/pop_plot1.png")
+ # ggsave("external/nightlight/pop_plot1.png")
   
 # Convert raster to dataframe for plotting
 r_pop_df <- as.data.frame(rasterToPoints(r_pop))
@@ -572,14 +587,10 @@ ggplot() +
         axis.ticks = element_blank(),
         legend.title = element_blank(),
         legend.position = c(0.1, 0.85)) 
-  ggsave("external/nightlight/pop_plot2.png")
+ # ggsave("external/nightlight/pop_plot2.png")
 ```
 
 The maps below compare the true 2020 census tract population to the interpolated population grid.
-
-```{r, echo = FALSE, out.width = "49%", out.height = "49%"}
-#knitr::include_graphics(c("graphics\\pop_plot1.png", "graphics\\pop_plot2.png"))
-```
 
 #### *Create gridded building volume from NYC buildings*
 
@@ -658,14 +669,10 @@ ggplot() +
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
         legend.position = c(0.15, 0.75)) 
-  ggsave("external/nightlight/bvol_plot.png")
+ # ggsave("external/nightlight/bvol_plot.png")
 ```
 
 The map below shows the areal interpolated volume of buildings in each 500 m cell.
-
-```{r, echo = FALSE, out.width = "60%", fig.align = 'center'}
-#knitr::include_graphics("graphics\\bvol_plot.png")
-```
 
 #### *Sample pixels with and without public housing.*
 
@@ -792,17 +799,12 @@ ggplot() +
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
         legend.position = c(0.1, 0.9),
-        legend.title= element_blank()) + 
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/samples_map0.png", 
-         width = 6, height = 6)
+        legend.title= element_blank()) 
+#ggsave("external/nightlight/samples_map0.png", 
+#         width = 6, height = 6)
 ```
 
 Below shows the locations of pixels with at least 10% area coverage of public housing and sampled pixels without public houses with the same building and population structure.
-
-```{r, echo = FALSE, out.width = "60%", fig.align = 'center'}
-knitr::include_graphics("graphics\\samples_map.png")
-```
-
 
 ## Results
 
@@ -812,18 +814,20 @@ When analyzing the results of our project it is crucial to understand our emphas
 
 Looking at the original anomaly analysis of comparing the mean radiance from the year prior to the year after the light installation at Polo Grounds, we found there to be a decrease of 190 (Watts·cm^−2·sr^−1) over the housing site. Meaning we were unable to detect any increase in radiance due to the installation of new light fixtures using the method above. Furthermore, when expanding the time frame of the analysis from 2014-2016 to 2012-2022, we still saw an overall decrease of the radiance by 36 when comparing the time period before and after the light installation. This can be visually seen in the boxplot below, keep in mind not all boxes have equal amounts of observations.
 
+# zoo_frame doesn't work.
+
 ```{r, eval = FALSE}
 #Using the same data frame of the quarterly means used in the line plot in section 1 of methods.
-ggplot(zoo_frame) + 
-  geom_boxplot(aes(x = group, y = mean, fill = group)) +
-  ylab("Radiance") + xlab(NULL) +
-  ggtitle("Comparison of radiance of before and after light instalation at Polo Grounds") +
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics//polo_boxplot.png")
+# ggplot(zoo_frame) + 
+#   geom_boxplot(aes(x = group, y = mean, fill = group)) +
+#   ylab("Radiance") + xlab(NULL) +
+#   ggtitle("Comparison of radiance of before and after light instalation at Polo Grounds") 
+#   ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics//polo_boxplot.png")
 ```
 
 
 ```{r, echo = FALSE, out.width = "80%", fig.align = 'center'}
-knitr::include_graphics("graphics\\polo_boxplot.png")
+#knitr::include_graphics("graphics\\polo_boxplot.png")
 ```
 
 
@@ -836,7 +840,6 @@ ggplot() +
   geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
   geom_sf(data = nytract, fill = NA, col = alpha("white", 0.2)) +
   geom_sf(data = blm_pts_night, fill = NA, col = "deeppink") + 
-  ggtitle("Mean Radiance 2012 - 2022 with BLM Protest Points") +
   ggsave("BLM_Points_Mean_Radiance.png")
   scale_fill_gradient(low = 'black', high = 'yellow',
                       guide = guide_colorbar(title = "", 
@@ -849,11 +852,11 @@ ggplot() +
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks = element_blank())
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/blm_points_mean_radiance.png")
+ # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/blm_points_mean_radiance.png")
 ```
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\blm_points_mean_radiance.png")
+#knitr::include_graphics("graphics\\blm_points_mean_radiance.png")
 ```
 
 When analyzing the mean nighttime floodlight radiance across the 3-day window of BLM locations May into June (2017 - 2020). There is an obvious increase in mean radiance within 2020. However, there are only a few BLM Protest points that reside within these locations. Upon the conclusion of these results it is important to understand the correlation between BLM Protests and floodlight use are minimal. Although the potential of floodlight usage may increase with the presence of police officers at these protests, there are many factors at play when analyzing light radiation. 
@@ -862,12 +865,12 @@ When analyzing the mean nighttime floodlight radiance across the 3-day window of
 blm_mean_s <- stack(blm_2020_mean, blm_2019_mean, blm_2019_mean, blm_2017_mean)
 names(blm_mean_s) <- c("May_June_2020", "May_June_2019", "May_June_2018", "May_June_2017")
 blm_mean_overtime <- plot(blm_mean_s)
-dev.copy(png, "blm_mean_overtime.png")
-dev.off()
+#dev.copy(png, "blm_mean_overtime.png")
+#dev.off()
 ```
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\blm_mean_overtime.png")
+#knitr::include_graphics("graphics\\blm_mean_overtime.png")
 ```
 
 #### **3.  Public Housing Lights Analysis**
@@ -886,13 +889,13 @@ ggplot(combined, aes(x = pop_class, y = radiance, color = sample, fill = sample)
   theme_bw() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        legend.title = element_blank()) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/boxplot1.png", 
-         width = 9, height = 6)
+        legend.title = element_blank())
+  # ggsave("external/nightlight/boxplot1.png", 
+  #        width = 9, height = 6)
 ```
 
 ```{r, out.width = "80%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\boxplot1.png")
+#knitr::include_graphics("graphics\\boxplot1.png")
 ```
 
 The above boxplot displaying the Population class on the x-axis shows that in both pixels with and without public housing, the 10-year mean radiance increases with population.  Both the mean (indicated by an X) and median (indicated by the line), increase when moving from lower to higher population classes.  Within each Population class, we see that both the mean and median radiance value is greater for pixels with public housing.  In the three largest Population classes, the interquartile ranges for the public housing pixels are outside and greater than the interquartile ranges of those without public housing, while there is a slight overlap in the lowest class.  In all plots, values greater than the 75th percentile in the NOPH distributions overlap the interquartile range of the PH distributions.  
@@ -909,13 +912,13 @@ ggplot(combined, aes(x = bvol_class, y = radiance, color = sample, fill = sample
   theme_bw() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        legend.title = element_blank()) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/boxplot2.png", 
-         width = 9, height = 6)
+        legend.title = element_blank()) 
+  # ggsave("external/nightlight/boxplot2.png", 
+  #        width = 9, height = 6)
 ```
 
 ```{r, out.width = "80%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\boxplot2.png")
+#knitr::include_graphics("graphics\\boxplot2.png")
 ```
 
 In the above boxplot displaying the Building Volume class on the x-axis, similar trends are found.  Both the mean and median values, increase when moving from lower to higher Building Volume classes.  Within each Building Volume class, both the mean and median radiance value is greater for pixels with public housing.  In the three largest Population classes, the interquartile ranges for the public housing pixels are outside and greater than the interquartile ranges of those without public housing, while there is a slight overlap in the lowest class.  In all plots, values greater than the 75th percentile in the NoPH distributions overlap the interquartile range of the PH distributions. 
