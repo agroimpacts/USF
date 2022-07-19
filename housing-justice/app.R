@@ -55,16 +55,16 @@ ui <- dashboardPage(
     dashboardHeader(title = "Housing Justice"),
     dashboardSidebar(
         sidebarMenu(
-            menuItem(selectInput("hood", "Select a neighborhood",
+            menuItem(selectInput("nhood", "Select a neighborhood",
                                  choices = c("Select", unique(parcels$Hood)))
             )
             )
         ),
     dashboardBody(
-        fluidRow(
+        fluidPage(
             tabBox(
                 id = "tabset1",
-                tabPanel("2007", leafletOutput("map", height = "800px", width = "1000px")),
+                tabPanel("2007", leafletOutput("map", height = "570px", width = "700px")),
                 tabPanel("2020", "placeholder for 2020 data")
             )
             #,
@@ -85,17 +85,17 @@ server <- function(input, output) {
 
 # reactive functions - defined by user input
     neighborhood <- reactive({
-        w <- parcels %>% filter(Hood == input$hood)
+        w <- parcels %>% filter(Hood == input$nhood)
         return(w)
         })
 
     priority <- reactive({
-        w <- bk_priority %>% filter(Name.y == input$hood)
+        w <- bk_priority %>% filter(Name.y == input$nhood)
         return(w)
     })
 
     xy <- reactive({
-        w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$hood)))
+        w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
         return(w)
     })
 
@@ -121,7 +121,7 @@ server <- function(input, output) {
 
         leaflet() %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
-            setView(-73.93, 40.68, zoom = 11)  %>% # Zoom issue
+            setView(-73.93, 40.68, zoom = 12)  %>% # Zoom issue
             #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>% #Lyndon's rec + my edits
             addLayersControl(position = "bottomleft",
                 overlayGroups = c("Land Value", "Household Income",
@@ -129,11 +129,17 @@ server <- function(input, output) {
                 options = layersControlOptions(collapsed = FALSE)
             ) %>%
             addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
-                      labels = paste0("up to ", format(breaks_qt1$brks[-1], digits = 2)),
+                      labels = paste0("up to $",
+                                      prettyNum(format(breaks_qt1$brks[-1],
+                                                       digits = 7),
+                                                big.mark = ",")),
                       title = "Assessed Land Value, 2007", opacity = 0.7
             ) %>%
             addLegend(values = ~estimate, colors = brewer.pal(7, "Greens"),
-                      labels = paste0("up to $", format(breaks_qt2$brks[-1], digits = 2)),
+                      labels = paste0("up to $",
+                                      prettyNum(format(breaks_qt2$brks[-1],
+                                                       digits = 2 ),
+                                                big.mark = ",")),
                       title = "Median Household Income, 2009", opacity = 0.7
             ) %>%
             addLegend(pal = factpal2, values = parcels$DECODES2007,
@@ -152,7 +158,9 @@ server <- function(input, output) {
                         color= NA, opacity = 5,
                         weight = 7,
                         fillOpacity = 6, fillColor = ~rpal(neighborhood()$AssessLand2007),
-                        popup = paste("Value: ", neighborhood()$AssessLand2007, "<br>")
+                        popup = paste("Value: $",
+                                      prettyNum(format(neighborhood()$AssessLand2007),
+                                                big.mark = ","), "<br>")
             )
         })
 
@@ -166,10 +174,10 @@ server <- function(input, output) {
                     color= NA, opacity = 5,
                     weight = 7,
                     fillOpacity = 6, fillColor = ~gpal(neighborhood()$estimate),
-                    popup = paste("Value: ", neighborhood()$estimate, "<br>")
-        )
+                    popup = paste("Value: $",
+                                  prettyNum(format(neighborhood()$estimate),
+                                                        big.mark = ","), "<br>"))
     })
-
 
     observe({
 
@@ -184,10 +192,6 @@ server <- function(input, output) {
 
     observe({
 
-        # function for label
-
-        factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
-
         # map
         leafletProxy("map", data = neighborhood()) %>%
             addPolygons(group = "Land Use",
@@ -195,12 +199,7 @@ server <- function(input, output) {
                         color= NA, opacity = 5,
                         weight = 7,
                         fillOpacity = 6, fillColor = factpal2(neighborhood()$DECODES2007),
-                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>")) #%>%
-            #Commented this out to remove the extra "Land Use Types" in legend
-            # addLegend(values = ~DECODES2007,
-            #           pal = factpal,
-            #           #labels = group_by(neighborhood()$DECODES2007),
-            #           title = "Land Use types", opacity = 0.7)
+                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>"))
     })
 
 }
