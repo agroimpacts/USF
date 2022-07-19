@@ -85,7 +85,7 @@ server <- function(input, output) {
         leaflet() %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(-73.93, 40.68, zoom = 11)  %>% # Zoom issue
-            #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>% #Lyndon's rec + my edits
+            #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 14) %>% #Lyndon's rec + my edits
             addLayersControl(position = "bottomleft",
                 overlayGroups = c("Land Value", "Household Income",
                                   "Risky locations"),
