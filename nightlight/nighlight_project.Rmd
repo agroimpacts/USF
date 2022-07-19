@@ -147,6 +147,8 @@ The following is a masked visualization of the mean NYC nighttime lights from 20
 #install.packages("rgdal")
 library(rgdal)
 # Upload raster stack of nighttime lights
+bm_nyc_cen <- stack("~/Clark/RA-ing/SummerInstitute/nightlight/data/bm_nyc_cen.grd")
+
 s <- stack(bm_nyc_cen)
 
 plot(s[[1]])
@@ -157,8 +159,8 @@ plot(mean_s)
 
 # Calculate the long term mean of nighttime lights, 
 # project to NYC crs, then mask to NYC.
-# mean_s <- mean(s, na.rm = TRUE) %>% projectRaster(s, ny_crs)
-mean_sc <- mask(mean_s, st_transform(nytract, st_crs(mean_s)))#nytract)
+
+mean_sc <- mask(mean_s, st_transform(nytract, st_crs(mean_s))))
 plot(mean_sc)
 
 # Convert raster to dataframe for plotting
@@ -206,32 +208,51 @@ dates <- getZ(s2)
 class(getZ(s2)) 
 print(s2)
 #Query Formatting
-instal_sub <- subset(s2, which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
+instal_sub <- subset(s2, 
+                     which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
+
 #Getting subsets of before and after year of known installation 
-before_inst_sub <- subset(s2, which(getZ(s2) <= '2015-07-01' & (getZ(s2) >= '2014-07-01')))
-after_inst_sub <- subset(s2, which(getZ(s2) >= '2016-03-10' & (getZ(s2) <= '2017-03-10')))
+before_inst_sub <- subset(s2, 
+                          which(getZ(s2) <= '2015-07-01' & 
+                                  (getZ(s2) >= '2014-07-01')))
+after_inst_sub <- subset(s2, 
+                         which(getZ(s2) >= '2016-03-10' & 
+                                 (getZ(s2) <= '2017-03-10')))
+
 #Creating one year means before and after the installation of lights at Polo Grounds
-before_mean <- mean(before_inst_sub, na.rm = TRUE)
-after_mean <- mean(after_inst_sub, na.rm = TRUE)
+
+before_mean <- calc(before_inst_sub, mean, na.rm = TRUE)
+plot(before_mean)
+
+after_mean <- calc(after_inst_sub, mean, na.rm = TRUE)
+plot(after_mean)
+
+
 #Plots of before and after means 
 ba_mean_s <- stack(before_mean, after_mean)
 names(ba_mean_s) <- c("Aug_2014-2015", "Aug_2016-2017")
 plot(ba_mean_s)
+
 #Annomalies of irradnace, from before and after light installation
 diff <- (after_mean - before_mean)
+
 #Histogram of the difference, where positive values indicate increase in values and negative indicates decrease in values
 par(mar = c(3, 3, 3, 3))
 hist(diff, col = "blue", xlab = "iradiance", breaks = 12)
+
 #cropping the anamoly for Polo Grounds, turns out only 1 pixel
-rpolo_ann <- crop(x = diff, y = polo)
+rpolo_ann <- crop(x = diff, y = st_transform(polo, st_crs(diff)))
 plot(rpolo_ann)
 ```
 
 ```{r}
 #subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
 sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
-polo_s <- crop(x = sub1, y = polo) # error no non-missing arguments to min
-polo_frame <- raster::extract(x = polo_s, y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
+polo_s <- crop(x = sub1, y = st_transform(polo, st_crs(sub1))) 
+
+polo_frame <- raster::extract(x = polo_s, 
+                              y = st_transform(polo, st_crs(polo_s)), 
+                              exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
   as.data.frame(.) %>% 
   mutate(., date = getZ(sub1)) # this line doesn't work
 
