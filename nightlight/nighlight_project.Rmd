@@ -4,8 +4,10 @@ author: "Max Lutz, Liam Tobin, Mitchell Lazarz"
 date: "5/4/2022"
 vignette: >
   %\VignetteIndexEntry{floodlightblm_final}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -14,6 +16,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The following packages are needed for our analysis.
 ```{r, eval = FALSE}
+library(here
+        )
 # Libraries for vector data
 # install.packages("geojsonsf") # Use to import geojson data
 # install.packages("sp")
@@ -58,39 +62,43 @@ library(kableExtra) # Use for data table formatting
 Public Housing Development data was acquired from [NYC Open Data](https://data.cityofnewyork.us/Housing-Development/NYCHA-GIS-file/tqnb-xmxw). This polygon dataset is a .geojson of all New York City Housing Authority developments. Additionally, census tracts and building foothills shapefiles are acquired from the same source. Census tract population data was acquired in tabular format from [NYC Planning Population FactFinder](https://popfactfinder.planning.nyc.gov/). The plot below shows the locations of public housing in blue and the Polo Grounds Towers circled in red overlaid on census tracts.
 
 ```{r, eval = FALSE}
-# Shapefile of census tracts -- 
+# Shapefile of census tracts --
 # Projection is NAD83 / New York Long Island (ft US)
-# data("nytract")
-# nytract <- nytract
+data("nytract")
+nytract <- nytract
 
-nytract <- st_read(here("nyct2020.shp"))
+# nytract <- st_read(here("nyct2020.shp"))
 
 # This is the crs for NYC for future use
 ny_crs <- crs(nytract)
 
-# Geojson of NYC public housing developments 
-# data("nycha")
-# nycha <- nycha %>% 
-#   st_transform(ny_crs)
+# Geojson of NYC public housing developments
+data("nycha")
+nycha <- nycha %>%
+  st_transform(ny_crs)
 
-nycha <- geojson_sf(here("nycha.geojson")) %>% 
-   st_transform(ny_crs)
+# nycha <- geojson_sf(here("nycha.geojson")) %>%
+#    st_transform(ny_crs)
 
 # Select Polo Grounds Towers for proof of concept
 polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
 
 # Import population data with common attribute to shapefile, "BoroCT2020"
-# data("ny_pop")
-# ny_pop <- ny_pop
+data("ny_pop")
+ny_pop <- ny_pop
 
-ny_pop <- read.csv(here("nyct2020_pop.csv"))
+# ny_pop <- read.csv(here("nyct2020_pop.csv"))
 
-# Shapefile of NYC building footprints 
+# Shapefile of NYC building footprints
+
+buildings <- geojson_sf("~/Clark/RA-ing/SummerInstitute/nightlight/data/Building_Footprints.geojson") %>%
+   st_transform(ny_crs)
+
 # data("buildings")
-# buildings <-  buildings %>% 
+# buildings <-  buildings %>%
 #   st_transform(ny_crs)
 
-buildings <- st_read(here("buildings_p.shp")) %>% st_transform(ny_crs)
+# buildings <- st_read(here("buildings_p.shp")) %>% st_transform(ny_crs)
 
 ```
 
@@ -129,6 +137,7 @@ ggplot() +
 
 
 ```{r, eval = FALSE}
+library(here)
 blm_csv <- read.csv(here("blmprotestpts.csv"))
 
 s3 <- stack(here("bm_nyc.grd"))
@@ -150,6 +159,7 @@ blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
 
 # Add crs to protest points
 st_crs(blm_pts_night) <- st_crs(nycha)
+
 ```
 
 #### **3.  NASA Black Marble Night Time Lights**
@@ -196,12 +206,19 @@ The following is a masked visualization of the mean NYC nighttime lights from 20
 #install.packages("rgdal")
 library(rgdal)
 # Upload raster stack of nighttime lights
-s <- stack(here("bm_nyc_cen.grd"))
+s <- stack("~/Clark/RA-ing/SummerInstitute/nightlight/data/bm_nyc_cen.grd")
+
+plot(s[[1]])
+mean_s <- calc(s, mean, na.rm = TRUE)
+# mean_s <- s_mean
+# rm(s_mean)
+plot(mean_s)
 
 # Calculate the long term mean of nighttime lights, 
 # project to NYC crs, then mask to NYC.
-mean_s <- mean(s, na.rm = TRUE) %>% projectRaster(s, ny_crs)
-mean_sc <- mask(mean_s, nytract)
+# mean_s <- mean(s, na.rm = TRUE) %>% projectRaster(s, ny_crs)
+mean_sc <- mask(mean_s, st_transform(nytract, st_crs(mean_s)))#nytract)
+plot(mean_sc)
 
 # Convert raster to dataframe for plotting
 mean_s_df <- as.data.frame(rasterToPoints(mean_sc))
@@ -236,6 +253,7 @@ ggplot() +
 For this first part of the analysis, the goal was to be able to see if we could detect a known light installation in the New York Housing Authority project Polo Grounds. We found an article published on the nyc.gov website which claimed an installation of 341 new light fixtures at this location occurred between early August 2015 and March 10th, 2016. We first set out to see if we could find an anomaly in the amount of radiance from before and after the light installation. Then we set out to see how the values change over time to see if there are any recurring patterns by doing a rolling 30-day mean due to a large amount of noise in the data. Lastly, in an attempt to dampen the influence of yearly trends, we expanded the mean to quarterly.
 
 ```{r, eval = FALSE}
+
 #Names of each layer aka dates in format Xyyyyjjj
  names_s <- names(s)
 # taking out the X in the dates
@@ -272,158 +290,20 @@ hist(diff, col = "blue", xlab = "iradiance", breaks = 12)
 rpolo_ann <- crop(x = diff, y = polo)
 plot(rpolo_ann)
 
-#subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
-sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
-polo_s <- crop(x = sub1, y = polo) # error no non-missing arguments to min
-polo_frame <- raster::extract(x = polo_s, y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
-  as.data.frame(.) %>% 
-  mutate(., date = getZ(sub1)) # this line doesn't work
-
-
-# This Results in a value of -190 over polo grounds, which shows a decrease in radiance comparing before and after the light installation.
-
-# Looking at a 30 day rolling mean of the data above to visualize the decrease in radiance
-polo_roll <- polo_frame %>% mutate(month_av = rollapply(polo[[1]], 
-              width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
-
-# Creation of 30 day rolling mean of 3 year chunk analyzed above to display why a decrease in radiance is seen
-polo_roll %>% 
-ggplot() + 
-  geom_line(mapping = aes(x = date, y = month_av), size = 1.2, col = "blue") +
-  geom_line(polo_roll[(361:614),], mapping = aes(x = date, y = month_av), 
-            size = 1.2, col = "red") +
-  xlab("Date") + ylab("Radiancen (Watts·cm^−2·sr^−1)") +
-  ggtitle("Polo Grounds 30 day rolling mean with light installation period highlighted in red") 
- # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_window2.png")
 ```
 
-Displaying why the resulting anomaly value for polo ground is showing a decrease in radiance.
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-# knitr::include_graphics("graphics\\rolling_mean_window2.png")
-```
 
-Seeing Polo Grounds in the context of the whole time series by doing a 30 day rolling mean.
-
-```{r, eval = FALSE}
-# Cropping the time series to Polo Grounds
-polo_s2 <- crop(x = s2, y = polo) # error no non-missing arguments to min
-
-# Making a data frame from those radiance values form all the layers
-polo_frame_full_full <- raster::extract(x = polo_s2,
-                   y = polo, exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
-                  as.data.frame(.) %>% mutate(., date = getZ(s2))
-
-# Executing a rolling mean of 30 days across the whole time series and saving it as a new column in the data frame.
-polo_roll_full <- polo_frame_full_full %>%
-  mutate(month_av = rollapply(polo_frame_full_full[[1]],
-                width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
-
-# NA values are excluded from this rolling mean and the first 15 are NA.
-
-polo_roll_full %>% 
-ggplot() + geom_line(mapping = aes(x = date, y = month_av), col = "blue", size = 1.2) +
-  geom_line(polo_roll_full[(1244:1497), ], 
-            mapping = aes(x = date, y = month_av), col = "red", size = 1.2) +
-  ggtitle("Rolling 30 day mean over Polo Grounds with light installation period highlighted in red") +
-  ylab("Radaice (Watts·cm^−2·sr^−1)") + xlab(NULL) 
-  #ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/rolling_mean_polo.png")
-```
-
-Displaying a rolling mean of 30 days over polo ground across the whole time series.
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("graphics\\rolling_mean_polo.png")
-```
-
-Looking at quarterly means to smooth over short term trends. 
-```{r, eval = FALSE}
-# Summarizing the radiance values over Polo Grounds by 3-month means in an effort
-# to lessen the influence of the February spike in radiance seen every year. 
-zoo_frame <- polo_roll_full %>% 
-  mutate(quarter = as.yearqtr(polo_roll_full$date, format = "%Y-%m-%d")) %>%
-  mutate(radiance = as.numeric(polo_roll_full$.)) %>% 
-  group_by(quarter) %>% 
-  summarise(., mean = mean(radiance, na.rm = TRUE)) %>% 
-  as.data.frame(.) %>% 
-  mutate(year = as.yearqtr(.$quarter, format = "%y/0%q") %>%
-  format(., format = "%y")) %>%
-  mutate(row_num = seq.int(nrow(.))) %>% 
-  mutate(group = ifelse(row_num < 15, "Before", 
-                        ifelse(row_num > 17, "After", "During")))
-
-# Looking at the difference of before and after installation with full time scale
-zoo_table <- zoo_frame %>% 
-  group_by(group) %>% 
-  summarise(., mean = round(mean(mean))) %>% 
-  as.data.frame(.) 
-
-# Adding the difference row in the table
-zoo_table[nrow(zoo_table) + 1, ] <- c("difference", 
-                                      (zoo_table$mean[1] - zoo_table$mean[2]))
-# Creation of a more visually appealing table
-zoo_table %>% kable() %>% kable_styling() %>% 
-  as_image(file = "C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_table.png")
-
-# Line plot of quarterly 
-ggplot(zoo_frame) +
-  geom_line(aes(x = quarter, y = mean), size = 0.5) + ylab("Radiance") +
-  geom_point(mapping = aes(x = quarter, y = mean, color = group), size = 2) +
-  xlab(NULL) +
-  ggtitle("Comparison of radiance of before and after
-light instalation at Polo Grounds by looking at quarterly means") 
-  # ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/polo_qline_plot.png")
-```
-
-Quarterly means of Polo Ground
-```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("graphics\\polo_qline_plot.png")
-```
-
-Full time series mean split by time period with difference of before and after light installation.
-
-```{r, out.width = "80%", echo = FALSE, fig.align = 'center'}
-#knitr::include_graphics("graphics\\polo_table.png")
-```
 
 #### **2.  BLM Protest Analysis**
 
-
-Reading in BLM Protest Points and NYC GRID. 
-
-```{r, eval = FALSE}
-blm_csv <- read.csv("//Users//liamtobin//downloads//BLM Protest Points - Sheet1.csv")
-
-s3 <- stack("//Users//liamtobin//downloads//floodlightblmdata//bm_nyc.grd")
-```
-
-Reading in Polo Ground Towers proof of concept. 
-
-```{r, eval = FALSE}
-nycha <- geojson_sf("//Users//liamtobin//downloads//floodlightblmdata//nycha.geojson")
-
-# Select Polo Grounds Towers for proof of concept
-polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS")
-
-# Shapefile of census tracts
-nytract <- st_read("//Users//liamtobin//downloads//floodlightblmdata//nyct2020.shp") %>%
-  st_transform(crs(nycha))
-
-# Visualize housing and tracts
-par(mar = c(0, 0, 1, 0))
-plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9", 
-     main = "NYC Public Housing Development")
-plot(nycha %>% st_geometry(), col = "blue", border = 'blue', add = TRUE)
-plot(polo %>% st_geometry(), col = "red", border = 'red', add = TRUE)
-plot(polo %>% st_geometry() %>% st_centroid() %>% st_buffer(1000), 
-     col = NA, border = 'red', add = TRUE)
-```
 
 Plotting all BLM Protest Points. 
 
 ```{r, error = TRUE, warning = FALSE, message = FALSE, fig.height = 6, fig.width = 6, fig.align = 'center', eval = FALSE}
 # Read protest points for BLM protests
-blm_csv <- read.csv("//Users//liamtobin//downloads//BLM Protest Points - Sheet1.csv")
-
-# Convert protest points csv to sf
+# blm_csv <- read.csv("//Users//liamtobin//downloads//BLM Protest Points - Sheet1.csv")
+# 
+# # Convert protest points csv to sf
 blm_pts <- st_as_sf(blm_csv, coords = c("Long", "Lat"))
 
 # Add crs to protest points
@@ -436,77 +316,16 @@ plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9",
 plot(blm_pts %>% st_geometry(), col = "blue", pch = 16, add = TRUE)
 ```
 
-Plotting only Night Time BLM Protest Points. 
-
-```{r, error = TRUE, warning = FALSE, message = FALSE, fig.height = 6, fig.width = 6, fig.align = 'center', eval = FALSE}
-# Read protest points for BLM protests
-blm_csv_night <- read.csv("//Users//liamtobin//downloads//BLM Protest Points Night - Sheet1.csv")
-
-# Convert protest points csv to sf
-blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
-
-# Add crs to protest points
-st_crs(blm_pts_night) <- st_crs(nycha)
-
-# Visualize protest points
-par(mar = c(0, 0, 1, 0))
-plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9", 
-     main = "BLM Protest Locations Night")
-plot(blm_pts_night %>% st_geometry(), col = "blue", pch = 16, add = TRUE)
-
-```
-
-Plotting long term mean of Nighttime lights for NYC. 
-
-```{r, error = TRUE, warning = FALSE, message = FALSE, fig.height = 6, fig.width = 6, fig.align = 'center', eval = FALSE}
-# Upload raster stack of nighttime lights
-s <- stack("//Users//liamtobin//downloads//floodlightblmdata//bm_nyc_cen.grd")
-
-# Calculate the long term mean of nighttime lights.
-mean_s <- mean(s, na.rm = TRUE)
-
-# Convert raster to dataframe for plotting
-mean_s_df <- as.data.frame(rasterToPoints(mean_s))
-colnames(mean_s_df) <- c('x', 'y', 'value')
-
-par(mar = c(0, 0, 1, 0))
-plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9", 
-     main = "BLM Protest Locations")
-plot(blm_pts %>% st_geometry(), col = "blue", pch = 16, add = TRUE)
-
-# Plot long term mean of nighttime lights for NYC
-ggplot() + 
-  geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
-  geom_sf(data = nytract, fill = NA, col = alpha("white", 0.2)) +
-  ggtitle("Nighttime Lights mean radiance 2012 - 2022") +
-  scale_fill_gradient(low = 'black', high = 'yellow') +
-  xlab('') + ylab('') +
-  coord_sf(expand = 0) +
-  theme_minimal() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-
-```
 
 Plotting long term mean of Nighttime lights with BLM Protest Points on top. 
 
 ```{r, error = TRUE, warning = FALSE, message = FALSE, fig.height = 6, eval = FALSE}
-# Upload raster stack of nighttime lights
-s <- stack("//Users//liamtobin//downloads//floodlightblmdata//bm_nyc_cen.grd")
-
-# Calculate the long term mean of nighttime lights.
-mean_s <- mean(s, na.rm = TRUE)
-
-# Convert raster to dataframe for plotting
-mean_s_df <- as.data.frame(rasterToPoints(mean_s))
-colnames(mean_s_df) <- c('x', 'y', 'value')
-
 # Plot long term mean of nighttime lights for NYC with BLM Night Protest Points.
 ggplot() + 
   geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
   geom_sf(data = nytract, fill = NA, col = alpha("white", 0.2)) +
   geom_sf(data = blm_pts_night, fill = NA, col = "deeppink") + 
   ggtitle("Mean Radiance 2012 - 2022 with BLM Protest Points") +
-  ggsave("BLM_Points_Mean_Radiance.png")
   scale_fill_gradient(low = 'black', high = 'yellow',
                       guide = guide_colorbar(title = "", 
                                              ticks = FALSE)) +
@@ -517,12 +336,12 @@ ggplot() +
         panel.grid.minor = element_blank(),
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
-        axis.ticks = element_blank()) +
-  ggsave("C:/GEOG246_R/floodlightblm/vignettes/graphics/blm_points_mean_radiance.png")
+        axis.ticks = element_blank()) 
+  ggsave("external/nightlight/blm_points_mean_radiance.png")
 ```
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\BLM_Points_Mean_Radiance.png")
+#knitr::include_graphics("graphics\\BLM_Points_Mean_Radiance.png")
 ```
 
 Mean 3 day period - comparing it over multiple years. BLM Nighttime Protest Points Overlay 
@@ -551,33 +370,6 @@ print(s2)
 # additional code
 before_inst_sub <- subset(s2, which(getZ(s2) <= '2015-07-01' & (getZ(s2) >= '2014-07-01')))
 
-```
-
-Plotting Nighttime BLM Protest Points on NYC GRID. 
-
-```{r, error = TRUE, warning = FALSE, message = FALSE, fig.height = 6, fig.width = 6, fig.align = 'center', eval = FALSE}
-
-# Read protest points for BLM protests
-blm_csv_night <- read.csv("//Users//liamtobin//downloads//BLM Protest Points Night - Sheet1.csv")
-
-# Convert protest points csv to sf
-blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"))
-
-# Add crs to protest points
-st_crs(blm_pts_night) <- st_crs(nycha)
-
-# Visualize protest points
-par(mar = c(0, 0, 1, 0))
-plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9", 
-     main = "BLM Protest Locations Night")
-plot(blm_pts_night %>% st_geometry(), col = "blue", pch = 16, add = TRUE)
-
-mean_blm <- mean(s, na.rm = TRUE)
-
-mean_blm_night <- as.data.frame(rasterToPoints(mean_blm))
-colnames(mean_blm_night) <- c('x', 'y', 'value')
-
-mean_blm_night
 ```
 
 Polo Ground Code / BLM Protest Point Work Space
@@ -628,19 +420,13 @@ blm_2017_mean <- mean(blm_2017_sub, na.rm = TRUE)
 blm_mean_s <- stack(blm_2020_mean, blm_2019_mean, blm_2019_mean, blm_2017_mean)
 names(blm_mean_s) <- c("May_June_2020", "May_June_2019", "May_June_2018", "May_June_2017")
 blm_mean_overtime <- plot(blm_mean_s)
-dev.copy(png, "blm_mean_overtime.png")
+dev.copy(png, "external/nightlight/blm_mean_overtime.png")
 dev.off()
 
-#Anomalies of radiance, from before and after light installation
-blmdiff <- (blm_2020_mean - blm_2019_mean)
-
-#cropping the anomaly for Polo Grounds, turns out only 1 pixel
-rblm_ann <- crop(x = blmdiff, y = blm_pts_night)
-plot(rblm_ann)
 ```
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\blm_mean_overtime.png")
+#knitr::include_graphics("graphics\\blm_mean_overtime.png")
 ```
 
 #### **3.  Public Housing Lights Analysis**
@@ -657,9 +443,9 @@ values(r) <- 1:ncell(r)
 ph_fraction <- coverage_fraction(r, st_combine(nycha))[[1]]
 
 # Export raster
-writeRaster(ph_fraction, 
-            "C://CLARK//GEOSPAAR//floodlightblm//data//ph_coverage.grd", 
-            format = "raster")
+# writeRaster(ph_fraction, 
+#             "C://CLARK//GEOSPAAR//floodlightblm//data//ph_coverage.grd", 
+#             format = "raster")
 
 # Assign 0 to NA then convert raster to dataframe for plotting
 ph_fraction[ph_fraction == 0] <- NA
@@ -682,15 +468,15 @@ ggplot() +
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.1, 0.85)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/ph_plot.png")
+        legend.position = c(0.1, 0.85)) 
+  ggsave("external/nightlight/ph_plot.png")
 
 ```
 
 The map below shows the area proportion of 500 m pixels covered with public housing developments
 
 ```{r, out.width = "60%", echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("graphics\\ph_plot.png")
+#nitr::include_graphics("graphics\\ph_plot.png")
 ```
 
 #### *Create gridded population from census tracts*
@@ -715,6 +501,7 @@ tracts_cut <- st_intersection(x = nytract_pop, y = grid_p) %>%
   mutate(area_seg = as.numeric(st_area(.) / 10^6)) %>% 
   mutate(pop_seg = area_seg / area * Pop_20)
 
+
 # Calculate sum of population of tract segments within each cell
 # The 'layer' column indicates which cell index the tract segment belongs to
 r_pop_vals <- tracts_cut %>% group_by(layer) %>% 
@@ -736,10 +523,10 @@ r_pop <- setValues(r, values = r_pop_vals_full$pop)
 # Convert population to integer
 r_pop[] <- as.integer(r_pop[])
 
-# Export 2020 gridded population
-writeRaster(r_pop, 
-            "C://CLARK//GEOSPAAR//floodlightblm//data//pop2020_grid.grd", 
-            format = "raster")
+# # Export 2020 gridded population
+# writeRaster(r_pop, 
+#             "C://CLARK//GEOSPAAR//floodlightblm//data//pop2020_grid.grd", 
+#             format = "raster")
 
 # Tract Population map -- This is the true population
 ggplot() +
@@ -759,8 +546,8 @@ ggplot() +
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
         legend.title = element_blank(),
-        legend.position = c(0.1, 0.85)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/pop_plot1.png")
+        legend.position = c(0.1, 0.85)) 
+  ggsave("external/nightlight/pop_plot1.png")
   
 # Convert raster to dataframe for plotting
 r_pop_df <- as.data.frame(rasterToPoints(r_pop))
@@ -784,14 +571,14 @@ ggplot() +
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
         legend.title = element_blank(),
-        legend.position = c(0.1, 0.85)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/pop_plot2.png")
+        legend.position = c(0.1, 0.85)) 
+  ggsave("external/nightlight/pop_plot2.png")
 ```
 
 The maps below compare the true 2020 census tract population to the interpolated population grid.
 
 ```{r, echo = FALSE, out.width = "49%", out.height = "49%"}
-knitr::include_graphics(c("graphics\\pop_plot1.png", "graphics\\pop_plot2.png"))
+#knitr::include_graphics(c("graphics\\pop_plot1.png", "graphics\\pop_plot2.png"))
 ```
 
 #### *Create gridded building volume from NYC buildings*
@@ -805,15 +592,19 @@ The same process for creating a gridded population raster is used for creating a
 buildings_c <- buildings %>% filter(., feat_code == 2100)
 
 # Convert building height to meters, calculate area, then calculate volume
-buildings_vol <- buildings_c %>% mutate(heightroof = heightroof / 3.281) %>% 
-  mutate(area = as.numeric(units::set_units(st_area(.), m^2))) %>% 
-  mutate(volume = area * heightroof)
+
+buildings_vol <- buildings_c %>% 
+  mutate(heightroof_1 = as.numeric(heightroof) / 3.281) %>% 
+  mutate(area = as.numeric(units::set_units(st_area(.), "m^2"))) %>% 
+  mutate(volume = area * heightroof_1)
 
 # Intersect buildings with polygon grid and calculate area of segments
 # then find proportional volume
-build_cut <- st_intersection(x = buildings_vol, y = grid_p) %>% 
+build_cut <- st_intersection(x = st_transform(buildings_vol, st_crs(grid_p)), y = grid_p) %>% 
   mutate(area_seg = as.numeric(units::set_units(st_area(.), m^2))) %>% 
   mutate(volume_seg = area_seg / area * volume)
+
+
 
 # Convert to dataframe selecting cell value (layer) and volume of segment
 build_cut_df <- build_cut %>% as.data.frame(.) %>% select(., c('layer', 'volume_seg'))
@@ -836,9 +627,9 @@ r_bvol <- setValues(r, values = r_vol_vals_full$vol)
 r_bvol[r_bvol == 0] <- NA
 
 # Export building volume raster
-writeRaster(r_bvol, 
-            "C://CLARK//GEOSPAAR//floodlightblm//data//buildvol_grid.grd", 
-            format = "raster")
+# writeRaster(r_bvol, 
+#             "C://CLARK//GEOSPAAR//floodlightblm//data//buildvol_grid.grd", 
+#             format = "raster")
 
 # Convert raster to dataframe for plotting, convert from cubic meters to cubic hectometers
 r_bvol_df <- as.data.frame(rasterToPoints(r_bvol / 1000000))
@@ -866,14 +657,14 @@ ggplot() +
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.15, 0.75)) +
-  ggsave("C:/CLARK/GEOSPAAR/floodlightblm/graphics/bvol_plot.png")
+        legend.position = c(0.15, 0.75)) 
+  ggsave("external/nightlight/bvol_plot.png")
 ```
 
 The map below shows the areal interpolated volume of buildings in each 500 m cell.
 
 ```{r, echo = FALSE, out.width = "60%", fig.align = 'center'}
-knitr::include_graphics("graphics\\bvol_plot.png")
+#knitr::include_graphics("graphics\\bvol_plot.png")
 ```
 
 #### *Sample pixels with and without public housing.*
@@ -882,14 +673,13 @@ The 10-year mean nighttime lights for pixels with public housing (PH) coverage i
 
 ```{r, eval = FALSE}
 # Upload Public Housing Fractional coverage raster
-ph_r <- raster("C://CLARK//GEOSPAAR//floodlightblm//data//ph_coverage.grd")
+ph_r <- ph_fraction
 
 # Upload gridded population
-pop_r <- raster("C://CLARK//GEOSPAAR//floodlightblm//data//pop2020_grid.grd")
+pop_r <- r_pop
 
 # Upload gridded building volume, convert to cubic hectometers
-bvol_r <- 
-  raster("C://CLARK//GEOSPAAR//floodlightblm//data//buildvol_grid.grd") / 1000000
+bvol_r <- r_bvol / 1000000
 
 # Find PH pixels with at least 10% coverage of tracts with public housing
 ph_full_r <- ph_r > 0.1
@@ -942,6 +732,8 @@ t2 <- as.data.frame(t) %>%
 # Find pixels with at 0% coverage with public housing
 no_ph_r <- ph_r == 0
 
+plot(no_ph_r)
+
 # This lapply masks the NYC extent based on the population class and building volume
 # class criteria.  The number of pixels randomly sampled from the No PH raster is the 
 # same number in the frequency cross tabulation.  This is done to ensure that the sampled
@@ -955,7 +747,6 @@ no_ph <- lapply(1:nrow(t2), function(i) {
   no_ph_r_masked[no_ph_r_masked == 0] <- NA
   no_ph_smp <- sampleRandom(x = no_ph_r_masked, size = x$Freq, cells = TRUE)
   return(no_ph_smp[, 1])}) %>% unlist()
-
 # Bind cell index with a column 'layer' set to 1, indicating sampled
 no_ph_df <- cbind(cell = no_ph, layer = rep(1, length(no_ph)))
 
@@ -971,7 +762,7 @@ r_smp <- setValues(r, values = r_smp_df$layer)
 
 # Convert No PH sample raster to points
 smp_p <- rasterToPoints(r_smp) %>% as.data.frame() %>% 
-  st_as_sf(., coords = c("x", "y"), crs = crs(mean_s))
+  st_as_sf(., coords = c("x", "y"), crs = st_crs(mean_s))
 
 # Create column that specifies that pixels do not contain public housing
 # Extract radiance, population, and building volume
