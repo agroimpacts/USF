@@ -59,12 +59,12 @@ polo <- nycha %>% dplyr::filter(., developmen == "POLO GROUNDS TOWERS") %>%
 data("ny_pop")
 ny_pop <- ny_pop 
 
-# Shapefile of NYC building footprints
-buildings <- geojson_sf("~/Clark/RA-ing/SummerInstitute/nightlight/data/Building_Footprints.geojson") %>%
+# Shapefile of NYC building footprints - source NYC open data
+buildings <- geojson_sf("~/data/Building_Footprints.geojson") %>%
      st_transform(., crs = 2263)
 
 # BLM protests
-blm_csv <- read.csv(here("~/Clark/RA-ing/SummerInstitute/nightlight/data/blmprotestpts.csv"))
+blm_csv <- read.csv(here("~/data/blmprotestpts.csv"))
 blm_pts <- st_as_sf(blm_csv, coords = c("Long", "Lat"), 
                     crs = 4326) %>% st_transform(., crs = 2263)
 
@@ -89,7 +89,8 @@ ggplot() +
           show.legend = F, inherit.aes = F) +
   ggtitle("NYC Public Housing Developments") +
   scale_fill_manual(values = c("A" = "blue", "B" = "red"), 
-                    labels = c("Public Housing Developments", "Polo Grounds Towers")) +
+                    labels = c("Public Housing Developments", 
+                               "Polo Grounds Towers")) +
   xlab('') + ylab('') +
   theme_bw() +
   theme(panel.grid.major = element_blank(), 
@@ -147,7 +148,7 @@ The following is a masked visualization of the mean NYC nighttime lights from 20
 #install.packages("rgdal")
 library(rgdal)
 # Upload raster stack of nighttime lights
-bm_nyc_cen <- stack("~/Clark/RA-ing/SummerInstitute/nightlight/data/bm_nyc_cen.grd")
+bm_nyc_cen <- stack("~/data/bm_nyc_cen.grd")
 
 s <- stack(bm_nyc_cen)
 
