@@ -110,7 +110,9 @@ server <- function(input, output) {
 
     # function for label
 
-    factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
+   #factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
+    factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007) # legend v.1
+
 
 
 # output maps
@@ -134,7 +136,7 @@ server <- function(input, output) {
                       labels = paste0("up to $", format(breaks_qt2$brks[-1], digits = 2)),
                       title = "Median Household Income, 2009", opacity = 0.7
             ) %>%
-            addLegend(pal = factpal, values = parcels$DECODES2007,
+            addLegend(pal = factpal2, values = parcels$DECODES2007,
                       title = "Land Use",
                       opacity = 0.7)
         })
@@ -192,7 +194,7 @@ server <- function(input, output) {
                         stroke = TRUE, fill = TRUE,
                         color= NA, opacity = 5,
                         weight = 7,
-                        fillOpacity = 6, fillColor = factpal(neighborhood()$DECODES2007),
+                        fillOpacity = 6, fillColor = factpal2(neighborhood()$DECODES2007),
                         popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>")) #%>%
             #Commented this out to remove the extra "Land Use Types" in legend
             # addLegend(values = ~DECODES2007,
