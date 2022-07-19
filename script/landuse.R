@@ -58,40 +58,23 @@ colnames(parcels)
 names(parcels)[10] <- "Hood"
 names(parcels)[16] <- "Tract"
 saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")
-# library(tmap)
-# tmap_mode("view")
-# tm_shape(brooklyn) +
-#   tm_polygons(col = NA)  +
-#   tm_shape(parcels) +
-#   tm_polygons(col = "AssessLand2007", border.lwd = NA, n = 5)  +
-#   tm_layout(legend.outside = TRUE) +
-#   tm_basemap(server = "OpenStreetMap", alpha = 0.7)
+
+
+#### Plotting leaflet ####
 
 library(leaflet)
 
-# qpal <-  colorBin("Reds", parcels$AssessLand2007, bins = 5)
-# map_interactive <- leaflet(w) %>% # openmaps background not showing up
-#   addPolygons(stroke = TRUE, fill = TRUE,
-#               color= NA, opacity = 5,
-#               # set the stroke width in pixels
-#               weight = 7,
-#               # set the fill opacity
-#               fillOpacity = 6, fillColor = ~qpal(w$AssessLand2007),
-#               highlightOptions = highlightOptions(weight = 5,
-#                                                   fillOpacity = 1,
-#                                                   color = "black",
-#                                                   opacity = 1,
-#                                                   bringToFront = TRUE)) %>%
-#   addProviderTiles(providers$CartoDB.Positron) %>%
-#   addLegend(values = ~AssessLand2007, pal = qpal,title = "Assessed Land Value, 2007")
 
 q <- parcels %>% filter(Hood == "Williamsburg")
+
 # quantile breaks
 #install.packages("classInt")
 library(classInt)
 breaks_qt <- classIntervals(q$AssessLand2007, n = 5, style = "quantile")
 br <- breaks_qt$brks
 qpal <-  colorQuantile("Reds", q$AssessLand2007, n = 5)
+
+# testing Assessed Land Value
 mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
   addPolygons(stroke = TRUE, fill = TRUE,
               color= NA, opacity = 5,
@@ -114,22 +97,24 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
             title = "Assessed Land Value, 2007"
 )
 
-#saveWidget(map_interactive, "bk_assessland_2007_map.html")
+
+# testing land use
+factpal <- colorFactor(topo.colors(12), parcels$DECODES2007) # legend v.1
+factpal2 <- colorFactor(palette = "Spectral", parcels$DECODES2007) # legend v.1
 
 
+colores <- c("#6f42f5", "#a09ea3", "##9e4166", "dark grey", "orange", "" )
+levels <- unique(parcels$DECODES2007)
 
-factpal <- colorFactor(topo.colors(11), parcels$DECODES2007)
 mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
   addPolygons(stroke = TRUE, fill = TRUE,
               color= NA, opacity = 5,
               weight = 7,
-              fillOpacity = 6, fillColor = factpal(q$DECODES2007),
+              fillOpacity = 6, fillColor = factpal2(q$DECODES2007),
               popup = paste("Use: ", q$DECODES2007, "<br>")
   ) %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
-  addLegend(values = values(q$DECODES2007), colors = factpal(q$DECODES2007),
-            # labFormat = function(type, cuts, p) {
-            #   n = length(cuts)
-            #   p = paste0(round(p * 100), '%')
-            #   cuts = paste0(formatC(cuts[-n]), " - ", formatC(cuts[-1]))},
-            labels = q$DECODES2007)
+  addLegend(pal = factpal2, values = q$DECODES2007,
+            title = "Land Use",
+            opacity = 0.7)
+
