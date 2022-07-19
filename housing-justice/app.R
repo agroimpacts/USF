@@ -17,7 +17,7 @@ library(sp)
 library(sf)
 library(shinydashboard)
 #names(providers)
-#setwd(here("housing-justice/"))
+setwd(here("housing-justice/"))
 parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
 
@@ -64,7 +64,7 @@ ui <- dashboardPage(
         fluidPage(
             tabBox(
                 id = "tabset1",
-                tabPanel("2007", leafletOutput("map", height = "570px", width = "700px")),
+                tabPanel("2007", leafletOutput("map", height = "700px", width = "700px")),
                 tabPanel("2020", "placeholder for 2020 data")
             )
             #,
@@ -95,7 +95,8 @@ server <- function(input, output) {
     })
 
     xy <- reactive({
-        w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
+       # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
+        w <- st_bbox(parcels %>% filter(Hood == input$nhood))
         return(w)
     })
 
@@ -107,22 +108,17 @@ server <- function(input, output) {
     breaks_qt2 <- classIntervals(parcels$estimate, n = 7, style = "quantile")
     br <- breaks_qt2$brks
     gpal <-  colorQuantile("Greens", parcels$estimate, n = 7)
-
-    # function for label
-
-   #factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
-    factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007) # legend v.1
-
+    factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007)
 
 
 # output maps
     output$map <- renderLeaflet({
 
-
+    # basemap
         leaflet() %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(-73.93, 40.68, zoom = 12)  %>% # Zoom issue
-            #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>% #Lyndon's rec + my edits
+            #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
             addLayersControl(position = "bottomleft",
                 overlayGroups = c("Land Value", "Household Income",
                                   "Risky locations", "Land Use"),
@@ -147,12 +143,12 @@ server <- function(input, output) {
                       opacity = 0.7)
         })
 
-
+    # layer 1: assessed land value
     observe({
 
         leafletProxy("map", data = neighborhood()) %>%
-           # setView(xy['X'], xy['Y'], zoom = 10) %>%
-           # setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+            #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+            #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
             addPolygons(group = "Land Value",
                         stroke = TRUE, fill = TRUE,
                         color= NA, opacity = 5,
@@ -164,12 +160,12 @@ server <- function(input, output) {
             )
         })
 
-
+    # layer 2: household income
     observe({
 
         leafletProxy("map", data = neighborhood()) %>%
-           # setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
-                    addPolygons(group = "Household Income",
+            #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+            addPolygons(group = "Household Income",
                     stroke = TRUE, fill = TRUE,
                     color= NA, opacity = 5,
                     weight = 7,
@@ -179,22 +175,24 @@ server <- function(input, output) {
                                                         big.mark = ","), "<br>"))
     })
 
+    #layer 3: Risky locations
     observe({
 
         leafletProxy("map", data = priority()) %>%
-            addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
+            #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+                        addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
                         opacity = 5,
                         weight = 7,
                         color = NA,
                         fillOpacity = 6, fillColor = priority()$Name.y)
     })
 
-
+    #layer 4: Land Use
     observe({
 
-        # map
         leafletProxy("map", data = neighborhood()) %>%
-            addPolygons(group = "Land Use",
+            #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+                        addPolygons(group = "Land Use",
                         stroke = TRUE, fill = TRUE,
                         color= NA, opacity = 5,
                         weight = 7,
