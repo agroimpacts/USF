@@ -15,37 +15,68 @@ library(classInt)
 library(RColorBrewer)
 library(sp)
 library(sf)
+library(shinydashboard)
 #names(providers)
-setwd(here("housing-justice/"))
+#setwd(here("housing-justice/"))
 parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
 
+## regular dashboard
 
-ui <- fluidPage(
-    titlePanel("Housing Justice, 2007 - test"),
-    sidebarLayout(
-        sidebarPanel(
-        h5("Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+# ui <- fluidPage(
+#     titlePanel("Housing Justice, 2007 - test"),
+#     sidebarLayout(
+#         sidebarPanel(
+#         h5("Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+#            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+#
+#
+#            + Land Value is based on the Assessor's appraisal for the city of NY.
+#            Data source: PLUTO.
+#
+#
+#            + Income is based on acs5 census data for 2009.
+#            Aggregate data per census tract.
+#
+#
+#            + Policing: either stop and frisk, or rtm file/priority places."),
+#
+#     selectInput("hood",
+#                 "Select a neighborhood",
+#                 choices = c("Select", unique(parcels$Hood)))
+#         ),
+#     mainPanel(leafletOutput("map", height = "600px", width = "700px"))
+#         )
+#  )
 
+## using shinydashboard
 
-           + Land Value is based on the Assessor's appraisal for the city of NY.
-           Data source: PLUTO.
-
-
-           + Income is based on acs5 census data for 2009.
-           Aggregate data per census tract.
-
-
-           + Policing: either stop and frisk, or rtm file/priority places."),
-
-    selectInput("hood",
-                "Select a neighborhood",
-                choices = c("Select", unique(parcels$Hood)))
+ui <- dashboardPage(
+    dashboardHeader(title = "Housing Justice"),
+    dashboardSidebar(
+        sidebarMenu(
+            menuItem(selectInput("hood", "Select a neighborhood",
+                                 choices = c("Select", unique(parcels$Hood)))
+            )
+            )
         ),
-    mainPanel(leafletOutput("map", height = "600px", width = "700px"))
-        )
- )
+    dashboardBody(
+        fluidRow(
+            tabBox(
+                id = "tabset1",
+                tabPanel("2007", leafletOutput("map", height = "800px", width = "1000px")),
+                tabPanel("2020", "placeholder for 2020 data")
+            )
+            #,
+            # tabBox(
+            #     title = "2020 data",
+            #     id = "tabset2",
+            #     tabPanel("2020", leafletOutput("map", height = "800px", width = "1000px"))
+            )
+            #,
+          #box(leafletOutput("map", height = "800px", width = "1000px"))
+          )
+    )
 
 
 
@@ -77,6 +108,12 @@ server <- function(input, output) {
     br <- breaks_qt2$brks
     gpal <-  colorQuantile("Greens", parcels$estimate, n = 7)
 
+    # function for label
+
+   #factpal <- colorFactor(topo.colors(12), parcels$DECODES2007)
+    factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007) # legend v.1
+
+
 
 # output maps
     output$map <- renderLeaflet({
@@ -88,7 +125,7 @@ server <- function(input, output) {
             #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 14) %>% #Lyndon's rec + my edits
             addLayersControl(position = "bottomleft",
                 overlayGroups = c("Land Value", "Household Income",
-                                  "Risky locations"),
+                                  "Risky locations", "Land Use"),
                 options = layersControlOptions(collapsed = FALSE)
             ) %>%
             addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
@@ -98,7 +135,10 @@ server <- function(input, output) {
             addLegend(values = ~estimate, colors = brewer.pal(7, "Greens"),
                       labels = paste0("up to $", format(breaks_qt2$brks[-1], digits = 2)),
                       title = "Median Household Income, 2009", opacity = 0.7
-            )
+            ) %>%
+            addLegend(pal = factpal2, values = parcels$DECODES2007,
+                      title = "Land Use",
+                      opacity = 0.7)
         })
 
 
@@ -154,8 +194,8 @@ server <- function(input, output) {
                         stroke = TRUE, fill = TRUE,
                         color= NA, opacity = 5,
                         weight = 7,
-                        fillOpacity = 6, fillColor = factpal(neighborhood()$DECODES2007),
-                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>"))
+                        fillOpacity = 6, fillColor = factpal2(neighborhood()$DECODES2007),
+                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>")) #%>%
             #Commented this out to remove the extra "Land Use Types" in legend
             # addLegend(values = ~DECODES2007,
             #           pal = factpal,
