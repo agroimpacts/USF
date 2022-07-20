@@ -52,21 +52,47 @@ bk_priority <- readRDS("bk_priority.RDS")
 ## using shinydashboard
 
 ui <- dashboardPage(
+    skin = "green",
     dashboardHeader(title = "Housing Justice"),
     dashboardSidebar(
+        h5("
+        Land Value is based on the Assessor's appraisal for the city of NY.
+           Data source: PLUTO "),
+        h5("
+        Income is based on acs5 census data for 2009.
+        Aggregate data per census tract."),
+        h5("
+        Risky locations are the outputs of an RTM analysis based on
+           historic crime data for NYC."),
+        width = 350,
         sidebarMenu(
             menuItem(selectInput("nhood", "Select a neighborhood",
                                  choices = c("Select", unique(parcels$Hood)))
+            ),
+            menuItem(
+                "Data Sources"
             )
-            )
+            ),
+            menuSubItem("PLUTO data", href = "https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page"),
+            menuSubItem("Historic crime data", href = "https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i")
         ),
     dashboardBody(
+        tags$head(tags$style(HTML('
+      .main-header .logo {
+        font-family: "Arial", Times, "Times New Roman", serif;
+        font-weight: bold;
+        font-size: 24px;
+      }
+    '))),
         fluidPage(
             tabBox(
+                width = 500,
                 id = "tabset1",
-                tabPanel("2007", leafletOutput("map", height = "700px", width = "700px")),
+                tabPanel("2007", background = "maroon", leafletOutput("map", height = "700px")), #, height = "700px", width = "700px"
                 tabPanel("2020", "placeholder for 2020 data")
-            )
+             )#,
+            # box("text, something about housing,
+            #       + Land Value is based on the Assessor's appraisal for the city of NY. Data source: PLUTO")
             #,
             # tabBox(
             #     title = "2020 data",
