@@ -60,11 +60,11 @@ data("ny_pop")
 ny_pop <- ny_pop 
 
 # Shapefile of NYC building footprints - source NYC open data
-buildings <- geojson_sf("~/data/Building_Footprints.geojson") %>%
+buildings <- geojson_sf("~/Clark/RA-ing/SummerInstitute/nightlight/data/Building_Footprints.geojson") %>%
      st_transform(., crs = 2263)
 
 # BLM protests
-blm_csv <- read.csv(here("~/data/blmprotestpts.csv"))
+blm_csv <- read.csv(here("~/Clark/RA-ing/SummerInstitute/nightlight/data/blmprotestpts.csv"))
 blm_pts <- st_as_sf(blm_csv, coords = c("Long", "Lat"), 
                     crs = 4326) %>% st_transform(., crs = 2263)
 
@@ -148,7 +148,7 @@ The following is a masked visualization of the mean NYC nighttime lights from 20
 #install.packages("rgdal")
 library(rgdal)
 # Upload raster stack of nighttime lights
-bm_nyc_cen <- stack("~/data/bm_nyc_cen.grd")
+bm_nyc_cen <- stack("~/Clark/RA-ing/SummerInstitute/nightlight/data/bm_nyc_cen.grd")
 
 s <- stack(bm_nyc_cen)
 
@@ -161,7 +161,7 @@ plot(mean_s)
 # Calculate the long term mean of nighttime lights, 
 # project to NYC crs, then mask to NYC.
 
-mean_sc <- mask(mean_s, st_transform(nytract, st_crs(mean_s))))
+mean_sc <- mask(mean_s, st_transform(nytract, st_crs(mean_s)))
 plot(mean_sc)
 
 # Convert raster to dataframe for plotting
@@ -211,15 +211,17 @@ print(s2)
 #Query Formatting
 instal_sub <- subset(s2, 
                      which(getZ(s2) >= '2015-7-01' & (getZ(s2) <= '2016-03-10')))
+plot(instal_sub)
 
 #Getting subsets of before and after year of known installation 
 before_inst_sub <- subset(s2, 
                           which(getZ(s2) <= '2015-07-01' & 
                                   (getZ(s2) >= '2014-07-01')))
+plot(before_inst_sub)
 after_inst_sub <- subset(s2, 
                          which(getZ(s2) >= '2016-03-10' & 
                                  (getZ(s2) <= '2017-03-10')))
-
+plot(after_inst_sub)
 #Creating one year means before and after the installation of lights at Polo Grounds
 
 before_mean <- calc(before_inst_sub, mean, na.rm = TRUE)
@@ -236,6 +238,7 @@ plot(ba_mean_s)
 
 #Annomalies of irradnace, from before and after light installation
 diff <- (after_mean - before_mean)
+plot(diff)
 
 #Histogram of the difference, where positive values indicate increase in values and negative indicates decrease in values
 par(mar = c(3, 3, 3, 3))
@@ -248,14 +251,27 @@ plot(rpolo_ann)
 
 ```{r}
 #subsetting on a ~3 year time frame of before during and after light installation to see if one can find anomalies 
-sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-03-10')))
-polo_s <- crop(x = sub1, y = st_transform(polo, st_crs(sub1))) 
 
-polo_frame <- raster::extract(x = polo_s, 
-                              y = st_transform(polo, st_crs(polo_s)), 
-                              exact = TRUE, na.rm = TRUE) %>% unlist(.) %>% 
-  as.data.frame(.) %>% 
-  mutate(., date = getZ(sub1)) # this line doesn't work
+polo <- polo %>% st_transform(., crs = 4326)
+
+sub1 <- subset(s2, which(getZ(s2) >= '2014-07-01' & (getZ(s2) <= '2017-06-30')))
+polo_s <- crop(x = sub1, y = st_transform(polo, st_crs(sub1)))
+st_bbox(polo_s)
+st_bbox(polo)
+plot(polo_s[[5]])
+plot(polo$geometry, add = TRUE)
+
+polo_frame <- raster::extract(
+  x = polo_s, 
+  y = st_transform(polo, st_crs(polo_s)), small = TRUE, 
+  na.rm = TRUE) %>% unlist(.) %>% as.data.frame(.) #%>% 
+ # mutate(., date = getZ(sub1)) # this line doesn't work
+
+bb <- st_bbox(st_transform(polo, st_crs(polo_s)))
+plot(polo_s[[5]], xlim = bb[c(1, 3)], ylim = bb[c(2, 4)])
+bb
+st_transform(polo, st_crs(polo_s))
+
 
 polo_roll <- polo_frame %>% mutate(month_av = rollapply(polo[[1]], 
               width = 30, FUN = function(x) mean(x, na.rm = TRUE), fill = NA))
