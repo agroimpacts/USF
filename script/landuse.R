@@ -75,7 +75,7 @@ names(parcels)[20] <- "NHood"
 saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")
 
 
-#### Test Plotting leaflet ####
+#### Test Assessed Value ####
 
 library(leaflet)
 
@@ -113,13 +113,9 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
 )
 
 
-# testing land use
+#### testing land use ####
 factpal <- colorFactor(topo.colors(12), parcels$DECODES2007) # legend v.1
 factpal2 <- colorFactor(palette = "Spectral", parcels$DECODES2007) # legend v.1
-
-
-colores <- c("#6f42f5", "#a09ea3", "##9e4166", "dark grey", "orange", "" )
-levels <- unique(parcels$DECODES2007)
 
 mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
   addPolygons(stroke = TRUE, fill = TRUE,

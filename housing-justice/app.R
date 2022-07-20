@@ -52,7 +52,7 @@ bk_priority <- readRDS("bk_priority.RDS")
 ## using shinydashboard
 
 ui <- dashboardPage(
-    skin = "purple",
+    skin = "black",
     dashboardHeader(title = "Housing Justice"),
     dashboardSidebar(
         h5("
@@ -131,9 +131,9 @@ server <- function(input, output) {
     breaks_qt1 <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
     br <- breaks_qt1$brks
     rpal <-  colorQuantile("Reds", parcels$AssessLand2007, n = 5)
-    breaks_qt2 <- classIntervals(parcels$estimate, n = 7, style = "quantile")
+    breaks_qt2 <- classIntervals(parcels$estimate2009, n = 7, style = "quantile")
     br <- breaks_qt2$brks
-    gpal <-  colorQuantile("Greens", parcels$estimate, n = 7)
+    gpal <-  colorQuantile("Greens", parcels$estimate2009, n = 7)
     factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007)
 
 
@@ -157,7 +157,7 @@ server <- function(input, output) {
                                                 big.mark = ",")),
                       title = "Assessed Land Value, 2007", opacity = 0.7
             ) %>%
-            addLegend(values = ~estimate, colors = brewer.pal(7, "Greens"),
+            addLegend(values = ~estimate2009, colors = brewer.pal(7, "Greens"),
                       labels = paste0("up to $",
                                       prettyNum(format(breaks_qt2$brks[-1],
                                                        digits = 2 ),
@@ -195,9 +195,9 @@ server <- function(input, output) {
                     stroke = TRUE, fill = TRUE,
                     color= NA, opacity = 5,
                     weight = 7,
-                    fillOpacity = 6, fillColor = ~gpal(neighborhood()$estimate),
+                    fillOpacity = 6, fillColor = ~gpal(neighborhood()$estimate2009),
                     popup = paste("Value: $",
-                                  prettyNum(format(neighborhood()$estimate),
+                                  prettyNum(format(neighborhood()$estimate2009),
                                                         big.mark = ","), "<br>"))
     })
 
