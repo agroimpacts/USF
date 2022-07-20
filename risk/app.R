@@ -15,8 +15,9 @@ library(sf)
 setwd(here("risk/"))
 bk07crime <- readRDS("bk07crime.RDS")
 rtm <- readRDS("rtm.RDS")
-parcels <- readRDS("parcels.RDS")
-
+# parcels <- readRDS("parcels.RDS")
+bk07heat <- readRDS("bk07heat.RDS")
+#img <- hmtable07col.html
 
 
 ui <- fluidPage(
@@ -30,15 +31,22 @@ ui <- fluidPage(
                        tableOutput(outputId = "hist"))
         ),
         mainPanel(
-            sliderInput("range", "Select an hour of the day to begin",
-                        min = min(bk07crime$HourFormat),
-                        max = max(bk07crime$HourFormat),
-                        value = min(bk07crime$HourFormat),
-                        step = 1,
-                        animate = animationOptions(interval = 1000, loop = FALSE)),
-            leafletOutput("map")
+          fluidRow(sliderInput("range", "Select an hour of the day to begin",
+                               min = min(bk07crime$HourFormat),
+                               max = max(bk07crime$HourFormat),
+                               value = min(bk07crime$HourFormat),
+                               step = 1,
+                               animate = animationOptions(interval = 1000, loop = FALSE)),
+                   leafletOutput("map")),
+          fluidRow(" Heat Maps"),
+
+          fluidRow(
+            splitLayout((leafletOutput("map2")),
+                        "heatmap table placeholder"))
+          )
+
         )
-    ))
+    )
 
 
 server <- function(input, output) {
@@ -48,19 +56,17 @@ server <- function(input, output) {
         return(h)
     })
 
+    heat <- reactive({
+      h <- bk07heat %>% filter(HourFormat == input$range)
+      return(h)
+    })
+
+
     output$map <- renderLeaflet({
-      #  hourofday() %>%
         leaflet() %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
-            setView(-73.95, 40.66, zoom = 11) #%>%
-            # addPolygons(stroke = TRUE, fill = TRUE,
-            #     color= NA, opacity = 5,
-            #     weight = 7,
-            #     fillOpacity = 6, fillColor = parcels$DECODES2007) %>%
-            # addLayersControl(
-            #     overlayGroups =  "Land Use",
-            #     options = layersControlOptions(collapsed = FALSE))
-    })
+            setView(-73.95, 40.66, zoom = 11)
+      })
 
     observe({
         leafletProxy("map", data = hourofday()) %>%
@@ -70,6 +76,25 @@ server <- function(input, output) {
                        stroke = TRUE)
 
     })
+
+    output$map2 <- renderLeaflet({
+      heat() %>%
+      leaflet() %>%
+        addProviderTiles(providers$CartoDB.Positron) %>%
+        setView(-73.95, 40.66, zoom = 11) %>%
+    # })
+    #
+    # observe({
+    #   leafletProxy("map2", data = heat()) %>%
+        addHeatmap(
+          lng = ~long, lat = ~lat, intensity = 2,
+          blur = 10, max = 0.05, radius = 5,
+         # gradient = "RdPu"
+        )
+
+    })
+
+
 
     output$hist <- renderTable({
 
