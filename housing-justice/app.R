@@ -88,8 +88,8 @@ ui <- dashboardPage(
             tabBox(
                 width = 500,
                 id = "tabset1",
-                tabPanel("2007", background = "maroon", leafletOutput("map", height = "700px")), #, height = "700px", width = "700px"
-                tabPanel("2020", "placeholder for 2020 data")
+                tabPanel("2007", leafletOutput("map", height = "700px")), #, height = "700px", width = "700px"
+                tabPanel("2020", leafletOutput("map2", height = "700px"))
              )#,
             # box("text, something about housing,
             #       + Land Value is based on the Assessor's appraisal for the city of NY. Data source: PLUTO")
@@ -126,7 +126,7 @@ server <- function(input, output) {
         return(w)
     })
 
-# functions to format the legend
+# functions to format the legend 2007
     library(classInt)
     breaks_qt1 <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
     br <- breaks_qt1$brks
@@ -137,7 +137,7 @@ server <- function(input, output) {
     factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007)
 
 
-# output maps
+# output maps 1: 2007
     output$map <- renderLeaflet({
 
     # basemap
@@ -223,8 +223,99 @@ server <- function(input, output) {
                         color= NA, opacity = 5,
                         weight = 7,
                         fillOpacity = 6, fillColor = factpal2(neighborhood()$DECODES2007),
-                        popup = paste("Land Use: ", neighborhood()$DECODES2007, "<br>"))
+                        popup = paste("Land Use Type: ", neighborhood()$DECODES2007, "<br>"))
     })
+
+# output map 2: 2020
+
+    output$map2 <- renderLeaflet({
+
+      # basemap
+      leaflet() %>%
+        addProviderTiles(providers$CartoDB.Positron) %>%
+        setView(-73.93, 40.68, zoom = 12)  %>% # Zoom issue
+        #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+        addLayersControl(position = "bottomleft",
+                         overlayGroups = c("Land Value", "Household Income",
+                                           "Risky locations", "Land Use"),
+                         options = layersControlOptions(collapsed = FALSE)
+        ) %>%
+        addLegend(values = ~AssessLand2020, colors = brewer.pal(5, "Reds"),
+                  labels = paste0("up to $",
+                                  prettyNum(format(breaks_qt1$brks[-1],
+                                                   digits = 7),
+                                            big.mark = ",")),
+                  title = "Assessed Land Value, 2020", opacity = 0.7
+        ) %>%
+        addLegend(values = ~estimate2019, colors = brewer.pal(7, "Greens"),
+                  labels = paste0("up to $",
+                                  prettyNum(format(breaks_qt2$brks[-1],
+                                                   digits = 2 ),
+                                            big.mark = ",")),
+                  title = "Median Household Income, 2019", opacity = 0.7
+        ) %>%
+        addLegend(pal = factpal2, values = parcels$DECODES2020,
+                  title = "Land Use",
+                  opacity = 0.7)
+    })
+
+    # layer 1: assessed land value
+    observe({
+
+      leafletProxy("map2", data = neighborhood()) %>%
+        #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+        #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+        addPolygons(group = "Land Value",
+                    stroke = TRUE, fill = TRUE,
+                    color= NA, opacity = 5,
+                    weight = 7,
+                    fillOpacity = 6, fillColor = ~rpal(neighborhood()$AssessLand2020),
+                    popup = paste("Value: $",
+                                  prettyNum(format(neighborhood()$AssessLand2020),
+                                            big.mark = ","), "<br>")
+        )
+    })
+
+    # layer 2: household income
+    observe({
+
+      leafletProxy("map2", data = neighborhood()) %>%
+        #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+        addPolygons(group = "Household Income",
+                    stroke = TRUE, fill = TRUE,
+                    color= NA, opacity = 5,
+                    weight = 7,
+                    fillOpacity = 6, fillColor = ~gpal(neighborhood()$estimate2019),
+                    popup = paste("Value: $",
+                                  prettyNum(format(neighborhood()$estimate2019),
+                                            big.mark = ","), "<br>"))
+    })
+
+    #layer 3: Risky locations
+    # observe({
+    #
+    #   leafletProxy("map", data = priority()) %>%
+    #     #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+    #     addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
+    #                 opacity = 5,
+    #                 weight = 7,
+    #                 color = NA,
+    #                 fillOpacity = 6, fillColor = priority()$Name.y)
+    # })
+    #
+    #layer 4: Land Use
+    observe({
+
+      leafletProxy("map2", data = neighborhood()) %>%
+        #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+        addPolygons(group = "Land Use",
+                    stroke = TRUE, fill = TRUE,
+                    color= NA, opacity = 5,
+                    weight = 7,
+                    fillOpacity = 6, fillColor = factpal2(neighborhood()$DECODES2020),
+                    popup = paste("Land Use Type: ", neighborhood()$DECODES2020, "<br>"))
+    })
+
 
 }
 

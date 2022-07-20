@@ -115,17 +115,17 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
 
 #### testing land use ####
 factpal <- colorFactor(topo.colors(12), parcels$DECODES2007) # legend v.1
-factpal2 <- colorFactor(palette = "Spectral", parcels$DECODES2007) # legend v.1
+factpal2 <- colorFactor(palette = "Spectral", parcels$DECODES2020) # legend v.1
 
 mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
   addPolygons(stroke = TRUE, fill = TRUE,
               color= NA, opacity = 5,
               weight = 7,
-              fillOpacity = 6, fillColor = factpal2(q$DECODES2007),
-              popup = paste("Use: ", q$DECODES2007, "<br>")
+              fillOpacity = 6, fillColor = factpal2(q$DECODES2020),
+              popup = paste("Use: ", q$DECODES2020, "<br>")
   ) %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
-  addLegend(pal = factpal2, values = q$DECODES2007,
+  addLegend(pal = factpal2, values = q$DECODES2020,
             title = "Land Use",
             opacity = 0.7)
 
