@@ -52,7 +52,7 @@ bk_priority <- readRDS("bk_priority.RDS")
 ## using shinydashboard
 
 ui <- dashboardPage(
-    skin = "green",
+    skin = "purple",
     dashboardHeader(title = "Housing Justice"),
     dashboardSidebar(
         h5("
@@ -67,7 +67,7 @@ ui <- dashboardPage(
         width = 350,
         sidebarMenu(
             menuItem(selectInput("nhood", "Select a neighborhood",
-                                 choices = c("Select", unique(parcels$Hood)))
+                                 choices = c("Select", unique(parcels$NHood)))
             ),
             menuItem(
                 "Data Sources"
@@ -79,7 +79,7 @@ ui <- dashboardPage(
     dashboardBody(
         tags$head(tags$style(HTML('
       .main-header .logo {
-        font-family: "Arial", Times, "Times New Roman", serif;
+        font-family: "Arial", serif;
         font-weight: bold;
         font-size: 24px;
       }
@@ -111,7 +111,7 @@ server <- function(input, output) {
 
 # reactive functions - defined by user input
     neighborhood <- reactive({
-        w <- parcels %>% filter(Hood == input$nhood)
+        w <- parcels %>% filter(NHood == input$nhood)
         return(w)
         })
 
@@ -122,7 +122,7 @@ server <- function(input, output) {
 
     xy <- reactive({
        # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
-        w <- st_bbox(parcels %>% filter(Hood == input$nhood))
+        w <- st_bbox(parcels %>% filter(NHood == input$nhood))
         return(w)
     })
 
