@@ -16,14 +16,14 @@ library(RColorBrewer)
 library(sp)
 library(sf)
 library(shinydashboard)
-library(rmapshaper)
 #names(providers)
 setwd("~/Clark/RA-ing/SummerInstitute/USF/housing-justice")
-parcels <- readRDS("parcels.RDS")
+#parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
 library(USF)
 data("brooklyn_neigh")
 brooklyn_neigh <- brooklyn_neigh
+parcels <- fixed_vector
 
 ## regular dashboard
 
@@ -238,26 +238,27 @@ server <- function(input, output) {
 
 # output map 2: 2020
 
+
+    # reactive functions - defined by user input
+    neighborhood <- reactive({
+      w <- parcels %>% filter(NHood == input$nhood)
+      return(w)
+    })
+
+    priority <- reactive({
+      w <- bk_priority %>% filter(Name.y == input$nhood)
+      return(w)
+    })
+
+    xy <- reactive({
+      # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
+      w <- st_bbox(parcels %>% filter(NHood == input$nhood))
+      return(w)
+    })
+
     output$map2 <- renderLeaflet({
 
-      # reactive functions - defined by user input
-      neighborhood <- reactive({
-        w <- parcels %>% filter(NHood == input$nhood)
-        return(w)
-      })
-
-      priority <- reactive({
-        w <- bk_priority %>% filter(Name.y == input$nhood)
-        return(w)
-      })
-
-      xy <- reactive({
-        # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
-        w <- st_bbox(parcels %>% filter(NHood == input$nhood))
-        return(w)
-      })
-
-      # functions to format the legend 2007
+     # functions to format the legend 2007
       library(classInt)
       breaks_qt1 <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
       br <- breaks_qt1$brks

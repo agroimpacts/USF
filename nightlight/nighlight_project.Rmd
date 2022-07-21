@@ -65,13 +65,13 @@ buildings <- geojson_sf("~/Clark/RA-ing/SummerInstitute/nightlight/data/Building
 
 # BLM protests
 blm_csv <- read.csv(here("~/Clark/RA-ing/SummerInstitute/nightlight/data/blmprotestpts.csv"))
-blm_pts <- st_as_sf(blm_csv, coords = c("Long", "Lat"), 
+blm_pts_night <- st_as_sf(blm_csv, coords = c("Long", "Lat"), 
                     crs = 4326) %>% st_transform(., crs = 2263)
 
 # BLM protests at night
 data("blm_csv_night")
 blm_csv_night <- blm_csv_night
-blm_pts_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"), 
+blm_pts_night_night <- st_as_sf(blm_csv_night, coords = c("Long", "Lat"), 
                           crs = 4326) %>% st_transform(., crs = 2263)
 ```
 
@@ -162,6 +162,8 @@ plot(mean_s)
 # project to NYC crs, then mask to NYC.
 
 mean_sc <- mask(mean_s, st_transform(nytract, st_crs(mean_s)))
+
+
 plot(mean_sc)
 
 # Convert raster to dataframe for plotting
@@ -362,7 +364,7 @@ Plotting all BLM Protest Points.
 par(mar = c(0, 0, 1, 0))
 plot(nytract %>% st_geometry(), col = "grey", pch = NA, border = "grey9", 
      main = "BLM Protest Locations")
-plot(blm_pts %>% st_geometry(), col = "blue", pch = 16, add = TRUE)
+plot(blm_pts_night %>% st_geometry(), col = "blue", pch = 16, add = TRUE)
 ```
 
 
@@ -373,7 +375,7 @@ Plotting long term mean of Nighttime lights with BLM Protest Points on top.
 ggplot() + 
   geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
   geom_sf(data = nytract, fill = NA, col = alpha("white", 0.2)) +
-  geom_sf(data = blm_pts_night, fill = NA, col = "deeppink") + 
+  geom_sf(data = blm_pts_night_night, fill = NA, col = "deeppink") + 
   ggtitle("Mean Radiance 2012 - 2022 with BLM Protest Points") +
   scale_fill_gradient(low = 'black', high = 'yellow',
                       guide = guide_colorbar(title = "", 
@@ -638,11 +640,11 @@ The same process for creating a gridded population raster is used for creating a
 ## Create building volume grid
 
 # Filter buildings that are fully constructed (feat_code 2100), 
-buildings_c <- buildings %>% filter(., feat_code == 2100)
+#buildings_c <- buildings %>% filter(., feat_code == 2100)
 
 # Convert building height to meters, calculate area, then calculate volume
 
-buildings_vol <- buildings_c %>% 
+buildings_vol <- buildings %>% 
   mutate(heightroof_1 = as.numeric(heightroof) / 3.281) %>% 
   mutate(area = as.numeric(units::set_units(st_area(.), "m^2"))) %>% 
   mutate(volume = area * heightroof_1)
@@ -877,7 +879,7 @@ Analyzing the locations of BLM Protest Point centroids with nighttime mean radia
 ggplot() + 
   geom_raster(aes(x = x, y = y, fill = value), data = mean_s_df) +
   geom_sf(data = nytract, fill = NA, col = alpha("white", 0.2)) +
-  geom_sf(data = blm_pts_night, fill = NA, col = "deeppink") + 
+  geom_sf(data = blm_pts_night_night, fill = NA, col = "deeppink") + 
   ggsave("BLM_Points_Mean_Radiance.png")
   scale_fill_gradient(low = 'black', high = 'yellow',
                       guide = guide_colorbar(title = "", 

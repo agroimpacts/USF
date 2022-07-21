@@ -14,6 +14,10 @@ census_api_key("db359ed97072a2b7fc30c854994aea932e99598a", install = TRUE)
 # load parcels data
 #parcels <- readRDS("~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")
 
+# fix parcels bug
+# parcels <- parcels[-c(25:33)]
+# colnames(parcels)
+
 
 ### 2009 data ###
 v19 <- load_variables(2009, "acs5", cache = TRUE)
@@ -75,7 +79,7 @@ st_bbox(bk_2019)
 st_bbox(parcels)
 
 
-bk_2019 <- st_transform(bk_2009, crs = 4326)
+bk_2019 <- st_transform(bk_2019, crs = 4326)
 parcels <- st_join(parcels, bk_2019, left = TRUE)%>%
   filter(!estimate %in% NA)
 
@@ -122,3 +126,10 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
             title = "Median Household Income, 2009"
   )
 
+
+
+# table to compare both years
+
+comparison <- parcels %>% select("estimate2019", "estimate2009")
+bk_2009 %>% select("estimate")
+bk_2019 %>% select("estimate")
