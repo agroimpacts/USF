@@ -2,18 +2,9 @@
 
 # RISK - property crime 2007
 
-
 brooklyn <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/nyc/Borough Boundaries/boroughboundary.shp") %>%
   filter(boro_name == "Brooklyn") %>%
   st_transform(. , crs = st_crs(4326))
-
-# load KML
-nyc_boundaries <- st_read(here("~/Clark/RA-ing/SummerInstitute/GIS/nyc/brooklyn_boundaries/nyc_neighborhoods_map.kml")) %>%
-  as.data.frame(.) %>%
-  st_as_sf() %>%
-  st_transform(. , crs = st_crs(4326)) %>%
-  select(-Description)
-comms_bk <- nyc_boundaries[brooklyn, ] %>% st_as_sf()
 
 # Create spatial feature
 # load NYC historic crime data
