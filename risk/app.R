@@ -17,7 +17,6 @@ library(leaflet)
 library(RColorBrewer)
 library(leaflet.extras)
 
-setwd(here("risk/"))
 bk07crime <- readRDS("bk07crime.RDS")
 rtm <- readRDS("rtm.RDS")
 bk_priority <- readRDS("bk_priority.RDS")

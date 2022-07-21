@@ -16,10 +16,14 @@ library(RColorBrewer)
 library(sp)
 library(sf)
 library(shinydashboard)
+library(rmapshaper)
 #names(providers)
-setwd(here("housing-justice/"))
+setwd("~/Clark/RA-ing/SummerInstitute/USF/housing-justice")
 parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
+library(USF)
+data("brooklyn_neigh")
+brooklyn_neigh <- brooklyn_neigh
 
 ## regular dashboard
 
@@ -141,15 +145,20 @@ server <- function(input, output) {
     output$map <- renderLeaflet({
 
     # basemap
-        leaflet() %>%
+        leaflet(brooklyn_neigh) %>%
+        addPolygons(color = "grey", weight = 1, smoothFactor = 0.5,
+                    opacity = 0.4, fillOpacity = 0.03, fillColor = "#f0ede9",
+                    popup = paste(brooklyn_neigh$Name)) %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(-73.93, 40.68, zoom = 12)  %>% # Zoom issue
             #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-            addLayersControl(position = "bottomleft",
+            addLayersControl(position = "topleft",
                 overlayGroups = c("Land Value", "Household Income",
                                   "Risky locations", "Land Use"),
                 options = layersControlOptions(collapsed = FALSE)
             ) %>%
+            hideGroup(c("Household Income",
+                              "Risky locations", "Land Use")) %>%
             addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
                       labels = paste0("up to $",
                                       prettyNum(format(breaks_qt1$brks[-1],
@@ -226,20 +235,53 @@ server <- function(input, output) {
                         popup = paste("Land Use Type: ", neighborhood()$DECODES2007, "<br>"))
     })
 
+
 # output map 2: 2020
 
     output$map2 <- renderLeaflet({
 
+      # reactive functions - defined by user input
+      neighborhood <- reactive({
+        w <- parcels %>% filter(NHood == input$nhood)
+        return(w)
+      })
+
+      priority <- reactive({
+        w <- bk_priority %>% filter(Name.y == input$nhood)
+        return(w)
+      })
+
+      xy <- reactive({
+        # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
+        w <- st_bbox(parcels %>% filter(NHood == input$nhood))
+        return(w)
+      })
+
+      # functions to format the legend 2007
+      library(classInt)
+      breaks_qt1 <- classIntervals(parcels$AssessLand2007, n = 5, style = "quantile")
+      br <- breaks_qt1$brks
+      rpal <-  colorQuantile("Reds", parcels$AssessLand2007, n = 5)
+      breaks_qt2 <- classIntervals(parcels$estimate2009, n = 7, style = "quantile")
+      br <- breaks_qt2$brks
+      gpal <-  colorQuantile("Greens", parcels$estimate2009, n = 7)
+      factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007)
+
       # basemap
-      leaflet() %>%
+      leaflet(brooklyn_neigh) %>%
+        addPolygons(color = "grey", weight = 1, smoothFactor = 0.5,
+                    opacity = 0.4, fillOpacity = 0.03, fillColor = "#f0ede9",
+                    popup = paste(brooklyn_neigh$Name)) %>%
         addProviderTiles(providers$CartoDB.Positron) %>%
         setView(-73.93, 40.68, zoom = 12)  %>% # Zoom issue
         #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-        addLayersControl(position = "bottomleft",
+        addLayersControl(position = "topleft",
                          overlayGroups = c("Land Value", "Household Income",
                                            "Risky locations", "Land Use"),
                          options = layersControlOptions(collapsed = FALSE)
         ) %>%
+        hideGroup(c("Household Income",
+                    "Risky locations", "Land Use")) %>%
         addLegend(values = ~AssessLand2020, colors = brewer.pal(5, "Reds"),
                   labels = paste0("up to $",
                                   prettyNum(format(breaks_qt1$brks[-1],
