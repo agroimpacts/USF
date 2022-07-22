@@ -156,24 +156,24 @@ server <- function(input, output) {
                 options = layersControlOptions(collapsed = FALSE)
             ) %>%
             hideGroup(c("Household Income",
-                              "Risky locations", "Land Use"))  #%>%
-        #     addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
-        #               labels = paste0("up to $",
-        #                               prettyNum(format(breaks_qt1$brks[-1],
-        #                                                digits = 7),
-        #                                         big.mark = ",")),
-        #               title = "Assessed Land Value, 2007", opacity = 0.7
-        #     ) %>%
-        #     addLegend(values = ~estimate2009, colors = brewer.pal(7, "Greens"),
-        #               labels = paste0("up to $",
-        #                               prettyNum(format(breaks_qt2$brks[-1],
-        #                                                digits = 2 ),
-        #                                         big.mark = ",")),
-        #               title = "Median Household Income, 2009", opacity = 0.7
-        #     ) %>%
-        #     addLegend(pal = factpal2, values = parcels$DECODES2007,
-        #               title = "Land Use",
-        #               opacity = 0.7)
+                              "Risky locations", "Land Use"))  %>%
+            addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
+                      labels = paste0("up to $",
+                                      prettyNum(format(breaks_qt1$brks[-1],
+                                                       digits = 7),
+                                                big.mark = ",")),
+                      title = "Assessed Land Value, 2007", opacity = 0.7
+            ) %>%
+            addLegend(values = ~estimate2009, colors = brewer.pal(7, "Greens"),
+                      labels = paste0("up to $",
+                                      prettyNum(format(breaks_qt2$brks[-1],
+                                                       digits = 2 ),
+                                                big.mark = ",")),
+                      title = "Median Household Income, 2009", opacity = 0.7
+            ) %>%
+            addLegend(pal = factpal2, values = parcels$DECODES2007,
+                      title = "Land Use",
+                      opacity = 0.7)
          })
 
     # layer 1: assessed land value
@@ -190,13 +190,6 @@ server <- function(input, output) {
                         popup = paste("Value: $",
                                       prettyNum(format(neighborhood()$AssessLand2007),
                                                 big.mark = ","), "<br>")
-            ) %>%
-            addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
-                      labels = paste0("up to $",
-                                      prettyNum(format(breaks_qt1$brks[-1],
-                                                       digits = 7),
-                                                big.mark = ",")),
-                      title = "Assessed Land Value, 2007", opacity = 0.7
             )
         })
 
