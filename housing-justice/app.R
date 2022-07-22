@@ -18,12 +18,9 @@ library(sf)
 library(shinydashboard)
 #names(providers)
 setwd("~/Clark/RA-ing/SummerInstitute/USF/housing-justice")
-#parcels <- readRDS("parcels.RDS")
+parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
-library(USF)
-data("brooklyn_neigh")
-brooklyn_neigh <- brooklyn_neigh
-parcels <- fixed_vector
+brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
 
 ## regular dashboard
 
@@ -61,13 +58,13 @@ ui <- dashboardPage(
     dashboardSidebar(
         h5("
         Land Value is based on the Assessor's appraisal for the city of NY.
-           Data source: PLUTO "),
+           Data source: PLUTO", align = "center"),
         h5("
         Income is based on acs5 census data for 2009.
-        Aggregate data per census tract."),
+        Aggregate data per census tract.", align = "center"),
         h5("
         Risky locations are the outputs of an RTM analysis based on
-           historic crime data for NYC."),
+           historic crime data for NYC.", align = "center"),
         width = 350,
         sidebarMenu(
             menuItem(selectInput("nhood", "Select a neighborhood",
@@ -141,10 +138,11 @@ server <- function(input, output) {
     factpal2 <- colorFactor(palette = "RdYlBu", parcels$DECODES2007)
 
 
+
 # output maps 1: 2007
     output$map <- renderLeaflet({
 
-    # basemap
+  # basemap
         leaflet(brooklyn_neigh) %>%
         addPolygons(color = "grey", weight = 1, smoothFactor = 0.5,
                     opacity = 0.4, fillOpacity = 0.03, fillColor = "#f0ede9",
@@ -158,25 +156,25 @@ server <- function(input, output) {
                 options = layersControlOptions(collapsed = FALSE)
             ) %>%
             hideGroup(c("Household Income",
-                              "Risky locations", "Land Use")) %>%
-            addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
-                      labels = paste0("up to $",
-                                      prettyNum(format(breaks_qt1$brks[-1],
-                                                       digits = 7),
-                                                big.mark = ",")),
-                      title = "Assessed Land Value, 2007", opacity = 0.7
-            ) %>%
-            addLegend(values = ~estimate2009, colors = brewer.pal(7, "Greens"),
-                      labels = paste0("up to $",
-                                      prettyNum(format(breaks_qt2$brks[-1],
-                                                       digits = 2 ),
-                                                big.mark = ",")),
-                      title = "Median Household Income, 2009", opacity = 0.7
-            ) %>%
-            addLegend(pal = factpal2, values = parcels$DECODES2007,
-                      title = "Land Use",
-                      opacity = 0.7)
-        })
+                              "Risky locations", "Land Use"))  #%>%
+        #     addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
+        #               labels = paste0("up to $",
+        #                               prettyNum(format(breaks_qt1$brks[-1],
+        #                                                digits = 7),
+        #                                         big.mark = ",")),
+        #               title = "Assessed Land Value, 2007", opacity = 0.7
+        #     ) %>%
+        #     addLegend(values = ~estimate2009, colors = brewer.pal(7, "Greens"),
+        #               labels = paste0("up to $",
+        #                               prettyNum(format(breaks_qt2$brks[-1],
+        #                                                digits = 2 ),
+        #                                         big.mark = ",")),
+        #               title = "Median Household Income, 2009", opacity = 0.7
+        #     ) %>%
+        #     addLegend(pal = factpal2, values = parcels$DECODES2007,
+        #               title = "Land Use",
+        #               opacity = 0.7)
+         })
 
     # layer 1: assessed land value
     observe({
@@ -192,6 +190,13 @@ server <- function(input, output) {
                         popup = paste("Value: $",
                                       prettyNum(format(neighborhood()$AssessLand2007),
                                                 big.mark = ","), "<br>")
+            ) %>%
+            addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
+                      labels = paste0("up to $",
+                                      prettyNum(format(breaks_qt1$brks[-1],
+                                                       digits = 7),
+                                                big.mark = ",")),
+                      title = "Assessed Land Value, 2007", opacity = 0.7
             )
         })
 
