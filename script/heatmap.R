@@ -40,6 +40,7 @@ png(filename =
       "~/Clark/RA-ing/SummerInstitute/USF/vignettes/figures/bk07heat.png",
     width = 1280, height = 590)
 bk07table <- t(table(bk07heat$DayFormatText, bk07heat$HourFormat))
+
 grid.table(bk07table)
 dev.off()
 
@@ -66,4 +67,5 @@ html <- "bk_hmtable07col.html"
 setwd("~/Clark/RA-ing/SummerInstitute/USF/risk/")
 saveWidget(hmtable07col, html)
 #webshot(url = "file:///C:/Users/pilii/Documents/Clark/RA-ing/SummerInstitute/USF/localdrive/vignettes/hmtable07col.html") # you can also export to pdf
+
 

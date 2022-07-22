@@ -16,6 +16,8 @@ library(here)
 library(leaflet)
 library(RColorBrewer)
 library(leaflet.extras)
+library(DT)
+library(gridExtra)
 
 bk07crime <- readRDS("bk07crime.RDS")
 rtm <- readRDS("rtm.RDS")
@@ -24,36 +26,7 @@ bk07heat <- readRDS("bk07heat.RDS")
 bk07table <- readRDS("bk07table.RDS")
 
 
-# ui <- fluidPage(
-#     titlePanel("Deconstructing risk for property crime in BK, 2007 - test"),
-#
-#     sidebarLayout(
-#         sidebarPanel(
-#         h5("Risk locations are defined by XYZ. Not all places are equally
-#                risky through out the day."),
-#         verticalLayout("Risky locations for that hour of day",
-#                        tableOutput(outputId = "hist"))
-#         ),
-#         mainPanel(
-#           fluidRow(sliderInput("range", "Select an hour of the day to begin",
-#                                min = min(bk07crime$HourFormat),
-#                                max = max(bk07crime$HourFormat),
-#                                value = min(bk07crime$HourFormat),
-#                                step = 1,
-#                                animate = animationOptions(interval = 1000, loop = FALSE)),
-#                    leafletOutput("map")),
-#           fluidRow(" Heat Maps"),
-#
-#           fluidRow(
-#             splitLayout((leafletOutput("map2")),
-#                         "heatmap table placeholder"))
-#           )
-#
-#         )
-#     )
 
-
-# Using shinydashboard
 
 ui <- dashboardPage(
   skin = "black",
@@ -72,6 +45,9 @@ ui <- dashboardPage(
           - arson."),
     h5("Based on this classification, we created a property crime variable using
         Historic crime dataset for NYC."),
+    h5("For 2007, the NYPD registered 9346 property crimes in Brooklyn. The
+       information in this dashboard shows their distribution to deconstruct
+       how the police/city/state think about risk"),
     h5("Risk locations are defined by XYZ. Not all places are equally
        risky through out the day"),
     width = 350,
@@ -97,12 +73,14 @@ ui <- dashboardPage(
       }
     '))),
     fluidRow(
-      box(leafletOutput("map")),
-      box(tableOutput(outputId = "hist"))
+      box(title = "Location of P.Crimes", leafletOutput("map")),
+      box(title = "Frequency of recorded crime per location",
+          tableOutput(outputId = "hist"), style = "font-size: 75%")
     ),
     fluidRow(
-      box(leafletOutput("map2")),
-      box (plotOutput(outputId = "heatable"), height = 450)
+      box(title = "Spatial Heatmap", leafletOutput("map2")),
+      box (title = "Temporal Heatmap", DT::dataTableOutput(outputId = "heatable"),
+           style = "font-size: 75%; width: 75%")
     )
   )
 )
@@ -188,10 +166,16 @@ server <- function(input, output) {
     })
 
 
-    output$heatable <- renderPlot({
-      col <- colorRampPalette(brewer.pal(9, "YlOrRd"))(256)
-      bk07table %>% as.matrix() %>%
-      heatmap(., col = col, Rowv = NA, Colv = NA)
+
+    output$heatable <- DT::renderDataTable({
+
+            brks <- quantile(bk07table, probs = seq(.05, .95, .05), na.rm = TRUE)
+      ramp <- colorRampPalette(c("green", "yellow", "red"))
+      clrs <- ramp(length(brks)+1)
+      hmtable07col <- datatable((bk07table),
+                                rownames = (seq(0, 23) %>% as.character)) %>%
+        formatStyle(names(bk07table),backgroundColor = styleInterval(brks, clrs))
+      print(hmtable07col)
     })
 
 }
