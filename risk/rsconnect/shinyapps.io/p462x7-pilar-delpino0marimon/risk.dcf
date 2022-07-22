@@ -5,7 +5,9 @@ account: p462x7-pilar-delpino0marimon
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6674066
-bundleId: 6119832
+bundleId: 6123776
 url: https://p462x7-pilar-delpino0marimon.shinyapps.io/risk/
-when: 1658416108.0687
-lastSyncTime: 1658416108.0687
+when: 1658505290.15987
+lastSyncTime: 1658505290.15987
+asMultiple: FALSE
+asStatic: FALSE
