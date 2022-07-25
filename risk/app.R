@@ -175,7 +175,6 @@ server <- function(input, output) {
       hmtable07col <- datatable((bk07table),
                                 rownames = (seq(0, 23) %>% as.character)) %>%
         formatStyle(names(bk07table),backgroundColor = styleInterval(brks, clrs))
-      print(hmtable07col)
     })
 
 }
