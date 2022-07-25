@@ -133,3 +133,4 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
 library(rmapshaper)
 parcels <-readRDS("parcels.RDS") %>%
   ms_simplify(.)
+saveRDS(parcels, "~/R/USF/housing-justice")
