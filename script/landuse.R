@@ -129,3 +129,7 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
             title = "Land Use",
             opacity = 0.7)
 
+#### simplify features ####
+library(rmapshaper)
+parcels <-readRDS("parcels.RDS") %>%
+  ms_simplify(.)
