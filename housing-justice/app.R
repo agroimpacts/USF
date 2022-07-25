@@ -19,6 +19,7 @@ library(shinydashboard)
 #names(providers)
 setwd("~/R/USF/housing-justice")
 parcels <- readRDS("parcels.RDS")
+#parcels <- readRDS("q.RDS") #Williamsburg test
 bk_priority <- readRDS("bk_priority.RDS")
 brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
 ## regular dashboard
