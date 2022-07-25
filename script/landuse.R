@@ -128,3 +128,5 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
   addLegend(pal = factpal2, values = q$DECODES2020,
             title = "Land Use",
             opacity = 0.7)
+
+saveRDS(q, "~/R/USF/housing-justice/q.RDS")
