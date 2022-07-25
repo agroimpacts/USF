@@ -2,18 +2,9 @@
 
 # RISK - property crime 2007
 
-
 brooklyn <- st_read("~/Clark/RA-ing/SummerInstitute/GIS/nyc/Borough Boundaries/boroughboundary.shp") %>%
   filter(boro_name == "Brooklyn") %>%
   st_transform(. , crs = st_crs(4326))
-
-# load KML
-nyc_boundaries <- st_read(here("~/Clark/RA-ing/SummerInstitute/GIS/nyc/brooklyn_boundaries/nyc_neighborhoods_map.kml")) %>%
-  as.data.frame(.) %>%
-  st_as_sf() %>%
-  st_transform(. , crs = st_crs(4326)) %>%
-  select(-Description)
-comms_bk <- nyc_boundaries[brooklyn, ] %>% st_as_sf()
 
 # Create spatial feature
 # load NYC historic crime data
@@ -47,7 +38,7 @@ bk07crime <- bk07crime %>% # filter propcrime
 # propcrime + neighborhood join
 bk07crime <- st_join(bk07crime, comms_bk, left = TRUE)
 
-saveRDS(bk07crime, "~/Clark/RA-ing/SummerInstitute/USF/risk/bk07crime.RDS")
+#saveRDS(bk07crime, "~/Clark/RA-ing/SummerInstitute/USF/risk/bk07crime.RDS")
 
 
 leaflet(bk07crime) %>%
@@ -65,13 +56,21 @@ saveRDS(rtm, "~/Clark/RA-ing/SummerInstitute/USF/risk/rtm.RDS")
 
 
 rtm %>% filter(HourFormat == "15") %>% filter(!PREM_TYP_DESC == "STREET") %>%
-group_by(.$PREM_TYP_DESC) %>%
-   count() %>% # frequency per group
-   rename(., RTM_factors = ".$PREM_TYP_DESC", Count = "n") %>%
-  as_tibble() %>% arrange(-Count)
+      group_by(.$PREM_TYP_DESC) %>%
+      count() %>% # frequency per group
+      rename(., RTM_factors = ".$PREM_TYP_DESC", Count = "n") %>%
+      as_tibble() %>% arrange(-Count)
+
 
 
 leaflet(bk07crime) %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
   addCircles(radius = 2, weight = 1, color = "#545050",
              fillOpacity = 0.3, stroke = TRUE)
+
+
+# total number of property crime for 2007
+
+bk07crime <- readRDS("~/Clark/RA-ing/SummerInstitute/USF/risk/bk07crime.RDS")
+
+bk07crime %>% select(DayFormat) %>% group_by(.$DayFormat) %>% count()
