@@ -17,11 +17,10 @@ library(sp)
 library(sf)
 library(shinydashboard)
 #names(providers)
-setwd("~/Clark/RA-ing/SummerInstitute/USF/housing-justice")
+setwd("~/R/USF/housing-justice")
 parcels <- readRDS("parcels.RDS")
 bk_priority <- readRDS("bk_priority.RDS")
 brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
-
 ## regular dashboard
 
 # ui <- fluidPage(
