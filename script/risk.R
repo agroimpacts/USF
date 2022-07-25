@@ -73,4 +73,8 @@ leaflet(bk07crime) %>%
 
 bk07crime <- readRDS("~/Clark/RA-ing/SummerInstitute/USF/risk/bk07crime.RDS")
 
-bk07crime %>% select(DayFormat) %>% group_by(.$DayFormat) %>% count()
+bk07crime %>% st_drop_geometry() %>%  select(DayFormat, HourFormat) %>%
+  group_by(.$DayFormat) %>% count()
+
+bk07crime %>% st_drop_geometry() %>%  select(HourFormat) %>%
+  group_by(.$HourFormat) %>% count() %>% as_tibble() %>% arrange(-n)
