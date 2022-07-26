@@ -287,7 +287,7 @@ server <- function(input, output) {
                                                  digits = 7),
                                           big.mark = ",")),
                 title = "Assessed Land Value, 2020", opacity = 0.7
-      ) %>%
+) %>%
       addLegend(values = ~estimate2019, colors = brewer.pal(7, "Greens"),
                 labels = paste0("up to $",
                                 prettyNum(format(breaks_qt2$brks[-1],
