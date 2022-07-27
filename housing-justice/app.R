@@ -180,30 +180,17 @@ server <- function(input, output) {
   })
 
   #layer 3: Risky locations
-<<<<<<< HEAD
   # observe({
   #
   #   leafletProxy("map", data = priority()) %>%
   #     #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+  #     clearGroup(group = "Risky locations") %>% #clears current selection when the user changes the dropdown selection
   #     addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
   #                 opacity = 5,
   #                 weight = 7,
   #                 color = NA,
   #                 fillOpacity = 6, fillColor = priority()$Name.y)
   # })
-=======
-  observe({
-
-    leafletProxy("map", data = priority()) %>%
-      #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-      clearGroup(group = "Risky locations") %>% #clears current selection when the user changes the dropdown selection
-      addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
-                  opacity = 5,
-                  weight = 7,
-                  color = NA,
-                  fillOpacity = 6, fillColor = priority()$Name.y)
-  })
->>>>>>> ffcd9319a4e736ca69eb5526fa2d804020b16ac8
 
   #layer 4: Land Use
   observe({
