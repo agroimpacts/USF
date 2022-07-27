@@ -51,7 +51,7 @@ ui <- dashboardPage(
     h5("Risk locations are defined by XYZ. Not all places are equally
        risky through out the day"),
     width = 350,
-    menuItem(sliderInput("range", "Select an hour of the day to begin",
+    sidebarMenu(tags$style(type = "text/css", ".irs-grid-pol {color: white}"), sliderInput("range", "Select an hour of the day to begin",
                          min = min(bk07crime$HourFormat),
                          max = max(bk07crime$HourFormat),
                          value = min(bk07crime$HourFormat),

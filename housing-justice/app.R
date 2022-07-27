@@ -151,6 +151,7 @@ server <- function(input, output) {
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
       #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+      clearGroup(group = "Land Value") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Land Value",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -167,6 +168,7 @@ server <- function(input, output) {
 
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+      clearGroup(group = "Household Income") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Household Income",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -178,6 +180,7 @@ server <- function(input, output) {
   })
 
   #layer 3: Risky locations
+<<<<<<< HEAD
   # observe({
   #
   #   leafletProxy("map", data = priority()) %>%
@@ -188,12 +191,26 @@ server <- function(input, output) {
   #                 color = NA,
   #                 fillOpacity = 6, fillColor = priority()$Name.y)
   # })
+=======
+  observe({
+
+    leafletProxy("map", data = priority()) %>%
+      #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+      clearGroup(group = "Risky locations") %>% #clears current selection when the user changes the dropdown selection
+      addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
+                  opacity = 5,
+                  weight = 7,
+                  color = NA,
+                  fillOpacity = 6, fillColor = priority()$Name.y)
+  })
+>>>>>>> ffcd9319a4e736ca69eb5526fa2d804020b16ac8
 
   #layer 4: Land Use
   observe({
 
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+      clearGroup(group = "Land Use") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Land Use",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -238,7 +255,7 @@ server <- function(input, output) {
                                                  digits = 7),
                                           big.mark = ",")),
                 title = "Assessed Land Value, 2020", opacity = 0.7
-      ) %>%
+) %>%
       addLegend(values = ~estimate2019, colors = brewer.pal(7, "Greens"),
                 labels = paste0("up to $",
                                 prettyNum(format(breaks_qt2$brks[-1],
