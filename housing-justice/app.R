@@ -16,41 +16,13 @@ library(RColorBrewer)
 library(sp)
 library(sf)
 library(shinydashboard)
-#names(providers)
-setwd("~/R/USF/housing-justice")
-parcels <- readRDS("parcels.RDS")
+library(readr)
+
+parcels <- readRDS("parcels2.RDS")
 #parcels <- readRDS("q.RDS") #Williamsburg test
 bk_priority <- readRDS("bk_priority.RDS")
 brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
-## regular dashboard
 
-# ui <- fluidPage(
-#     titlePanel("Housing Justice, 2007 - test"),
-#     sidebarLayout(
-#         sidebarPanel(
-#         h5("Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-#            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-#
-#
-#            + Land Value is based on the Assessor's appraisal for the city of NY.
-#            Data source: PLUTO.
-#
-#
-#            + Income is based on acs5 census data for 2009.
-#            Aggregate data per census tract.
-#
-#
-#            + Policing: either stop and frisk, or rtm file/priority places."),
-#
-#     selectInput("hood",
-#                 "Select a neighborhood",
-#                 choices = c("Select", unique(parcels$Hood)))
-#         ),
-#     mainPanel(leafletOutput("map", height = "600px", width = "700px"))
-#         )
-#  )
-
-## using shinydashboard
 
 ui <- dashboardPage(
   skin = "black",
@@ -89,19 +61,10 @@ ui <- dashboardPage(
       tabBox(
         width = 500,
         id = "tabset1",
-        tabPanel("2007", leafletOutput("map", height = "700px")), #, height = "700px", width = "700px"
+        tabPanel("2007", leafletOutput("map", height = "700px")),
         tabPanel("2020", leafletOutput("map2", height = "700px"))
-      )#,
-      # box("text, something about housing,
-      #       + Land Value is based on the Assessor's appraisal for the city of NY. Data source: PLUTO")
-      #,
-      # tabBox(
-      #     title = "2020 data",
-      #     id = "tabset2",
-      #     tabPanel("2020", leafletOutput("map", height = "800px", width = "1000px"))
+      )
     )
-    #,
-    #box(leafletOutput("map", height = "800px", width = "1000px"))
   )
 )
 
@@ -116,10 +79,10 @@ server <- function(input, output) {
     return(w)
   })
 
-  priority <- reactive({
-    w <- bk_priority %>% filter(Name.y == input$nhood)
-    return(w)
-  })
+  # priority <- reactive({
+  #   w <- bk_priority %>% filter(Name.y == input$nhood)
+  #   return(w)
+  # })
 
   xy <- reactive({
     # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
@@ -155,8 +118,8 @@ server <- function(input, output) {
                                          "Risky locations", "Land Use"),
                        options = layersControlOptions(collapsed = FALSE)
       ) %>%
-      hideGroup(c("Household Income",
-                  "Risky locations", "Land Use"))  %>%
+      hideGroup(c("Land Value", "Household Income",
+                  "Land Use"))  %>%
       addLegend(values = ~AssessLand2007, colors = brewer.pal(5, "Reds"),
                 labels = paste0("up to $",
                                 prettyNum(format(breaks_qt1$brks[-1],
@@ -173,7 +136,13 @@ server <- function(input, output) {
       ) %>%
       addLegend(pal = factpal2, values = parcels$DECODES2007,
                 title = "Land Use",
-                opacity = 0.7)
+                opacity = 0.7) %>%
+    addPolygons(data = bk_priority, group = "Risky locations",
+                stroke = TRUE, fill = TRUE,
+                opacity = 5,
+                weight = 7,
+                color = NA,
+                fillOpacity = 6, fillColor = bk_priority)
   })
 
   # layer 1: assessed land value
@@ -209,16 +178,16 @@ server <- function(input, output) {
   })
 
   #layer 3: Risky locations
-  observe({
-
-    leafletProxy("map", data = priority()) %>%
-      #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-      addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
-                  opacity = 5,
-                  weight = 7,
-                  color = NA,
-                  fillOpacity = 6, fillColor = priority()$Name.y)
-  })
+  # observe({
+  #
+  #   leafletProxy("map", data = priority()) %>%
+  #     #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+  #     addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
+  #                 opacity = 5,
+  #                 weight = 7,
+  #                 color = NA,
+  #                 fillOpacity = 6, fillColor = priority()$Name.y)
+  # })
 
   #layer 4: Land Use
   observe({
@@ -235,24 +204,6 @@ server <- function(input, output) {
 
 
   # output map 2: 2020
-
-
-  # reactive functions - defined by user input
-  neighborhood <- reactive({
-    w <- parcels %>% filter(NHood == input$nhood)
-    return(w)
-  })
-
-  priority <- reactive({
-    w <- bk_priority %>% filter(Name.y == input$nhood)
-    return(w)
-  })
-
-  xy <- reactive({
-    # w <- st_coordinates(st_centroid(parcels %>% filter(Hood == input$nhood)))
-    w <- st_bbox(parcels %>% filter(NHood == input$nhood))
-    return(w)
-  })
 
   output$map2 <- renderLeaflet({
 
