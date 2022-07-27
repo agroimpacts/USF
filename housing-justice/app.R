@@ -18,7 +18,8 @@ library(sf)
 library(shinydashboard)
 library(readr)
 
-parcels <- readRDS("parcels2.RDS")
+#parcels <- readRDS("parcels2.RDS")
+parcels <- readRDS("parcels.RDS")
 #parcels <- readRDS("q.RDS") #Williamsburg test
 bk_priority <- readRDS("bk_priority.RDS")
 brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
@@ -151,7 +152,7 @@ server <- function(input, output) {
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
       #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
-      clearGroup(group = "Land Value") %>% #clears current selection when the user changes the dropdown selection
+      #clearGroup(group = "Land Value") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Land Value",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -168,7 +169,7 @@ server <- function(input, output) {
 
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-      clearGroup(group = "Household Income") %>% #clears current selection when the user changes the dropdown selection
+      #clearGroup(group = "Household Income") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Household Income",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -197,7 +198,7 @@ server <- function(input, output) {
 
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-      clearGroup(group = "Land Use") %>% #clears current selection when the user changes the dropdown selection
+      #clearGroup(group = "Land Use") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Land Use",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
