@@ -182,6 +182,7 @@ server <- function(input, output) {
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
       #setView(lng = xy()[1,1], lat = xy()[1,2], zoom = 10) %>%
+      clearGroup(group = "Land Value") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Land Value",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -198,6 +199,7 @@ server <- function(input, output) {
 
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+      clearGroup(group = "Household Income") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Household Income",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
@@ -213,6 +215,7 @@ server <- function(input, output) {
 
     leafletProxy("map", data = priority()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+      clearGroup(group = "Risky locations") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Risky locations", stroke = TRUE, fill = TRUE,
                   opacity = 5,
                   weight = 7,
@@ -225,6 +228,7 @@ server <- function(input, output) {
 
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
+      clearGroup(group = "Land Use") %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Land Use",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
