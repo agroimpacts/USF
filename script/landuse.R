@@ -130,3 +130,8 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
             opacity = 0.7)
 
 saveRDS(q, "~/R/USF/housing-justice/q.RDS")
+
+# loading times
+# not on repo but in shiny deployment
+parcels2 <- saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels2.RDS",
+                    compress = FALSE )

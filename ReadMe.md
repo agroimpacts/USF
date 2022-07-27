@@ -48,20 +48,30 @@ library(USF)
 data(name-of-dataset)
 ```
 
-## <ins> How to use the data </ins>
 
-### <ins> For 2022 Summer Institute </ins>
+## <ins> Cloning the Repo </ins>
 
-The Dashboards developed for the Summer Institute have their own folder: `housing-justice` and `risk`.
-
-To run the dashboard from Rstudio you must clone the `USF` repository into your computer with this link:
+To run dashboards or explore the data, you must clone the `USF` repository into your computer with this link:
 
 `https://github.com/agroimpacts/USF.git`
 
-browse through the pertinent folder, and then run the `app.R` script in Rstudio.
-
-
 For step by step demo on how to clone a repository, follow this [link](https://nceas.github.io/oss-lessons/version-control/4-getting-started-with-git-in-RStudio.html).
+
+
+
+## <ins> How to use the data </ins>
+
+### <ins> 2022 Summer Institute </ins>
+
+Two Shiny Dashboards have been created. Click on the links to deploy the Shiny app.
+
+
+- [Housing Justice](https://p462x7-pilar-delpino0marimon.shinyapps.io/housing-justice/#)
+- [Deconstructing Risk](https://p462x7-pilar-delpino0marimon.shinyapps.io/risk/#)
+
+
+The scripts and data used to develop the dashboards are in the `housing-justice` and `risk` folders.
+
 
 
 
