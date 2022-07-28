@@ -166,10 +166,9 @@ server <- function(input, output) {
 
   # layer 2: household income
   observe({
-
     leafletProxy("map", data = neighborhood()) %>%
       #setView(lng = xy()[1], lat = xy()[2], zoom = 10) %>% #Lyndon's rec + my edits
-      #clearGroup(group = "Household Income") %>% #clears current selection when the user changes the dropdown selection
+      #clearMarkerClusters() %>% #clears current selection when the user changes the dropdown selection
       addPolygons(group = "Household Income",
                   stroke = TRUE, fill = TRUE,
                   color= NA, opacity = 5,
