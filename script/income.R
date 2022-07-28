@@ -133,3 +133,5 @@ mapq_interactive <- leaflet(q) %>% # openmaps background not showing up
 comparison <- parcels %>% select("estimate2019", "estimate2009")
 bk_2009 %>% select("estimate")
 bk_2019 %>% select("estimate")
+
+saveRDS(parcels, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/parcels.RDS")

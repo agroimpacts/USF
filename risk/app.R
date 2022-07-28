@@ -19,11 +19,11 @@ library(leaflet.extras)
 library(DT)
 library(gridExtra)
 
-bk07crime <- readRDS("bk07crime.RDS")
-rtm <- readRDS("rtm.RDS")
-bk_priority <- readRDS("bk_priority.RDS")
-bk07heat <- readRDS("bk07heat.RDS")
-bk07table <- readRDS("bk07table.RDS")
+bk07crime <- readRDS("bk07crime.RDS") # crime events
+rtm <- readRDS("rtm.RDS") # Premises description
+bk_priority <- readRDS("bk_priority.RDS") # RTM results
+bk07heat <- readRDS("bk07heat.RDS") # spatial heatmap
+bk07table <- readRDS("bk07table.RDS") # heatmap table
 
 
 
@@ -73,9 +73,14 @@ ui <- dashboardPage(
       }
     '))),
     fluidRow(
-      box(title = "Location of P.Crimes", leafletOutput("map")),
+      box(title = "Top Risky Locations for 2007",
+          tableOutput(outputId = "freq"), style = "font-size: 75%"),
       box(title = "Frequency of recorded crime per location",
           tableOutput(outputId = "hist"), style = "font-size: 75%")
+    ),
+    fluidRow(
+      box(title = "Location of P.Crimes", leafletOutput("map")),
+      box(title = "Stop and Frisk")
     ),
     fluidRow(
       box(title = "Spatial Heatmap", leafletOutput("map2")),
@@ -102,11 +107,11 @@ server <- function(input, output) {
 
 
     output$map <- renderLeaflet({
-        leaflet() %>%
+        leaflet(bk_priority) %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             setView(-73.95, 40.66, zoom = 11) %>%
         addLayersControl(position = "bottomleft",
-            overlayGroups = c("Risky locations"),
+            overlayGroups = c("Priority Risky Locations"),
             options = layersControlOptions(collapsed = FALSE)
             )
       })
@@ -138,11 +143,12 @@ server <- function(input, output) {
         setView(-73.95, 40.66, zoom = 11)
      })
 
+
     observe({
       leafletProxy("map2", data = heat()) %>%
         addHeatmap(
           lng = ~long, lat = ~lat, intensity = 2,
-          blur = 20, max = 0.05, radius = 5,
+          blur = 17, max = 0.05, radius = 5,
          # gradient = "RdPu"
         )
 
@@ -151,8 +157,21 @@ server <- function(input, output) {
 
 
 
-    output$hist <- renderTable({
+    output$freq <- renderTable({
+      rtm %>% group_by(.$PREM_TYP_DESC) %>%
+        filter(!PREM_TYP_DESC == "STREET") %>%
+        filter(!PREM_TYP_DESC %in% NA) %>%
+        filter(!PREM_TYP_DESC == "") %>%
+        filter(!PREM_TYP_DESC == "OTHER") %>%
+        count() %>%
+        rename(., RTMfactors = ".$PREM_TYP_DESC", Count = "n") %>%
+        as_tibble() %>% arrange(-Count) %>% slice(1:12)
 
+    })
+
+
+
+    output$hist <- renderTable({
         rtm %>% filter(HourFormat == input$range) %>%
             filter(!PREM_TYP_DESC == "STREET") %>%
             filter(!PREM_TYP_DESC %in% NA) %>%
@@ -162,13 +181,11 @@ server <- function(input, output) {
             rename(., RTMfactors = ".$PREM_TYP_DESC", Count = "n") %>%
             as_tibble() %>% arrange(-Count) %>% slice(1:12)
 
-
     })
 
 
 
     output$heatable <- DT::renderDataTable({
-
             brks <- quantile(bk07table, probs = seq(.05, .95, .05), na.rm = TRUE)
       ramp <- colorRampPalette(c("green", "yellow", "red"))
       clrs <- ramp(length(brks)+1)
