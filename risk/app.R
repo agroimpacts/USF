@@ -74,7 +74,7 @@ ui <- dashboardPage(
       }
     '))),
     fluidRow(
-      box(title = "Location of Property Crimes", leafletOutput("map")),
+      box(title = "Location of Property Crime", leafletOutput("map")),
       box(title = "Cumulative Spatial Heatmap", leafletOutput("map2"))
     ),
     fluidRow(
