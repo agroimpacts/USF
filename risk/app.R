@@ -74,21 +74,20 @@ ui <- dashboardPage(
       }
     '))),
     fluidRow(
+      box(title = "Location of Property Crimes", leafletOutput("map")),
+      box(title = "Cumulative Spatial Heatmap", leafletOutput("map2"))
+    ),
+    fluidRow(
+      box(title = "Frequency of recorded crime per location",
+        tableOutput(outputId = "hist"), style = "font-size: 75%"),
+      box(title = "Stop and Frisk GIF for 2007",
+          img(src = "2007week.gif", width="450", height="243",
+              align = "left"))
+    ),
+    fluidRow(
       box(title = "Top Risky Locations for 2007",
           tableOutput(outputId = "freq"), style = "font-size: 75%"),
-      box(title = "Frequency of recorded crime per location",
-          tableOutput(outputId = "hist"), style = "font-size: 75%")
-    ),
-    fluidRow(
-      box(title = "Location of P.Crimes", leafletOutput("map")),
-      box(title = "Stop and Frisk GIF for 2007", img(src = "2007week.gif",
-                                                     width="450",
-                                                     height="243",
-                                                     align = "left"))
-    ),
-    fluidRow(
-      box(title = "Spatial Heatmap", leafletOutput("map2")),
-      box (title = "Temporal Heatmap",
+      box (title = "Temporal Heatmap for 2007",
            DT::dataTableOutput(outputId = "heatable"),
            style = "font-size: 75%; width: 75%")
     )
