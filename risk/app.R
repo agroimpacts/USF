@@ -51,7 +51,8 @@ ui <- dashboardPage(
     h5("Risk locations are defined by XYZ. Not all places are equally
        risky through out the day"),
     width = 350,
-    sidebarMenu(tags$style(type = "text/css", ".irs-grid-pol {color: white}"), sliderInput("range", "Select an hour of the day to begin",
+    sidebarMenu(tags$style(type = "text/css", ".irs-grid-pol {color: white}"),
+                sliderInput("range", "Select an hour of the day to begin",
                          min = min(bk07crime$HourFormat),
                          max = max(bk07crime$HourFormat),
                          value = min(bk07crime$HourFormat),
@@ -80,16 +81,18 @@ ui <- dashboardPage(
     ),
     fluidRow(
       box(title = "Location of P.Crimes", leafletOutput("map")),
-      box(title = "Stop and Frisk")
+      box(title = "Stop and Frisk GIF for 2007", img(src = "2007week.gif",
+                                                     width="450",
+                                                     height="243",
+                                                     align = "left"))
     ),
     fluidRow(
       box(title = "Spatial Heatmap", leafletOutput("map2")),
-      box (title = "Temporal Heatmap", DT::dataTableOutput(outputId = "heatable"),
+      box (title = "Temporal Heatmap",
+           DT::dataTableOutput(outputId = "heatable"),
            style = "font-size: 75%; width: 75%")
     )
-  )
-)
-
+))
 
 
 
@@ -101,7 +104,7 @@ server <- function(input, output) {
     })
 
     heat <- reactive({
-      h <- bk07heat %>% filter(HourFormat == input$range)
+      h <- bk07heat %>% filter(HourFormat <= input$range)
       return(h)
     })
 
@@ -116,6 +119,7 @@ server <- function(input, output) {
             )
       })
 
+
     observe({
         leafletProxy("map", data = hourofday()) %>%
             clearShapes() %>%
@@ -124,7 +128,6 @@ server <- function(input, output) {
                        stroke = TRUE)
 
     })
-
 
     observe({
 
@@ -136,25 +139,18 @@ server <- function(input, output) {
                     fillOpacity = 6, fillColor = bk_priority)
     })
 
+
     output$map2 <- renderLeaflet({
-      # heat() %>%
-      leaflet() %>%
+    #  heat() %>%
+      leaflet(heat()) %>%
         addProviderTiles(providers$CartoDB.Positron) %>%
-        setView(-73.95, 40.66, zoom = 11)
-     })
-
-
-    observe({
-      leafletProxy("map2", data = heat()) %>%
+        setView(-73.95, 40.66, zoom = 11) %>%
         addHeatmap(
           lng = ~long, lat = ~lat, intensity = 2,
-          blur = 17, max = 0.05, radius = 5,
-         # gradient = "RdPu"
+          blur = 17, max = 0.05, radius = 8,
+          # gradient = "RdPu"
         )
-
-
-    })
-
+     })
 
 
     output$freq <- renderTable({

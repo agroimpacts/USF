@@ -12,19 +12,41 @@ library(tidyverse)
 bk07heat <- bk07crime %>%
   mutate(long = unlist(map(bk07crime$geometry,1)),
          lat = unlist(map(bk07crime$geometry,2)))
-saveRDS(bk07heat, "~/Clark/RA-ing/SummerInstitute/USF/risk/bk07heat.RDS")
+#saveRDS(bk07heat, "~/Clark/RA-ing/SummerInstitute/USF/risk/bk07heat.RDS")
 
 
-q <- bk07heat %>% filter(HourFormat == 15)
+q <- bk07heat %>% filter(HourFormat >= 16)
 
-leaflet(bk07heat) %>%
+w <- bk07heat %>% filter(HourFormat >= 15)
+
+leaflet(w) %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
-  setView(-73.93, 40.68, zoom = 12)  %>% # Zoom issue
+  setView(-73.93, 40.68, zoom = 11)  %>% # Zoom issue
+  addHeatmap(
+    lng = ~long, lat = ~lat, intensity = 2,
+    blur = 20, max = 0.05, radius = 10,
+    gradient = "RdPu", #cellSize = 0.5
+  )
+
+
+leaflet(q) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  setView(-73.93, 40.68, zoom = 11)  %>% # Zoom issue
   addHeatmap(
     lng = ~long, lat = ~lat, intensity = 2,
     blur = 20, max = 0.05, radius = 5,
     gradient = "RdPu", #cellSize = 0.5
   )
+
+
+
+
+
+
+
+
+
+
 
 
 # get html widget

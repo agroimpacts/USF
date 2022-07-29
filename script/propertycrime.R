@@ -15,18 +15,23 @@ nychcrime <- read.csv("~/Clark/RA-ing/SummerInstitute/GIS/nyc/NYPD_Complaint_Dat
   rename(., c( "Full_Date" = "CMPLNT_FR_DT", "Time" ="CMPLNT_FR_TM")) # rename columns
 
 # make sure both are in the same projection
-st_crs(bk19crime) <- st_crs(brooklyn)
+st_crs(nychcrime) <- st_crs(brooklyn)
 
 ##### 2019 #####
-# exercise data - extract Brooklyn, 2007 to test
+
 bk19crime <- nychcrime %>% filter(BORO_NM == "BROOKLYN") %>%
   separate(Full_Date, into = c("Month", "Day", "Year"),
            sep = "/", remove = FALSE) %>%
   filter(Year == "2019")
 
+# create property crime variable
 bk19crime <- bk19crime %>% filter((grepl("ARSON|BURGLARY|THEFT|VANDALISM",
                                              PD_DESC)))
 
+
+# rtm locations for 2019
+
+bk19crime %>% group_by(.$PREM_TYP_DESC) %>% count() %>% arrange(-n)
 
 heatmap07 <- bk19crime %>% # for temporal heat map
   mutate(timestamp = paste(Full_Date, Time)) %>%
@@ -43,5 +48,28 @@ heatmap07 %>% group_by(.$PREM_TYP_DESC) %>% count() %>% arrange(-n)
 bk19crime <- heatmap07 %>% filter(HourFormat == "15") %>% st_as_sf()
 class(bk19crime)
 
+bk19crime <- bk07crime[-c(2:18, 20:36)]
 
-st_write(bk19crime, "~/Clark/RA-ing/SummerInstitute/USF/localdrive/shapes/allbk19crime.shp")
+# shapefile for RTM software
+st_write(bk19crime, "~/Clark/RA-ing/SummerInstitute/USF/localdrive/shapes/2allbk19crime.shp")
+
+
+
+
+
+
+#### 2007 ####
+
+bk07crime <- nychcrime %>% filter(BORO_NM == "BROOKLYN") %>%
+  separate(Full_Date, into = c("Month", "Day", "Year"),
+           sep = "/", remove = FALSE) %>%
+  filter(Year == "2007")
+
+# create property crime variable
+bk07crime <- bk07crime %>% filter((grepl("ARSON|BURGLARY|THEFT|VANDALISM",
+                                         PD_DESC)))
+
+
+# rtm locations for 2019
+
+bk07crime %>% group_by(.$PREM_TYP_DESC) %>% count() %>% arrange(-n)
