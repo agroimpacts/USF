@@ -1,0 +1,1354 @@
+2022-07-21T14:47:31.299603+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T14:47:31.299371+00:00 shinyapps[6673934]: Running on host: 9a2750e1cff7
+2022-07-21T14:47:31.299639+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T14:47:31.299797+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T14:47:31.299938+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T14:47:31.300006+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:31.300051+00:00 shinyapps[6673934]: Starting R with process ID: '25'
+2022-07-21T14:47:31.300092+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T14:47:31.300130+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T14:47:31.300373+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T14:47:31.300171+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T14:47:31.300216+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T14:47:31.300258+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T14:47:31.300299+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T14:47:31.300338+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T14:47:31.299675+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T14:47:31.299723+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T14:47:31.299760+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T14:47:31.300411+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T14:47:31.300460+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T14:47:31.300500+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T14:47:31.300536+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:31.299833+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T14:47:31.299868+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T14:47:31.299902+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T14:47:31.299916+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T14:47:31.300589+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T14:47:31.300633+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:31.300673+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T14:47:31.300718+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:31.300764+00:00 shinyapps[6673934]:     box
+2022-07-21T14:47:31.300806+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:31.300853+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot change working directory
+2022-07-21T14:47:31.300894+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-21T14:47:31.300936+00:00 shinyapps[6673934]: Execution halted
+2022-07-21T14:47:31.300982+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-21T14:47:31.299409+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T14:47:31.299474+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T14:47:31.299513+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T14:47:31.299560+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T14:47:32.278247+00:00 shinyapps[6673934]: Running on host: 9a2750e1cff7
+2022-07-21T14:47:32.278498+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T14:47:32.278301+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T14:47:32.278461+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T14:47:32.278581+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T14:47:32.278648+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T14:47:32.279102+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T14:47:32.278365+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T14:47:32.278529+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T14:47:32.278692+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T14:47:32.278861+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T14:47:32.278899+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T14:47:32.278734+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T14:47:32.278775+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T14:47:32.278815+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T14:47:32.278419+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T14:47:32.278939+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T14:47:32.279013+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:32.279057+00:00 shinyapps[6673934]: Starting R with process ID: '44'
+2022-07-21T14:47:33.281149+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T14:47:33.281094+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T14:47:33.281199+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T14:47:33.281345+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T14:47:33.281243+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T14:47:33.281399+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T14:47:33.281291+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T14:47:33.281444+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T14:47:33.281481+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T14:47:34.278233+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T14:47:34.278285+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:34.278339+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T14:47:34.278385+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:34.278432+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T14:47:34.278476+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:34.278531+00:00 shinyapps[6673934]:     box
+2022-07-21T14:47:34.278613+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot change working directory
+2022-07-21T14:47:34.278574+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:34.278763+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-21T14:47:34.278720+00:00 shinyapps[6673934]: Execution halted
+2022-07-21T14:47:34.278675+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-21T14:47:42.278239+00:00 shinyapps[6673934]: Running on host: 9a2750e1cff7
+2022-07-21T14:47:42.278291+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T14:47:42.278389+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T14:47:42.278342+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T14:47:42.278442+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T14:47:42.278481+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T14:47:42.278516+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T14:47:42.278554+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T14:47:42.278592+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T14:47:42.278656+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T14:47:42.278699+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T14:47:42.278741+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T14:47:42.278779+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T14:47:42.278820+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T14:47:42.278862+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T14:47:43.280848+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T14:47:43.280911+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:43.280969+00:00 shinyapps[6673934]: Starting R with process ID: '63'
+2022-07-21T14:47:43.281018+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T14:47:44.278291+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T14:47:44.278224+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T14:47:44.278398+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T14:47:44.278347+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T14:47:44.278529+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T14:47:44.278442+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T14:47:44.278570+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T14:47:44.278612+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T14:47:44.278664+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T14:47:44.278794+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:44.278486+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T14:47:44.279068+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-21T14:47:44.278751+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T14:47:44.278839+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T14:47:44.278711+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:44.278880+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:44.279156+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-21T14:47:44.279013+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot change working directory
+2022-07-21T14:47:44.278977+00:00 shinyapps[6673934]: 
+2022-07-21T14:47:44.279113+00:00 shinyapps[6673934]: Execution halted
+2022-07-21T14:47:44.278921+00:00 shinyapps[6673934]:     box
+2022-07-21T14:48:02.278790+00:00 shinyapps[6673934]: Running on host: 9a2750e1cff7
+2022-07-21T14:48:02.278907+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T14:48:02.279335+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T14:48:02.280567+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T14:48:02.278948+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T14:48:02.278985+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T14:48:02.279102+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T14:48:02.279148+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T14:48:02.279181+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T14:48:02.279268+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T14:48:02.279303+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T14:48:02.280649+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T14:48:02.282603+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T14:48:02.282686+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T14:48:02.282743+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T14:48:03.281188+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T14:48:03.281245+00:00 shinyapps[6673934]: 
+2022-07-21T14:48:03.281349+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T14:48:03.281297+00:00 shinyapps[6673934]: Starting R with process ID: '90'
+2022-07-21T14:48:04.297923+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T14:48:04.297982+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T14:48:04.298032+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T14:48:04.298128+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T14:48:04.298085+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T14:48:04.298180+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T14:48:04.298224+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T14:48:04.298268+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T14:48:04.298305+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T14:48:04.298339+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T14:48:05.278267+00:00 shinyapps[6673934]: 
+2022-07-21T14:48:05.278420+00:00 shinyapps[6673934]: 
+2022-07-21T14:48:05.278483+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T14:48:05.278533+00:00 shinyapps[6673934]: 
+2022-07-21T14:48:05.278352+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T14:48:05.278591+00:00 shinyapps[6673934]:     box
+2022-07-21T14:48:05.278669+00:00 shinyapps[6673934]: 
+2022-07-21T14:48:05.278733+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot change working directory
+2022-07-21T14:48:05.278786+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-21T14:48:05.278896+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-21T14:48:05.278840+00:00 shinyapps[6673934]: Execution halted
+2022-07-21T14:52:37.298000+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-21T14:52:40.278240+00:00 shinyapps[6673934]: Container event from container-6986522: stop
+2022-07-21T14:52:40.297949+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T14:52:40.297919+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T14:52:40.297747+00:00 shinyapps[6673934]: Running on host: 6ef44f67e457
+2022-07-21T14:52:40.297986+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T14:52:40.298065+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T14:52:40.298015+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T14:52:40.297837+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T14:52:40.298137+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T14:52:40.297795+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T14:52:40.298167+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T14:52:40.297883+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T14:52:40.298109+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T14:52:40.298514+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T14:52:40.298207+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T14:52:40.298344+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T14:52:40.298466+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T14:52:40.298594+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T14:52:40.298848+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T14:52:40.298633+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T14:52:40.298809+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T14:52:40.299019+00:00 shinyapps[6673934]: 
+2022-07-21T14:52:40.298764+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T14:52:40.299060+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T14:52:40.298254+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T14:52:40.298426+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-21T14:52:40.298386+00:00 shinyapps[6673934]: 
+2022-07-21T14:52:40.298977+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T14:52:40.298671+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T14:52:40.298301+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T14:52:40.298552+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T14:52:40.298892+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T14:52:40.298720+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T14:52:40.299143+00:00 shinyapps[6673934]:     box
+2022-07-21T14:52:40.299101+00:00 shinyapps[6673934]: 
+2022-07-21T14:52:40.298934+00:00 shinyapps[6673934]: 
+2022-07-21T14:52:40.299183+00:00 shinyapps[6673934]: 
+2022-07-21T14:52:45.297712+00:00 shinyapps[6673934]: 
+2022-07-21T14:52:45.297766+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:40123
+2022-07-21T14:59:09.320396+00:00 shinyapps[6673934]: Container event from container-6986547: oom (out of memory)
+2022-07-21T14:59:12.297778+00:00 shinyapps[6673934]: Running on host: 6ef44f67e457
+2022-07-21T14:59:12.297920+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T14:59:12.297853+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T14:59:12.297974+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T14:59:12.298027+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T14:59:12.298076+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T14:59:12.298229+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T14:59:12.298151+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T14:59:12.298112+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T14:59:12.298262+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T14:59:12.298187+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T14:59:12.298310+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T14:59:12.298404+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T14:59:12.298355+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T14:59:12.298449+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T14:59:13.297725+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T14:59:13.297778+00:00 shinyapps[6673934]: 
+2022-07-21T14:59:13.297826+00:00 shinyapps[6673934]: Starting R with process ID: '158'
+2022-07-21T14:59:13.297870+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T14:59:14.301113+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T14:59:14.301500+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T14:59:14.301281+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T14:59:14.301459+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T14:59:14.301185+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T14:59:14.301233+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T14:59:14.301325+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T14:59:14.301369+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T14:59:14.301414+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T14:59:15.388858+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T14:59:15.388961+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T14:59:15.388909+00:00 shinyapps[6673934]: 
+2022-07-21T14:59:15.389028+00:00 shinyapps[6673934]: 
+2022-07-21T14:59:15.389214+00:00 shinyapps[6673934]: 
+2022-07-21T14:59:15.389118+00:00 shinyapps[6673934]: 
+2022-07-21T14:59:15.389174+00:00 shinyapps[6673934]:     box
+2022-07-21T14:59:15.389071+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T14:59:19.300355+00:00 shinyapps[6673934]: 
+2022-07-21T14:59:19.300417+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:36373
+2022-07-21T15:08:06.297752+00:00 shinyapps[6673934]: Container event from container-6986547: oom (out of memory)
+2022-07-21T15:08:08.297729+00:00 shinyapps[6673934]: Running on host: 6ef44f67e457
+2022-07-21T15:08:08.297782+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T15:08:08.297843+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T15:08:08.297988+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T15:08:08.297888+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T15:08:08.298071+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T15:08:08.298310+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T15:08:08.297936+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T15:08:08.298102+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T15:08:08.298474+00:00 shinyapps[6673934]: Starting R with process ID: '319'
+2022-07-21T15:08:08.298035+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T15:08:08.298230+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T15:08:08.298513+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T15:08:08.298144+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T15:08:08.298270+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T15:08:08.298187+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T15:08:08.298352+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T15:08:08.298391+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T15:08:08.298434+00:00 shinyapps[6673934]: 
+2022-07-21T15:08:10.297756+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T15:08:10.298010+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T15:08:10.297918+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T15:08:10.297871+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T15:08:10.298046+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T15:08:10.298164+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T15:08:10.298349+00:00 shinyapps[6673934]: 
+2022-07-21T15:08:10.298087+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T15:08:10.297810+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T15:08:10.298125+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T15:08:10.297966+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T15:08:10.298197+00:00 shinyapps[6673934]: 
+2022-07-21T15:08:10.298301+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T15:08:10.298235+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T15:08:10.298394+00:00 shinyapps[6673934]:     box
+2022-07-21T15:08:10.298270+00:00 shinyapps[6673934]: 
+2022-07-21T15:08:10.298433+00:00 shinyapps[6673934]: 
+2022-07-21T15:08:15.297755+00:00 shinyapps[6673934]: 
+2022-07-21T15:08:15.297838+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:36799
+2022-07-21T15:34:28.297740+00:00 shinyapps[6673934]: Running on host: 6ef44f67e457
+2022-07-21T15:34:28.297788+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T15:34:28.297828+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T15:34:28.297927+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T15:34:28.297875+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T15:34:28.297970+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T15:34:28.298013+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T15:34:28.298049+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T15:34:28.298088+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T15:34:28.298128+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T15:34:28.298181+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T15:34:28.298222+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T15:34:28.298267+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T15:34:28.298307+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T15:34:28.298344+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T15:34:29.297967+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T15:34:29.298076+00:00 shinyapps[6673934]: Starting R with process ID: '767'
+2022-07-21T15:34:29.298029+00:00 shinyapps[6673934]: 
+2022-07-21T15:34:29.298142+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T15:34:30.297742+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T15:34:30.297788+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T15:34:30.297817+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T15:34:30.297878+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T15:34:30.297932+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T15:34:30.297991+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T15:34:30.298073+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T15:34:30.298033+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T15:34:30.298123+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T15:34:31.297735+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T15:34:31.297788+00:00 shinyapps[6673934]: 
+2022-07-21T15:34:31.297833+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T15:34:31.297872+00:00 shinyapps[6673934]: 
+2022-07-21T15:34:31.297901+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T15:34:31.297991+00:00 shinyapps[6673934]:     box
+2022-07-21T15:34:31.298031+00:00 shinyapps[6673934]: 
+2022-07-21T15:34:31.297936+00:00 shinyapps[6673934]: 
+2022-07-21T15:34:36.297763+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:43893
+2022-07-21T15:34:36.297708+00:00 shinyapps[6673934]: 
+2022-07-21T15:35:52.297832+00:00 shinyapps[6673934]: Container event from container-6986547: oom (out of memory)
+2022-07-21T15:51:44.300506+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-21T21:30:32.341731+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-21T21:30:34.302784+00:00 shinyapps[6673934]: Running on host: 0e9ed94910c6
+2022-07-21T21:30:34.302828+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T21:30:34.302894+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T21:30:34.302985+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T21:30:34.302939+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T21:30:34.303034+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T21:30:34.303077+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T21:30:34.303286+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T21:30:34.303167+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T21:30:34.303401+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T21:30:34.303208+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T21:30:34.303507+00:00 shinyapps[6673934]: 
+2022-07-21T21:30:34.303125+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T21:30:34.303547+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-21T21:30:34.303247+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T21:30:34.303590+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T21:30:34.303363+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T21:30:34.303440+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T21:30:34.303322+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T21:30:35.302762+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T21:30:35.302810+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T21:30:35.302853+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T21:30:35.302904+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T21:30:35.302954+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T21:30:35.303045+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T21:30:35.303003+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T21:30:35.303083+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T21:30:35.303111+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T21:30:36.302795+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T21:30:36.302859+00:00 shinyapps[6673934]: 
+2022-07-21T21:30:36.302914+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T21:30:36.302970+00:00 shinyapps[6673934]: 
+2022-07-21T21:30:36.303023+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T21:30:36.303082+00:00 shinyapps[6673934]: 
+2022-07-21T21:30:36.303177+00:00 shinyapps[6673934]: 
+2022-07-21T21:30:36.303135+00:00 shinyapps[6673934]:     box
+2022-07-21T21:30:41.302767+00:00 shinyapps[6673934]: 
+2022-07-21T21:30:41.302816+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:46495
+2022-07-21T21:47:27.343174+00:00 shinyapps[6673934]: Running on host: 0e9ed94910c6
+2022-07-21T21:47:27.343232+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T21:47:27.343284+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T21:47:27.343408+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T21:47:27.343328+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T21:47:27.343448+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T21:47:27.343372+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T21:47:27.343491+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T21:47:27.343533+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T21:47:27.343601+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T21:47:27.343638+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T21:47:27.343714+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T21:47:27.343673+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T21:47:27.343757+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T21:47:27.343805+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T21:47:28.331111+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T21:47:28.331186+00:00 shinyapps[6673934]: 
+2022-07-21T21:47:28.331241+00:00 shinyapps[6673934]: Starting R with process ID: '318'
+2022-07-21T21:47:28.331281+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T21:47:29.365067+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T21:47:29.365017+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T21:47:29.365125+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T21:47:29.365178+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T21:47:29.365263+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T21:47:29.365219+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T21:47:29.365371+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T21:47:29.365302+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T21:47:29.365336+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T21:47:29.365402+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T21:47:29.365447+00:00 shinyapps[6673934]: 
+2022-07-21T21:47:29.365491+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T21:47:29.365533+00:00 shinyapps[6673934]: 
+2022-07-21T21:47:29.365580+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T21:47:29.365618+00:00 shinyapps[6673934]: 
+2022-07-21T21:47:29.365658+00:00 shinyapps[6673934]:     box
+2022-07-21T21:47:29.365697+00:00 shinyapps[6673934]: 
+2022-07-21T21:47:34.302778+00:00 shinyapps[6673934]: 
+2022-07-21T21:47:34.302844+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:35707
+2022-07-21T21:48:35.346428+00:00 shinyapps[6673934]: Running on host: 0e9ed94910c6
+2022-07-21T21:48:35.346481+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T21:48:35.346976+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T21:48:35.346526+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T21:48:35.346574+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T21:48:35.346854+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T21:48:35.346937+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T21:48:35.346661+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T21:48:35.346614+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T21:48:35.346701+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T21:48:35.347056+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T21:48:35.346743+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T21:48:35.346893+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T21:48:35.346818+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T21:48:35.347020+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T21:48:36.302897+00:00 shinyapps[6673934]: Starting R with process ID: '353'
+2022-07-21T21:48:36.302955+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T21:48:36.302783+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T21:48:36.302838+00:00 shinyapps[6673934]: 
+2022-07-21T21:48:37.302766+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T21:48:37.302821+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T21:48:37.302864+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T21:48:37.302961+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T21:48:37.302912+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T21:48:37.303017+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T21:48:37.303060+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T21:48:37.303097+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T21:48:37.303133+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T21:48:38.305402+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T21:48:38.305501+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T21:48:38.305453+00:00 shinyapps[6673934]: 
+2022-07-21T21:48:38.305541+00:00 shinyapps[6673934]: 
+2022-07-21T21:48:38.305580+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T21:48:38.305614+00:00 shinyapps[6673934]: 
+2022-07-21T21:48:38.305660+00:00 shinyapps[6673934]:     box
+2022-07-21T21:48:38.305697+00:00 shinyapps[6673934]: 
+2022-07-21T21:48:42.302753+00:00 shinyapps[6673934]: 
+2022-07-21T21:48:42.302822+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:39145
+2022-07-21T22:06:03.305301+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-21T22:11:43.297744+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-21T22:11:45.297741+00:00 shinyapps[6673934]: Running on host: 136c3f15c585
+2022-07-21T22:11:45.297807+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T22:11:45.297862+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T22:11:45.297904+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T22:11:45.297952+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T22:11:45.297992+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T22:11:45.298077+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T22:11:45.298163+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T22:11:45.298119+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T22:11:45.298211+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T22:11:45.298036+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T22:11:45.298255+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T22:11:45.298381+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T22:11:45.298296+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T22:11:45.298423+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T22:11:45.298341+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T22:11:45.298503+00:00 shinyapps[6673934]: Starting R with process ID: '25'
+2022-07-21T22:11:45.298541+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T22:11:45.298463+00:00 shinyapps[6673934]: 
+2022-07-21T22:11:46.297713+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T22:11:46.297779+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T22:11:46.297835+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T22:11:46.297891+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T22:11:46.297936+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T22:11:46.297981+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T22:11:46.298062+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T22:11:46.298023+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T22:11:46.298110+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T22:11:47.297727+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T22:11:47.297777+00:00 shinyapps[6673934]: 
+2022-07-21T22:11:47.297823+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T22:11:47.297872+00:00 shinyapps[6673934]: 
+2022-07-21T22:11:47.297921+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T22:11:47.297963+00:00 shinyapps[6673934]: 
+2022-07-21T22:11:47.298045+00:00 shinyapps[6673934]: 
+2022-07-21T22:11:47.298005+00:00 shinyapps[6673934]:     box
+2022-07-21T22:11:51.297707+00:00 shinyapps[6673934]: 
+2022-07-21T22:11:51.297763+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:34443
+2022-07-21T22:12:56.297751+00:00 shinyapps[6673934]: Container event from container-6986547: oom (out of memory)
+2022-07-21T22:12:58.297741+00:00 shinyapps[6673934]: Running on host: 136c3f15c585
+2022-07-21T22:12:58.297793+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T22:12:58.297837+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T22:12:58.297890+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T22:12:58.297947+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T22:12:58.298006+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T22:12:58.298051+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T22:12:58.298096+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T22:12:58.298142+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T22:12:58.298185+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T22:12:58.298221+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T22:12:58.298256+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T22:12:58.298297+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T22:12:58.298339+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T22:12:58.298380+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T22:12:58.298418+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T22:12:58.298452+00:00 shinyapps[6673934]: 
+2022-07-21T22:12:58.298489+00:00 shinyapps[6673934]: Starting R with process ID: '69'
+2022-07-21T22:12:58.298518+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T22:13:00.297743+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T22:13:00.297831+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T22:13:00.298007+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T22:13:00.297877+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T22:13:00.297790+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T22:13:00.297918+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T22:13:00.298043+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T22:13:00.298174+00:00 shinyapps[6673934]: 
+2022-07-21T22:13:00.298217+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T22:13:00.298257+00:00 shinyapps[6673934]: 
+2022-07-21T22:13:00.298290+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T22:13:00.297966+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T22:13:00.298128+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T22:13:00.298085+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T22:13:00.298375+00:00 shinyapps[6673934]:     box
+2022-07-21T22:13:00.298331+00:00 shinyapps[6673934]: 
+2022-07-21T22:13:00.298414+00:00 shinyapps[6673934]: 
+2022-07-21T22:13:05.297700+00:00 shinyapps[6673934]: 
+2022-07-21T22:13:05.297762+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:36507
+2022-07-21T22:13:58.297742+00:00 shinyapps[6673934]: Container event from container-6986547: oom (out of memory)
+2022-07-21T22:20:37.297741+00:00 shinyapps[6673934]: Running on host: 136c3f15c585
+2022-07-21T22:20:37.297812+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T22:20:37.297870+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T22:20:37.297932+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T22:20:37.298030+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T22:20:37.298140+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T22:20:37.298183+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T22:20:37.298272+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T22:20:37.298112+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T22:20:37.298352+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T22:20:37.297979+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T22:20:37.298230+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T22:20:37.298313+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T22:20:37.298073+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T22:20:37.298392+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T22:20:43.297733+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T22:20:43.297848+00:00 shinyapps[6673934]: Starting R with process ID: '209'
+2022-07-21T22:20:43.297804+00:00 shinyapps[6673934]: 
+2022-07-21T22:20:43.297902+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T22:20:43.297956+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T22:20:43.298044+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T22:20:43.298001+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T22:20:43.298166+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T22:20:43.298084+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T22:20:43.298127+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T22:20:43.298247+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T22:20:43.298208+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T22:20:43.298285+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T22:20:43.298352+00:00 shinyapps[6673934]: 
+2022-07-21T22:20:43.298315+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T22:20:43.298381+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T22:20:43.298428+00:00 shinyapps[6673934]: 
+2022-07-21T22:20:43.298468+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T22:20:43.298508+00:00 shinyapps[6673934]: 
+2022-07-21T22:20:43.298547+00:00 shinyapps[6673934]:     box
+2022-07-21T22:20:43.298586+00:00 shinyapps[6673934]: 
+2022-07-21T22:20:45.297720+00:00 shinyapps[6673934]: 
+2022-07-21T22:20:45.297771+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:38633
+2022-07-21T22:36:39.348941+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-21T23:47:27.316799+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-21T23:47:32.279052+00:00 shinyapps[6673934]: Running on host: 27af828cd0c6
+2022-07-21T23:47:32.279133+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-21T23:47:32.279260+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-21T23:47:32.279205+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-21T23:47:32.279316+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-21T23:47:32.279431+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-21T23:47:32.279485+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-21T23:47:32.279375+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-21T23:47:32.279541+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-21T23:47:32.279597+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-21T23:47:32.279749+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-21T23:47:32.279698+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-21T23:47:32.279798+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-21T23:47:32.279648+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-21T23:47:32.280134+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-21T23:47:32.279848+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-21T23:47:32.280271+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-21T23:47:32.279901+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-21T23:47:32.280008+00:00 shinyapps[6673934]: 
+2022-07-21T23:47:32.280073+00:00 shinyapps[6673934]: Starting R with process ID: '26'
+2022-07-21T23:47:32.280203+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-21T23:47:32.280398+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-21T23:47:32.280721+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-21T23:47:32.280920+00:00 shinyapps[6673934]: 
+2022-07-21T23:47:32.280334+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-21T23:47:32.280784+00:00 shinyapps[6673934]: 
+2022-07-21T23:47:32.280667+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-21T23:47:32.280614+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-21T23:47:32.280504+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-21T23:47:32.280447+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-21T23:47:32.280863+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-21T23:47:32.281026+00:00 shinyapps[6673934]: 
+2022-07-21T23:47:32.280562+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-21T23:47:32.281084+00:00 shinyapps[6673934]:     box
+2022-07-21T23:47:32.280971+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-21T23:47:32.281132+00:00 shinyapps[6673934]: 
+2022-07-21T23:47:36.281988+00:00 shinyapps[6673934]: 
+2022-07-21T23:47:36.282057+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:39301
+2022-07-22T00:03:26.279253+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-22T14:00:04.279023+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-22T14:00:07.279004+00:00 shinyapps[6673934]: Running on host: 826d34249b57
+2022-07-22T14:00:07.279075+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-22T14:00:07.279134+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-22T14:00:07.279184+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-22T14:00:07.279226+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-22T14:00:07.279272+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-22T14:00:07.279317+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-22T14:00:07.279363+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-22T14:00:07.279398+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-22T14:00:07.279434+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-22T14:00:07.279520+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-22T14:00:07.279562+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-22T14:00:07.279476+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-22T14:00:07.279596+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-22T14:00:07.279632+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-22T14:00:07.279668+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-22T14:00:07.279734+00:00 shinyapps[6673934]: 
+2022-07-22T14:00:07.280005+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-22T14:00:07.279778+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-22T14:00:07.279903+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-22T14:00:07.279813+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-22T14:00:07.280070+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-22T14:00:07.279856+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-22T14:00:07.280158+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-22T14:00:07.280118+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-22T14:00:07.280202+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-22T14:00:07.279961+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-22T14:00:07.280408+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-22T14:00:07.280455+00:00 shinyapps[6673934]: 
+2022-07-22T14:00:07.280296+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-22T14:00:07.280243+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-22T14:00:07.280594+00:00 shinyapps[6673934]:     box
+2022-07-22T14:00:07.280343+00:00 shinyapps[6673934]: 
+2022-07-22T14:00:07.280498+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-22T14:00:07.280545+00:00 shinyapps[6673934]: 
+2022-07-22T14:00:07.280643+00:00 shinyapps[6673934]: 
+2022-07-22T14:00:12.297989+00:00 shinyapps[6673934]: 
+2022-07-22T14:00:12.298052+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:33057
+2022-07-22T14:01:30.279141+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-22T14:01:30.279398+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-22T14:01:30.279188+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-22T14:01:30.279229+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-22T14:01:30.278986+00:00 shinyapps[6673934]: Running on host: 826d34249b57
+2022-07-22T14:01:30.279053+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-22T14:01:30.279638+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-22T14:01:30.279716+00:00 shinyapps[6673934]: 
+2022-07-22T14:01:30.279479+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-22T14:01:30.279804+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-22T14:01:30.279359+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-22T14:01:30.279598+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-22T14:01:30.279441+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-22T14:01:30.279104+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-22T14:01:30.279758+00:00 shinyapps[6673934]: Starting R with process ID: '71'
+2022-07-22T14:01:30.279277+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-22T14:01:30.279318+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-22T14:01:30.279558+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-22T14:01:30.279520+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-22T14:01:31.300478+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-22T14:01:31.300525+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-22T14:01:31.300649+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-22T14:01:31.300559+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-22T14:01:31.300603+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-22T14:01:32.279004+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-22T14:01:32.279054+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-22T14:01:32.279100+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-22T14:01:32.279189+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-22T14:01:32.279394+00:00 shinyapps[6673934]: 
+2022-07-22T14:01:32.279278+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-22T14:01:32.279318+00:00 shinyapps[6673934]: 
+2022-07-22T14:01:32.279233+00:00 shinyapps[6673934]: 
+2022-07-22T14:01:32.279431+00:00 shinyapps[6673934]:     box
+2022-07-22T14:01:32.279356+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-22T14:01:32.279464+00:00 shinyapps[6673934]: 
+2022-07-22T14:01:32.279143+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-22T14:01:37.279020+00:00 shinyapps[6673934]: 
+2022-07-22T14:01:37.279081+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:40797
+2022-07-22T14:17:27.279162+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-22T16:05:27.324496+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-22T16:05:30.302770+00:00 shinyapps[6673934]: Running on host: e168cdf3ae26
+2022-07-22T16:05:30.302886+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-22T16:05:30.302846+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-22T16:05:30.303056+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-22T16:05:30.302926+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-22T16:05:30.302969+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-22T16:05:30.303147+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-22T16:05:30.303010+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-22T16:05:30.303101+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-22T16:05:30.303188+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-22T16:05:30.303231+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-22T16:05:30.303278+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-22T16:05:30.303325+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-22T16:05:30.303403+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-22T16:05:30.303366+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-22T16:05:30.303441+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-22T16:05:30.303616+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-22T16:05:30.303572+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-22T16:05:30.303534+00:00 shinyapps[6673934]: Starting R with process ID: '24'
+2022-07-22T16:05:30.303491+00:00 shinyapps[6673934]: 
+2022-07-22T16:05:30.303658+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-22T16:05:30.303807+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-22T16:05:30.303693+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-22T16:05:30.303851+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-22T16:05:30.303724+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-22T16:05:30.303936+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-22T16:05:30.303764+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-22T16:05:30.303974+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-22T16:05:30.304009+00:00 shinyapps[6673934]: 
+2022-07-22T16:05:30.304059+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-22T16:05:30.303894+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-22T16:05:30.304093+00:00 shinyapps[6673934]: 
+2022-07-22T16:05:30.304124+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-22T16:05:30.304155+00:00 shinyapps[6673934]: 
+2022-07-22T16:05:30.304189+00:00 shinyapps[6673934]:     box
+2022-07-22T16:05:30.304228+00:00 shinyapps[6673934]: 
+2022-07-22T16:05:35.321756+00:00 shinyapps[6673934]: 
+2022-07-22T16:05:35.321802+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:33047
+2022-07-22T16:22:05.302769+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-25T18:40:03.302950+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-25T18:40:09.350874+00:00 shinyapps[6673934]: Running on host: d74d7a19595f
+2022-07-25T18:40:09.350921+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-25T18:40:09.350969+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-25T18:40:09.351019+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-25T18:40:09.351073+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-25T18:40:09.351110+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-25T18:40:09.351147+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-25T18:40:09.351189+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-25T18:40:09.351233+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-25T18:40:09.351276+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-25T18:40:09.351412+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-25T18:40:09.351319+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-25T18:40:09.351365+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-25T18:40:09.351454+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-25T18:40:09.351494+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-25T18:40:09.351533+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-25T18:40:09.351582+00:00 shinyapps[6673934]: 
+2022-07-25T18:40:09.351623+00:00 shinyapps[6673934]: Starting R with process ID: '28'
+2022-07-25T18:40:09.351665+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-25T18:40:09.351716+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-25T18:40:09.351755+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-25T18:40:09.351797+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-25T18:40:09.351838+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-25T18:40:09.351882+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-25T18:40:09.351930+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-25T18:40:09.351971+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-25T18:40:09.352053+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-25T18:40:09.352011+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-25T18:40:09.352095+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-25T18:40:09.352134+00:00 shinyapps[6673934]: 
+2022-07-25T18:40:09.352193+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-25T18:40:09.352229+00:00 shinyapps[6673934]: 
+2022-07-25T18:40:09.352275+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-25T18:40:09.352315+00:00 shinyapps[6673934]: 
+2022-07-25T18:40:09.352359+00:00 shinyapps[6673934]:     box
+2022-07-25T18:40:09.352404+00:00 shinyapps[6673934]: 
+2022-07-25T18:40:12.302794+00:00 shinyapps[6673934]: 
+2022-07-25T18:40:12.302844+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:37937
+2022-07-26T20:47:10.297867+00:00 shinyapps[6673934]: Container event from container-6986547: start
+2022-07-26T20:47:13.297722+00:00 shinyapps[6673934]: Running on host: d76d74329c7e
+2022-07-26T20:47:13.297781+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-26T20:47:13.297833+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-26T20:47:13.297919+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-26T20:47:13.297881+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-26T20:47:13.297954+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-26T20:47:13.297993+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-26T20:47:13.298042+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-26T20:47:13.298083+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-26T20:47:13.298212+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-26T20:47:13.298453+00:00 shinyapps[6673934]: 
+2022-07-26T20:47:13.298124+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-26T20:47:13.298171+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-26T20:47:13.298257+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-26T20:47:13.298294+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-26T20:47:13.298580+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-26T20:47:13.298340+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-26T20:47:13.298869+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-26T20:47:13.298731+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-26T20:47:13.298676+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-26T20:47:13.298376+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-26T20:47:13.298627+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-26T20:47:13.298488+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-26T20:47:13.298536+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-26T20:47:13.298764+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-26T20:47:13.298907+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-26T20:47:13.298949+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-26T20:47:13.298813+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-26T20:47:14.297716+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-26T20:47:14.297771+00:00 shinyapps[6673934]: 
+2022-07-26T20:47:14.297883+00:00 shinyapps[6673934]: 
+2022-07-26T20:47:14.297976+00:00 shinyapps[6673934]: 
+2022-07-26T20:47:14.297833+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-26T20:47:14.297928+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-26T20:47:14.298016+00:00 shinyapps[6673934]:     box
+2022-07-26T20:47:14.298056+00:00 shinyapps[6673934]: 
+2022-07-26T20:47:19.297727+00:00 shinyapps[6673934]: 
+2022-07-26T20:47:19.297775+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:38589
+2022-07-26T21:02:40.297725+00:00 shinyapps[6673934]: Container event from container-6986547: stop
+2022-07-26T22:24:40.504471+00:00 shinyapps[6673934]: Container event from container-7003907: start
+2022-07-26T22:24:41.484585+00:00 shinyapps[6673934]: Running on host: b3ca60108ffe
+2022-07-26T22:24:41.484634+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-26T22:24:41.484677+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-26T22:24:41.484725+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-26T22:24:41.484773+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-26T22:24:41.485027+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-26T22:24:41.485267+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:41.485110+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-26T22:24:41.485067+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-26T22:24:41.485227+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-26T22:24:41.485309+00:00 shinyapps[6673934]: Starting R with process ID: '26'
+2022-07-26T22:24:41.484868+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-26T22:24:41.485189+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-26T22:24:41.485352+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-26T22:24:41.484904+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-26T22:24:41.484815+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-26T22:24:41.485150+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-26T22:24:41.484946+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-26T22:24:41.484986+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-26T22:24:42.484565+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-26T22:24:42.484625+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-26T22:24:42.484936+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-26T22:24:42.484776+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-26T22:24:42.484678+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-26T22:24:42.484728+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-26T22:24:42.484824+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-26T22:24:42.484891+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-26T22:24:42.484977+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-26T22:24:43.484574+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-26T22:24:43.484689+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-26T22:24:43.484634+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:43.484731+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:43.484816+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:43.484765+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-26T22:24:43.484867+00:00 shinyapps[6673934]:     box
+2022-07-26T22:24:43.484907+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:46.484574+00:00 shinyapps[6673934]: Warning in gzfile(file, "rb") :
+2022-07-26T22:24:46.484623+00:00 shinyapps[6673934]:   cannot open compressed file 'bk_priority.RDS', probable reason 'No such file or directory'
+2022-07-26T22:24:46.484729+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-26T22:24:46.484666+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot open the connection
+2022-07-26T22:24:46.484782+00:00 shinyapps[6673934]: Execution halted
+2022-07-26T22:24:46.484825+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-26T22:24:49.484603+00:00 shinyapps[6673934]: Running on host: b3ca60108ffe
+2022-07-26T22:24:49.484656+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-26T22:24:49.484763+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-26T22:24:49.485078+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-26T22:24:49.484716+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-26T22:24:49.484914+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-26T22:24:49.485383+00:00 shinyapps[6673934]: Starting R with process ID: '45'
+2022-07-26T22:24:49.484871+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-26T22:24:49.485000+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-26T22:24:49.484807+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-26T22:24:49.485417+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-26T22:24:49.484959+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-26T22:24:49.485195+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-26T22:24:49.485113+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-26T22:24:49.485145+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-26T22:24:49.485039+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-26T22:24:49.485240+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-26T22:24:49.485347+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:49.485278+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-26T22:24:50.486755+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-26T22:24:50.486806+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-26T22:24:50.486860+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-26T22:24:50.486903+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-26T22:24:50.486951+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-26T22:24:50.486990+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-26T22:24:50.487024+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-26T22:24:50.487071+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-26T22:24:51.484579+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-26T22:24:51.484725+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-26T22:24:51.484631+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-26T22:24:51.484777+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:51.484969+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:51.484681+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:51.484876+00:00 shinyapps[6673934]: 
+2022-07-26T22:24:51.484928+00:00 shinyapps[6673934]:     box
+2022-07-26T22:24:51.484819+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-26T22:24:55.486827+00:00 shinyapps[6673934]: Warning in gzfile(file, "rb") :
+2022-07-26T22:24:55.486918+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot open the connection
+2022-07-26T22:24:55.486966+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-26T22:24:55.487054+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-26T22:24:55.486875+00:00 shinyapps[6673934]:   cannot open compressed file 'bk_priority.RDS', probable reason 'No such file or directory'
+2022-07-26T22:24:55.487011+00:00 shinyapps[6673934]: Execution halted
+2022-07-26T22:28:13.484559+00:00 shinyapps[6673934]: Running on host: b3ca60108ffe
+2022-07-26T22:28:13.484624+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-26T22:28:13.484731+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-26T22:28:13.484676+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-26T22:28:13.484782+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-26T22:28:13.484970+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-26T22:28:13.484825+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-26T22:28:13.484924+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-26T22:28:13.485178+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-26T22:28:13.485052+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-26T22:28:13.484878+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-26T22:28:13.485094+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-26T22:28:13.485216+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-26T22:28:13.485013+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-26T22:28:13.485134+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-26T22:28:14.484578+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-26T22:28:14.484629+00:00 shinyapps[6673934]: 
+2022-07-26T22:28:14.484677+00:00 shinyapps[6673934]: Starting R with process ID: '127'
+2022-07-26T22:28:14.484728+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-26T22:28:15.486803+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-26T22:28:15.486898+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-26T22:28:15.487032+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-26T22:28:15.486854+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-26T22:28:15.486942+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-26T22:28:15.487079+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-26T22:28:15.486983+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-26T22:28:15.487130+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-26T22:28:15.487178+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-26T22:28:16.484536+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-26T22:28:16.484618+00:00 shinyapps[6673934]: 
+2022-07-26T22:28:16.484802+00:00 shinyapps[6673934]: 
+2022-07-26T22:28:16.484669+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-26T22:28:16.484712+00:00 shinyapps[6673934]: 
+2022-07-26T22:28:16.484759+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-26T22:28:16.484899+00:00 shinyapps[6673934]: 
+2022-07-26T22:28:16.484846+00:00 shinyapps[6673934]:     box
+2022-07-26T22:28:19.484565+00:00 shinyapps[6673934]: Warning in gzfile(file, "rb") :
+2022-07-26T22:28:19.484627+00:00 shinyapps[6673934]:   cannot open compressed file 'bk_priority.RDS', probable reason 'No such file or directory'
+2022-07-26T22:28:19.484682+00:00 shinyapps[6673934]: Error in value[[3L]](cond) : cannot open the connection
+2022-07-26T22:28:19.484732+00:00 shinyapps[6673934]: Calls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+2022-07-26T22:28:19.484776+00:00 shinyapps[6673934]: Execution halted
+2022-07-26T22:28:19.484818+00:00 shinyapps[6673934]: Shiny application exiting ...
+2022-07-26T22:32:58.302971+00:00 shinyapps[6673934]: Running on host: df973b2e22a5
+2022-07-26T22:32:58.303001+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-26T22:32:58.303010+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-26T22:32:58.303102+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-26T22:32:58.303150+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-26T22:32:58.303056+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-26T22:32:58.303239+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-26T22:32:58.303197+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-26T22:32:58.303507+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-26T22:32:58.303282+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-26T22:32:58.303461+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-26T22:32:58.303369+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-26T22:32:58.422865+00:00 shinyapps[6673934]: Container event from container-7003928: start
+2022-07-26T22:32:58.303326+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-26T22:32:58.303417+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-26T22:32:58.303548+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-26T22:32:59.302769+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-26T22:32:59.302833+00:00 shinyapps[6673934]: 
+2022-07-26T22:32:59.302888+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-26T22:32:59.302939+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-26T22:33:00.302761+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-26T22:33:00.302811+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-26T22:33:00.302854+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-26T22:33:00.302900+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-26T22:33:00.302942+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-26T22:33:00.302994+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-26T22:33:00.303075+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-26T22:33:00.303036+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-26T22:33:00.303115+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-26T22:33:00.303158+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-26T22:33:00.303199+00:00 shinyapps[6673934]: 
+2022-07-26T22:33:00.303239+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-26T22:33:00.303359+00:00 shinyapps[6673934]: 
+2022-07-26T22:33:00.303500+00:00 shinyapps[6673934]: 
+2022-07-26T22:33:00.303278+00:00 shinyapps[6673934]: 
+2022-07-26T22:33:00.303320+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-26T22:33:00.303399+00:00 shinyapps[6673934]:     box
+2022-07-26T22:33:01.484579+00:00 shinyapps[6673934]: Container event from container-7003907: stop
+2022-07-26T22:33:04.302742+00:00 shinyapps[6673934]: 
+2022-07-26T22:33:04.302801+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:37289
+2022-07-26T22:45:07.305439+00:00 shinyapps[6673934]: Container event from container-7003928: oom (out of memory)
+2022-07-26T22:45:07.305379+00:00 shinyapps[6673934]: Container event from container-7003928: oom (out of memory)
+2022-07-26T22:45:07.305548+00:00 shinyapps[6673934]: Container event from container-7003928: oom (out of memory)
+2022-07-26T22:45:07.305495+00:00 shinyapps[6673934]: Container event from container-7003928: oom (out of memory)
+2022-07-26T23:01:03.346552+00:00 shinyapps[6673934]: Container event from container-7003928: stop
+2022-07-26T23:32:29.098142+00:00 shinyapps[6673934]: Running on host: 20b09b5f6f56
+2022-07-26T23:32:29.098201+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-26T23:32:29.098167+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-26T23:32:29.098259+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-26T23:32:29.098317+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-26T23:32:29.098380+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-26T23:32:29.098438+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-26T23:32:29.098595+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-26T23:32:29.098711+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-26T23:32:29.098659+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-26T23:32:29.098540+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-26T23:32:29.098491+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-26T23:32:29.099040+00:00 shinyapps[6673934]: 
+2022-07-26T23:32:29.098896+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-26T23:32:29.098956+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-26T23:32:29.098765+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-26T23:32:29.098838+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-26T23:32:29.099209+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-26T23:32:29.099148+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-26T23:32:29.099095+00:00 shinyapps[6673934]: Starting R with process ID: '25'
+2022-07-26T23:32:29.099259+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-26T23:32:29.099319+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-26T23:32:29.099376+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-26T23:32:29.099432+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-26T23:32:29.099490+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-26T23:32:29.099693+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-26T23:32:29.099538+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-26T23:32:29.099592+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-26T23:32:29.099643+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-26T23:32:29.099985+00:00 shinyapps[6673934]: 
+2022-07-26T23:32:29.099743+00:00 shinyapps[6673934]: 
+2022-07-26T23:32:29.099873+00:00 shinyapps[6673934]: 
+2022-07-26T23:32:29.100041+00:00 shinyapps[6673934]:     box
+2022-07-26T23:32:29.099820+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-26T23:32:29.099931+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-26T23:32:29.100094+00:00 shinyapps[6673934]: 
+2022-07-26T23:32:31.097861+00:00 shinyapps[6673934]: 
+2022-07-26T23:32:31.097928+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:44549
+2022-07-26T23:48:23.100752+00:00 shinyapps[6673934]: Container event from container-7003928: stop
+2022-07-29T21:23:25.097984+00:00 shinyapps[6673934]: Container event from container-7003928: start
+2022-07-29T21:23:31.097882+00:00 shinyapps[6673934]: Running on host: 6fe5f08f9342
+2022-07-29T21:23:31.097953+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-29T21:23:31.098061+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-29T21:23:31.098005+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-29T21:23:31.098108+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-29T21:23:31.098149+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-29T21:23:31.098184+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-29T21:23:31.098218+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-29T21:23:31.098258+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-29T21:23:31.098297+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-29T21:23:31.098341+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-29T21:23:31.098385+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-29T21:23:31.098494+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-29T21:23:31.098423+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-29T21:23:31.098459+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-29T21:23:31.098685+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-29T21:23:31.098646+00:00 shinyapps[6673934]: Starting R with process ID: '25'
+2022-07-29T21:23:31.098536+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-29T21:23:31.098795+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-29T21:23:31.098601+00:00 shinyapps[6673934]: 
+2022-07-29T21:23:31.098754+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-29T21:23:31.098856+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-29T21:23:31.098929+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-29T21:23:31.098894+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-29T21:23:31.098971+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-29T21:23:31.099000+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-29T21:23:31.099060+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-29T21:23:31.099110+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-29T21:23:31.099150+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-29T21:23:31.099192+00:00 shinyapps[6673934]: 
+2022-07-29T21:23:31.099251+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-29T21:23:31.099301+00:00 shinyapps[6673934]: 
+2022-07-29T21:23:31.099342+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-29T21:23:31.099426+00:00 shinyapps[6673934]:     box
+2022-07-29T21:23:31.099383+00:00 shinyapps[6673934]: 
+2022-07-29T21:23:31.099465+00:00 shinyapps[6673934]: 
+2022-07-29T21:23:33.101997+00:00 shinyapps[6673934]: 
+2022-07-29T21:23:33.102062+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:37445
+2022-07-30T11:47:20.294323+00:00 shinyapps[6673934]: Container event from container-7016921: start
+2022-07-30T11:47:24.294174+00:00 shinyapps[6673934]: Running on host: 9fbfc23b11fd
+2022-07-30T11:47:24.294235+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-30T11:47:24.294290+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-30T11:47:24.294336+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-30T11:47:24.294384+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-30T11:47:24.294428+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-30T11:47:24.294824+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-30T11:47:24.294471+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-30T11:47:24.294862+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-30T11:47:24.294566+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-30T11:47:24.294524+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-30T11:47:24.294972+00:00 shinyapps[6673934]: Starting R with process ID: '26'
+2022-07-30T11:47:24.295103+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-30T11:47:24.294777+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-30T11:47:24.295017+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-30T11:47:24.294927+00:00 shinyapps[6673934]: 
+2022-07-30T11:47:24.295282+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-30T11:47:24.295395+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-30T11:47:24.295236+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-30T11:47:24.295351+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-30T11:47:24.294605+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-30T11:47:24.294648+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-30T11:47:24.295133+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-30T11:47:24.295319+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-30T11:47:24.294693+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-30T11:47:24.295190+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-30T11:47:24.295616+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-30T11:47:24.294733+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-30T11:47:24.295066+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-30T11:47:24.295701+00:00 shinyapps[6673934]:     box
+2022-07-30T11:47:24.295531+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-30T11:47:24.295741+00:00 shinyapps[6673934]: 
+2022-07-30T11:47:24.295436+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-30T11:47:24.295472+00:00 shinyapps[6673934]: 
+2022-07-30T11:47:24.295573+00:00 shinyapps[6673934]: 
+2022-07-30T11:47:24.295661+00:00 shinyapps[6673934]: 
+2022-07-30T11:47:27.294128+00:00 shinyapps[6673934]: 
+2022-07-30T11:47:27.294182+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:46105
+2022-07-30T12:04:49.455258+00:00 shinyapps[6673934]: Running on host: 9fbfc23b11fd
+2022-07-30T12:04:49.455309+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-30T12:04:49.455461+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-30T12:04:49.455366+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-30T12:04:49.455551+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-30T12:04:49.455718+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-30T12:04:49.455414+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-30T12:04:49.455505+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-30T12:04:49.455800+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-30T12:04:49.455761+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-30T12:04:49.455839+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-30T12:04:49.455592+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-30T12:04:49.455632+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-30T12:04:49.455675+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-30T12:04:49.455878+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-30T12:04:50.311008+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-30T12:04:50.311066+00:00 shinyapps[6673934]: 
+2022-07-30T12:04:50.311161+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-30T12:04:50.311114+00:00 shinyapps[6673934]: Starting R with process ID: '328'
+2022-07-30T12:04:51.294190+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-30T12:04:51.294249+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-30T12:04:51.294300+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-30T12:04:51.294413+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-30T12:04:51.294374+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-30T12:04:51.294337+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-30T12:04:51.294539+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-30T12:04:51.294449+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-30T12:04:51.294578+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-30T12:04:51.294496+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-30T12:04:51.294622+00:00 shinyapps[6673934]: 
+2022-07-30T12:04:51.294800+00:00 shinyapps[6673934]: 
+2022-07-30T12:04:51.294664+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-30T12:04:51.294719+00:00 shinyapps[6673934]: 
+2022-07-30T12:04:51.294762+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-30T12:04:51.294843+00:00 shinyapps[6673934]:     box
+2022-07-30T12:04:51.294910+00:00 shinyapps[6673934]: 
+2022-07-30T12:04:56.294146+00:00 shinyapps[6673934]: 
+2022-07-30T12:04:56.294200+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:35235
+2022-07-30T12:24:21.294183+00:00 shinyapps[6673934]: Container event from container-7016921: stop
+2022-07-31T13:43:18.294357+00:00 shinyapps[6673934]: Running on host: 7ad040f3b2fd
+2022-07-31T13:43:18.294378+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-31T13:43:18.294420+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-31T13:43:18.294473+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-31T13:43:18.294527+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-31T13:43:18.294588+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-31T13:43:18.294651+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-31T13:43:18.294708+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-31T13:43:18.294768+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-31T13:43:18.294823+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-31T13:43:18.294880+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-31T13:43:18.294933+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-31T13:43:18.294982+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-31T13:43:18.295034+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-31T13:43:18.295083+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-31T13:43:18.295134+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-31T13:43:28.440411+00:00 shinyapps[6673934]: Container event from container-7016921: start
+2022-07-31T13:43:29.294222+00:00 shinyapps[6673934]: Starting R with process ID: '26'
+2022-07-31T13:43:29.294479+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-31T13:43:29.294398+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-31T13:43:29.294330+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-31T13:43:29.294162+00:00 shinyapps[6673934]: 
+2022-07-31T13:43:29.294613+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-31T13:43:29.294277+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-31T13:43:29.294366+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-31T13:43:29.294528+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-31T13:43:29.294574+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-31T13:43:29.294771+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-31T13:43:29.294929+00:00 shinyapps[6673934]: 
+2022-07-31T13:43:29.294434+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-31T13:43:29.294650+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-31T13:43:29.294685+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-31T13:43:29.294723+00:00 shinyapps[6673934]: 
+2022-07-31T13:43:29.294884+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-31T13:43:29.294818+00:00 shinyapps[6673934]: 
+2022-07-31T13:43:29.295062+00:00 shinyapps[6673934]: 
+2022-07-31T13:43:29.294982+00:00 shinyapps[6673934]:     box
+2022-07-31T13:43:29.295105+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:44537
+2022-07-31T13:43:29.295023+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:08.294165+00:00 shinyapps[6673934]: Container event from container-7016921: oom (out of memory)
+2022-07-31T13:44:12.321414+00:00 shinyapps[6673934]: Running on host: 7ad040f3b2fd
+2022-07-31T13:44:12.321465+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-31T13:44:12.321503+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-31T13:44:12.321549+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-31T13:44:12.321631+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-31T13:44:12.321669+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-31T13:44:12.321589+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-31T13:44:12.321699+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-31T13:44:12.321760+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-31T13:44:12.321804+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-31T13:44:12.321842+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-31T13:44:12.321880+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-31T13:44:12.321920+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-31T13:44:12.321960+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-31T13:44:12.322006+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-31T13:44:13.294145+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-31T13:44:13.294198+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:13.294251+00:00 shinyapps[6673934]: Starting R with process ID: '62'
+2022-07-31T13:44:13.294298+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-31T13:44:14.294161+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-31T13:44:14.294213+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-31T13:44:14.294266+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-31T13:44:14.294317+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-31T13:44:14.294417+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-31T13:44:14.294371+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-31T13:44:14.294462+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-31T13:44:14.294505+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-31T13:44:14.294547+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-31T13:44:15.294150+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-31T13:44:15.294202+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:15.294245+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-31T13:44:15.294288+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:15.294330+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-31T13:44:15.294379+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:15.294419+00:00 shinyapps[6673934]:     box
+2022-07-31T13:44:15.294463+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:22.296536+00:00 shinyapps[6673934]: 
+2022-07-31T13:44:22.296596+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:40617
+2022-07-31T13:49:41.294176+00:00 shinyapps[6673934]: Container event from container-7016921: oom (out of memory)
+2022-07-31T14:05:22.332065+00:00 shinyapps[6673934]: Container event from container-7016921: stop
+2022-07-31T21:09:59.287093+00:00 shinyapps[6673934]: Container event from container-7016921: start
+2022-07-31T21:10:02.287009+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-31T21:10:02.286926+00:00 shinyapps[6673934]: Running on host: 62201a6f8a50
+2022-07-31T21:10:02.287356+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-31T21:10:02.287054+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-31T21:10:02.287760+00:00 shinyapps[6673934]: 
+2022-07-31T21:10:02.287121+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-31T21:10:02.287576+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-31T21:10:02.287172+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-31T21:10:02.287440+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-31T21:10:02.287526+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-31T21:10:02.287245+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-31T21:10:02.287805+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-31T21:10:02.288155+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-31T21:10:02.287300+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-31T21:10:02.287696+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-31T21:10:02.288061+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-31T21:10:02.287400+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-31T21:10:02.287481+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-31T21:10:02.287892+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-31T21:10:02.288237+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-31T21:10:02.287929+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-31T21:10:02.287845+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-31T21:10:02.288113+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-31T21:10:02.288197+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-31T21:10:02.288015+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-31T21:10:02.287617+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-31T21:10:02.287970+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-31T21:10:02.287657+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-31T21:10:03.286905+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-31T21:10:03.286993+00:00 shinyapps[6673934]: 
+2022-07-31T21:10:03.287087+00:00 shinyapps[6673934]: 
+2022-07-31T21:10:03.287040+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-31T21:10:03.287165+00:00 shinyapps[6673934]: 
+2022-07-31T21:10:03.287209+00:00 shinyapps[6673934]:     box
+2022-07-31T21:10:03.287123+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-31T21:10:03.287248+00:00 shinyapps[6673934]: 
+2022-07-31T21:10:10.286906+00:00 shinyapps[6673934]: 
+2022-07-31T21:10:10.286997+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:40681
+2022-07-31T21:22:09.286910+00:00 shinyapps[6673934]: Running on host: 62201a6f8a50
+2022-07-31T21:22:09.286992+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-31T21:22:09.287040+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-31T21:22:09.287376+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-31T21:22:09.287274+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-31T21:22:09.287088+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-31T21:22:09.287316+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-31T21:22:09.287787+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-31T21:22:09.287137+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-31T21:22:09.287495+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-31T21:22:09.287183+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-31T21:22:09.287530+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-31T21:22:09.287223+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-31T21:22:09.287743+00:00 shinyapps[6673934]: Starting R with process ID: '247'
+2022-07-31T21:22:09.287576+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-31T21:22:09.287625+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-31T21:22:09.287419+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-31T21:22:09.287461+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-31T21:22:09.287701+00:00 shinyapps[6673934]: 
+2022-07-31T21:22:11.289308+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-31T21:22:11.289360+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-31T21:22:11.289412+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-31T21:22:11.289597+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-31T21:22:11.289647+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-31T21:22:11.289459+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-31T21:22:11.289771+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-31T21:22:11.289495+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-31T21:22:11.289812+00:00 shinyapps[6673934]: 
+2022-07-31T21:22:11.289892+00:00 shinyapps[6673934]: 
+2022-07-31T21:22:11.289732+00:00 shinyapps[6673934]: 
+2022-07-31T21:22:11.289855+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-31T21:22:11.289528+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-31T21:22:11.289566+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-31T21:22:11.289936+00:00 shinyapps[6673934]:     box
+2022-07-31T21:22:11.289691+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-31T21:22:11.289999+00:00 shinyapps[6673934]: 
+2022-07-31T21:22:18.286885+00:00 shinyapps[6673934]: 
+2022-07-31T21:22:18.286930+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:40747
+2022-07-31T21:22:51.289318+00:00 shinyapps[6673934]: Container event from container-7016921: oom (out of memory)
+2022-07-31T21:24:45.294157+00:00 shinyapps[6673934]: Container event from container-7019894: start
+2022-07-31T21:24:48.294161+00:00 shinyapps[6673934]: Running on host: d8928ee3343e
+2022-07-31T21:24:48.294212+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-31T21:24:48.294264+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-31T21:24:48.294316+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-31T21:24:48.294405+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-31T21:24:48.294364+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-31T21:24:48.294445+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-31T21:24:48.294705+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-31T21:24:48.295122+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-31T21:24:48.294786+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-31T21:24:48.295282+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-31T21:24:48.294533+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-31T21:24:48.294665+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-31T21:24:48.294891+00:00 shinyapps[6673934]: 
+2022-07-31T21:24:48.294935+00:00 shinyapps[6673934]: Starting R with process ID: '27'
+2022-07-31T21:24:48.295329+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-31T21:24:48.294744+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-31T21:24:48.295200+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-31T21:24:48.294582+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-31T21:24:48.295232+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-31T21:24:48.294491+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-31T21:24:48.294827+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-31T21:24:48.295164+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-31T21:24:48.294625+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-31T21:24:48.294985+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-31T21:24:48.295023+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-31T21:24:48.295090+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-31T21:24:48.295054+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-31T21:24:49.286891+00:00 shinyapps[6673934]: Container event from container-7016921: stop
+2022-07-31T21:24:49.294132+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-31T21:24:49.294295+00:00 shinyapps[6673934]: 
+2022-07-31T21:24:49.294184+00:00 shinyapps[6673934]: 
+2022-07-31T21:24:49.294240+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-31T21:24:49.294340+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-31T21:24:49.294427+00:00 shinyapps[6673934]:     box
+2022-07-31T21:24:49.294381+00:00 shinyapps[6673934]: 
+2022-07-31T21:24:49.294472+00:00 shinyapps[6673934]: 
+2022-07-31T21:24:56.294152+00:00 shinyapps[6673934]: 
+2022-07-31T21:24:56.294204+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:40657
+2022-07-31T21:25:26.294182+00:00 shinyapps[6673934]: Container event from container-7019894: oom (out of memory)
+2022-07-31T21:25:31.294139+00:00 shinyapps[6673934]: Running on host: d8928ee3343e
+2022-07-31T21:25:31.294189+00:00 shinyapps[6673934]: Server version: 2022.06.2
+2022-07-31T21:25:31.294230+00:00 shinyapps[6673934]: LANG: C.UTF-8
+2022-07-31T21:25:31.294275+00:00 shinyapps[6673934]: Working directory: /srv/connect/apps/housing-justice
+2022-07-31T21:25:31.294326+00:00 shinyapps[6673934]: Running content using the current R environment
+2022-07-31T21:25:32.294385+00:00 shinyapps[6673934]: R version: 4.0.4
+2022-07-31T21:25:32.294435+00:00 shinyapps[6673934]: shiny version: 1.6.0
+2022-07-31T21:25:32.294489+00:00 shinyapps[6673934]: httpuv version: 1.6.1
+2022-07-31T21:25:32.294671+00:00 shinyapps[6673934]: RJSONIO version: (none)
+2022-07-31T21:25:32.294536+00:00 shinyapps[6673934]: rmarkdown version: 2.13
+2022-07-31T21:25:32.294583+00:00 shinyapps[6673934]: knitr version: 1.31
+2022-07-31T21:25:32.294716+00:00 shinyapps[6673934]: htmltools version: 0.5.1.1
+2022-07-31T21:25:32.294621+00:00 shinyapps[6673934]: jsonlite version: 1.7.2
+2022-07-31T21:25:32.294785+00:00 shinyapps[6673934]: Using pandoc: /opt/connect/ext/pandoc/2.16
+2022-07-31T21:25:32.294860+00:00 shinyapps[6673934]: 
+2022-07-31T21:25:32.294752+00:00 shinyapps[6673934]: reticulate version: (none)
+2022-07-31T21:25:32.294821+00:00 shinyapps[6673934]: Using jsonlite for JSON processing
+2022-07-31T21:25:32.294927+00:00 shinyapps[6673934]: Shiny application starting ...
+2022-07-31T21:25:32.294889+00:00 shinyapps[6673934]: Starting R with process ID: '62'
+2022-07-31T21:25:33.294143+00:00 shinyapps[6673934]: ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+2022-07-31T21:25:33.294200+00:00 shinyapps[6673934]: ✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+2022-07-31T21:25:33.294284+00:00 shinyapps[6673934]: ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+2022-07-31T21:25:33.294246+00:00 shinyapps[6673934]: ✔ tibble  3.1.3     ✔ dplyr   1.0.7
+2022-07-31T21:25:33.294459+00:00 shinyapps[6673934]: ✖ dplyr::lag()    masks stats::lag()
+2022-07-31T21:25:33.294368+00:00 shinyapps[6673934]: ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+2022-07-31T21:25:33.294328+00:00 shinyapps[6673934]: ✔ readr   1.4.0     ✔ forcats 0.5.1
+2022-07-31T21:25:33.294410+00:00 shinyapps[6673934]: ✖ dplyr::filter() masks stats::filter()
+2022-07-31T21:25:34.294161+00:00 shinyapps[6673934]: here() starts at /srv/connect/apps/housing-justice
+2022-07-31T21:25:35.294136+00:00 shinyapps[6673934]: Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+2022-07-31T21:25:35.294210+00:00 shinyapps[6673934]: 
+2022-07-31T21:25:35.294306+00:00 shinyapps[6673934]: 
+2022-07-31T21:25:35.294263+00:00 shinyapps[6673934]: Attaching package: ‘shinydashboard’
+2022-07-31T21:25:35.294352+00:00 shinyapps[6673934]: The following object is masked from ‘package:graphics’:
+2022-07-31T21:25:35.294463+00:00 shinyapps[6673934]: 
+2022-07-31T21:25:35.294387+00:00 shinyapps[6673934]: 
+2022-07-31T21:25:35.294421+00:00 shinyapps[6673934]:     box
+2022-07-31T21:25:42.296547+00:00 shinyapps[6673934]: 
+2022-07-31T21:25:42.296616+00:00 shinyapps[6673934]: Listening on http://127.0.0.1:38365
