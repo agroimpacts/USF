@@ -27,7 +27,8 @@ brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
 
 ui <- dashboardPage(
   skin = "black",
-  dashboardHeader(title = "Risk, Value and Geographies of Policing"),
+  dashboardHeader(title = "Risk, Value and Geographies of Policing - 2007",
+                  titleWidth = 400),
   dashboardSidebar(
     h5("How can we expand analyses of policing beyond crime statistics and
        service call data to reveal a wider range of data sources that shape
