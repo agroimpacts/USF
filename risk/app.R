@@ -33,23 +33,23 @@ ui <- dashboardPage(
   dashboardHeader(title = "Deconstructing risk",
                   titleWidth = 350),
   dashboardSidebar(
-    h5("This dashboard shows data for Brooklyn, 2007. Source: NYC Open Data"),
-    h5("According to the National Institute of Justice,
-        property crime contemplates:
-          + burglary
-
-          - theft
-
-          - vandalism
-
-          - arson."),
-    h5("Based on this classification, we created a property crime variable using
-        Historic crime dataset for NYC."),
-    h5("For 2007, the NYPD registered 9346 property crimes in Brooklyn. The
-       information in this dashboard shows their distribution to deconstruct
-       how the police/city/state think about risk"),
-    h5("Risk locations are defined by XYZ. Not all places are equally
-       risky through out the day"),
+    h5("Risk Terrain Modeling (RTM) identifies potential areas where crime may
+       occur by doing an inventory of urban features
+       (e.g. foreclosed areas, bus stations, community rehab centers),
+       mapping their density and proximity to each other, assigning weights
+       related to their assumed relationship to crime, and modeling which
+       configurations are most likely to attract incidents. As RTMs are often
+       proprietary, there is a lack of transparency around data used to inform
+       these predictions. Using RTM software developed by Rutgers University,
+       and based on data on Brooklyn, New York from 2007, this dashboard
+       illustrates locations of areas most at “risk” for property crime to occur.
+       These data also suggest how and where cities may deploy
+       police units and/or surveillance technologies."),
+    h5("In 2007, the NYPD registered 9,346 property crimes in Brooklyn.
+       According to the National Institute of Justice, property crime includes
+       burglary, theft, vandalism, and arson. The information in this dashboard
+       shows their distribution to unpack how particular neighborhoods and
+       locations are imagined as “risky,” and therefore in need of intervention."),
     width = 350,
     sidebarMenu(tags$style(type = "text/css", ".irs-grid-pol {color: white}"),
                 sliderInput("range", "Select an hour of the day to begin",

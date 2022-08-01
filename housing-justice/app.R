@@ -28,7 +28,7 @@ brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
 ui <- dashboardPage(
   skin = "black",
   dashboardHeader(title = "Risk, Value and Geographies of Policing - 2007",
-                  titleWidth = 400),
+                  titleWidth = 700),
   dashboardSidebar(
     h5("How can we expand analyses of policing beyond crime statistics and
        service call data to reveal a wider range of data sources that shape
@@ -36,17 +36,17 @@ ui <- dashboardPage(
        household income, this dashboard illustrates the relationship between
        presumptions of value and determinations of risk. These data also suggest
        how we might better understand the relationship between land speculation
-       and urban policing", align = "center"),
+       and urban policing", align = "left"),
     h5("Land Value is based on the Assessor's appraisal for the city of NY.
-       Data source: PLUTO", align = "center"),
+       Data source: PLUTO", align = "left"),
     h5("Income is based on acs5 census data for 2009.
-       Aggregate data per census tract.", align = "center"),
+       Aggregate data per census tract.", align = "left"),
     h5("Risky locations are the outputs of an RTM analysis based
-       on historic property crime data for NYC", align = "center"),
+       on historic property crime data for NYC", align = "left"),
     h6("This is a BETA version of the Dashboard. Loading times can take between
        8 to 15 seconds depending on your network connectivity.
        Please be patient if your selection is not immedietally responsive.",
-       align = "center"),
+       align = "left"),
     width = 350,
     sidebarMenu(
       menuItem(selectInput("nhood", "Select a neighborhood",
