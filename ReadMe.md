@@ -66,7 +66,10 @@ For step by step demo on how to clone a repository, follow this [link](https://n
 Two Shiny Dashboards have been created. Click on the links to deploy the Shiny app.
 
 
-- [Housing Justice](https://p462x7-pilar-delpino0marimon.shinyapps.io/housing-justice/#)
+- [Risk, Value and Geographies of Policing - 2007](https://p462x7-pilar-delpino0marimon.shinyapps.io/housing-justice/)
+
+- [Risk, Value and Geographies of Policing - 2020](https://p462x7-pilar-delpino0marimon.shinyapps.io/housing-justice-2020/)
+
 - [Deconstructing Risk](https://p462x7-pilar-delpino0marimon.shinyapps.io/risk/#)
 
 

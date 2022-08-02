@@ -35,6 +35,7 @@ bk07crime <- bk07crime %>% # filter propcrime
   mutate(DayFormatText = as.character(DayFormat)) %>%
   mutate(HourFormat = hour(date1))
 
+
 # propcrime + neighborhood join
 bk07crime <- st_join(bk07crime, comms_bk, left = TRUE)
 
@@ -78,3 +79,36 @@ bk07crime %>% st_drop_geometry() %>%  select(DayFormat, HourFormat) %>%
 
 bk07crime %>% st_drop_geometry() %>%  select(HourFormat) %>%
   group_by(.$HourFormat) %>% count() %>% as_tibble() %>% arrange(-n)
+
+
+### create a feature for all Brooklyn crimes for 2019
+bk07crime <- nychcrime %>% filter(BORO_NM == "BROOKLYN") %>% # extract Brooklyn data
+  separate(Full_Date, into = c("Month", "Day", "Year"), # separate field Full_Date into new columns
+           sep = "/", remove = FALSE) %>%
+  filter(Year == "2019") #%>% # extract 2019 data
+#filter((grepl("ARSON|BURGLARY|THEFT|VANDALISM", PD_DESC)))
+bk07crime <- bk19crime
+bk07crime <- bk07crime[brooklyn, ]
+bk07crime <- bk07crime[-c(3:4, 7:13, 14:18, 21:31,34:36)]
+
+# heatmap
+bk07crime <- bk07crime %>% # filter propcrime
+  mutate(timestamp = paste(Full_Date, Time)) %>%
+  mutate(date1 = strptime(.$timestamp, format = "%m/%d/%Y %H:%M:%S")) %>%
+  mutate(DayFormat = weekdays(date1)) %>%
+  mutate(DayFormatText = as.character(DayFormat)) %>%
+  mutate(HourFormat = hour(date1))
+
+
+# 3pm crime
+
+bk07crime <- bk07crime %>% filter(HourFormat == "15")
+bk07crime %>% filter(HourFormat == "15") %>% filter(!PREM_TYP_DESC == "STREET") %>%
+  group_by(.$PREM_TYP_DESC) %>%
+  count() %>% # frequency per group
+  rename(., RTM_factors = ".$PREM_TYP_DESC", Count = "n") %>%
+  as_tibble() %>% arrange(-Count)
+
+st_write(bk07crime, "~/Clark/RA-ing/SummerInstitute/USF/localdrive/shapes/allbk193pmcrime.shp")
+
+
