@@ -18,8 +18,8 @@ library(sf)
 library(shinydashboard)
 library(readr)
 
-#parcels <- readRDS("parcels2.RDS")
-parcels <- readRDS("parcels.RDS")
+parcels <- readRDS("parcels2.RDS")
+#parcels <- readRDS("parcels.RDS")
 #parcels <- readRDS("q.RDS") #Williamsburg test
 bk_priority <- readRDS("bk_priority.RDS")
 brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
