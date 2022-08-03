@@ -29,6 +29,22 @@ bk_priority <- st_join(bk_priority, nyc_boundaries, left = TRUE)
 
 saveRDS(bk_priority, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice/bk_priority.RDS")
 
+
+## 2019 data
+# load KML
+bk_priority<- st_read(here("~/Clark/RA-ing/SummerInstitute/USF/localdrive/rtm_test/bk2019/PriorityPlaces.kml")) %>%
+  as.data.frame(.) %>%
+  st_as_sf() %>%
+  st_transform(. , crs = st_crs(parcels)) %>%
+  select(-Description)
+
+st_crs(bk_priority)
+st_crs(parcels)
+bk_priority <- st_transform(bk_priority, crs = 4326)
+
+saveRDS(bk_priority, "~/Clark/RA-ing/SummerInstitute/USF/housing-justice-2020/bk_priority2020.RDS")
+
+
 # q <- parcels %>% filter(Name == "Williamsburg") %>%
 #   filter(!estimate %in% NA)
 # # quantile breaks

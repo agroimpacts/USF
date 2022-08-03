@@ -21,6 +21,7 @@ library(readr)
 parcels <- readRDS("parcels2.RDS")
 #bk_priority <- readRDS("bk_priority.RDS") # replace with 2019 data
 brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
+bk_priority <- readRDS("bk_priority2020.RDS")
 
 
 ui <- dashboardPage(
@@ -127,13 +128,13 @@ server <- function(input, output) {
                       title = "Median Household Income, 2019", opacity = 0.7) %>%
             addLegend(pal = factpal2, values = parcels$DECODES2007,
                       title = "Land Use",
-                      opacity = 0.7) #  %>%
-            # addPolygons(data = bk_priority, group = "Priority Risky Locations",
-            #             stroke = TRUE, fill = TRUE,
-            #             opacity = 5,
-            #             weight = 7,
-            #             color = NA,
-            #             fillOpacity = 6, fillColor = bk_priority)
+                      opacity = 0.7) %>%
+        addPolygons(data = bk_priority, group = "Priority Risky Locations",
+                    stroke = TRUE, fill = TRUE,
+                    opacity = 5,
+                    weight = 7,
+                    color = NA,
+                    fillOpacity = 6, fillColor = bk_priority)
     })
 
 
