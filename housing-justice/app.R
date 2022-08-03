@@ -67,14 +67,8 @@ ui <- dashboardPage(
         font-size: 24px;
       }
     '))),
-    fluidPage(
-      tabBox(
-        width = 500,
-        id = "tabset1",
-        tabPanel("2007", leafletOutput("map", height = "700px")),
-        tabPanel("2020", leafletOutput("map2", height = "700px"))
-      )
-    )
+    fillPage(
+      leafletOutput("map", width = "900px", height = "600px"))
   )
 )
 
