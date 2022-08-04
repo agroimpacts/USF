@@ -7,9 +7,8 @@ Team:
 - Dr. Asha Best
 - Dr. Lyndon Estes
 - RA. Amy Dundon
-- RA. Pilar Delpino Marimon
 - RA. Lester Carver
-
+- RA. Pilar Delpino Marimon
 
 The data within the package is based 
 on selected cities:
