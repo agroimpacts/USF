@@ -25,15 +25,6 @@ brooklyn_neigh <- readRDS("brooklyn_neigh.RDS")
 bk_priority2020 <- readRDS("bk_priority2020.RDS")
 
 
-# merge Bk_priority for both years
-bk_priority2007 <- bk_priority2007 %>% mutate(group = "1")
-bk_priority2020 <- bk_priority2020 %>% mutate(group = "2")
-
-testjoin <- st_join(bk_priority2007,bk_priority2020, left = T)
-view(testjoin)
-
-
-
 # Test Bk Priority risk two years
 mapq_interactive <- leaflet() %>% # calls leaflet
     addProviderTiles(providers$CartoDB.Positron) %>% #base map
